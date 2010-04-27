@@ -25,6 +25,7 @@
 		
 	 	<activity android:name=".ui.tutorials.FixShipGameTutorial" android:label="@string/fix_ship_game_tutorial">
 		</activity> 
-	</application>
+	<activity android:name=".ui.tutorials.MoveSingleShipTutorial" android:label="MoveSingleShipTutorial"></activity>
+</application>
 
 </manifest> 

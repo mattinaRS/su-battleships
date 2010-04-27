@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>BattleShipsMainProject</name>
+	<name>MainMenuScreen</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -30,4 +30,11 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>res/drawable-hdpi/move_single_ship.PNG</name>
+			<type>1</type>
+			<location>C:/Documents and Settings/User/Desktop/Software Technology/Java/OurProject/BattleShipsMainProject/res/drawable-hdpi/move_single_ship.PNG</location>
+		</link>
+	</linkedResources>
 </projectDescription>

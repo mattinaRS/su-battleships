@@ -102,6 +102,7 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 			_iv.setImageResource(R.drawable.grey);// mark as fired
 		}
 		_iv.setClickable(false);// make imageView unclickable
+		//_iv.setFocusable(false);
 		aimedField = NO_FIELD_IS_AIMED;
 	}
 

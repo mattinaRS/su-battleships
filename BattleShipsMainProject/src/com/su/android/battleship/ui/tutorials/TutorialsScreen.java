@@ -46,6 +46,9 @@ public class TutorialsScreen extends Activity {
 					mIntent = new Intent(v.getContext(),FixShipGameTutorial.class);
 					startActivity(mIntent);
 					break;
+				case 3: //this is move single ship tutorial
+					mIntent = new Intent(v.getContext(), MoveSingleShipTutorial.class);
+					startActivity(mIntent);
 				default:
 					break;
 				}
@@ -54,14 +57,15 @@ public class TutorialsScreen extends Activity {
 	}
 	
 	public class ImageAdapter extends BaseAdapter {
-        private static final int TUTORIAL_MENU_BUTTONS_COUNT = 3;
+        private static final int TUTORIAL_MENU_BUTTONS_COUNT = 4;
         private Context mContext;
         private ImageView[] menuItems = new ImageView[TUTORIAL_MENU_BUTTONS_COUNT];
 
         private Integer[] menuPictures = {
         		R.drawable.aim_and_fire_tutorial,
         		R.drawable.fix_ship_game,
-        		R.drawable.view_minimap
+        		R.drawable.view_minimap,
+        		R.drawable.move_single_ship
         };
 
 		
