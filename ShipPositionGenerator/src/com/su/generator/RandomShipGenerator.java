@@ -12,7 +12,7 @@ import java.util.TreeSet;
 import com.su.data.ShipFieldsHolder;
 import com.su.generator.encoder.ShipPositionEncoder;
 import com.su.generator.encoder.ShipPositionEncoderDefaultImpl;
-import com.su.generator.manager.ForbiddenShipsManager;
+import com.su.generator.manager.ShipPositionsContainingFieldManager;
 import com.su.generator.randomizer.ExcludeRowRandomizer;
 import com.su.generator.randomizer.ExcludeRowRandomizerAllExcludedException;
 import com.su.generator.rule.FieldForbiddingRule;
@@ -41,7 +41,7 @@ public class RandomShipGenerator {
 	private ExcludeRowRandomizer randomizer;
 	private ForbiddenPositionsManager positionManager;
 	private ShipPositionEncoder encoder;
-	private ForbiddenShipsManager shipsManager;
+	private ShipPositionsContainingFieldManager shipsManager;
 	private FieldForbiddingRule rule;
 
 	/**
@@ -57,7 +57,7 @@ public class RandomShipGenerator {
 		this.encoder = new ShipPositionEncoderDefaultImpl(
 				(short) (boardSideSize));
 		this.positionManager = new ForbiddenPositionsManager();
-		this.shipsManager = new ForbiddenShipsManager(boardSideSize);
+		this.shipsManager = new ShipPositionsContainingFieldManager(boardSideSize);
 		
 //		this.rule = new FieldForbiddingRuleCrossImpl(boardSideSize);
 		this.rule = new FieldForbiddingRuleSquareImpl(boardSideSize);

@@ -15,11 +15,11 @@ import com.su.generator.rule.FieldForbiddingRule;
  * @author vasil.konstantinov
  *
  */
-public class ForbiddenShipsManager {
+public class ShipPositionsContainingFieldManager {
 	
 	private short boardSideSize;
 	
-	public ForbiddenShipsManager(short boardSideSize) {
+	public ShipPositionsContainingFieldManager(short boardSideSize) {
 		this.boardSideSize = boardSideSize;
 	}
 	
@@ -79,7 +79,7 @@ public class ForbiddenShipsManager {
 	}
 	
 	public static void main(String[] args){
-		ForbiddenShipsManager test = new ForbiddenShipsManager((short)4);
+		ShipPositionsContainingFieldManager test = new ShipPositionsContainingFieldManager((short)4);
 		List<ShipFieldsHolder> list;
 		
 		list = test.getShipsCrossingField(0, 3);
