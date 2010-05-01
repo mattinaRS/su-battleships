@@ -12,13 +12,13 @@ import java.util.TreeSet;
 import com.su.data.ShipFieldsHolder;
 import com.su.generator.encoder.ShipPositionEncoder;
 import com.su.generator.encoder.ShipPositionEncoderDefaultImpl;
-import com.su.generator.manager.ShipPositionsContainingFieldManager;
 import com.su.generator.randomizer.ExcludeRowRandomizer;
 import com.su.generator.randomizer.ExcludeRowRandomizerAllExcludedException;
 import com.su.generator.rule.FieldForbiddingRule;
 import com.su.generator.rule.FieldForbiddingRuleCrossImpl;
 import com.su.generator.rule.FieldForbiddingRuleSquareImpl;
 import com.su.manager.ForbiddenPositionsManager;
+import com.su.manager.ShipPositionsContainingFieldManager;
 
 /**
  * This class implements logic for generating random ship position That is - it

@@ -1,4 +1,4 @@
-package com.su.generator.manager;
+package com.su.manager;
 
 import java.util.ArrayList;
 import java.util.List;
