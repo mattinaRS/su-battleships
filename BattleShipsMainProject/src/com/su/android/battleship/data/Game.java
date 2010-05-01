@@ -1,7 +1,9 @@
 package com.su.android.battleship.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Game {
 	public static final short BOARD_SIDE = 10;
@@ -156,5 +158,27 @@ public class Game {
 		}
 		//TODO : handle IABE exception - index should be 0 or 1
 		return result;
+	}
+	
+	/**
+	 * 
+	 * @return Map<ShipLength,Count>
+	 */
+	public Map<Short, Short> getShipsMapRepresentation(){
+		Map<Short, Short> resultMap = new HashMap<Short, Short>();
+		
+		Ship[] ships = this.playersShips.get(0);
+		short tempLength;
+		for(int i = 0 ; i < ships.length ; i++){
+			tempLength = ships[i].getLength();
+			if(resultMap.containsKey(tempLength)){
+				short currentCount = resultMap.get(tempLength);
+				resultMap.put(tempLength, (short) (currentCount+1));
+			}else{
+				resultMap.put(tempLength, (short) 1);
+			}
+		}
+		
+		return resultMap;
 	}
 }

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -42,7 +43,7 @@ public class ExcludeRowRandomizer {
 	 * @throws ExcludeRowRandomizerAllExcludedException 
 	 */
 	public int getRandomIndexFromExclusiveRow(int rowCount,
-			SortedSet<Integer> excludedNumbers) throws ExcludeRowRandomizerAllExcludedException {
+			Set<Integer> excludedNumbers) throws ExcludeRowRandomizerAllExcludedException {
 		// TODO : handle assert criteria - rowCount must be bigger than all
 		// numbers in the excludedNumbers set and should be bigger than their
 		// count
@@ -58,8 +59,7 @@ public class ExcludeRowRandomizer {
 		return result;
 	}
 
-	private int getNthNotExcludedNumber(int nth,
-			SortedSet<Integer> excludedNumbers) {
+	private int getNthNotExcludedNumber(int nth,Set<Integer> excludedNumbers) {
 		// nth + excludedNumber.size() should be smaller then the whole size ,
 		// however this method does not have to assert that
 		int result = -1;

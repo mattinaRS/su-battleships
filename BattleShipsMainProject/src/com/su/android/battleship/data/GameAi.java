@@ -20,7 +20,7 @@ public class GameAi extends Game{
 	 */
 	public GameAi(short playerOnMove,Ship[] firstPlayerShips,Ship[] secondPlayerShips) {		
 		super(playerOnMove,firstPlayerShips,secondPlayerShips);
-		bot = AiFactory.getInstance().produceAiPlayer(AiFactory.AI_RANDOM_PLAYER,this);		
+		bot = AiFactory.getInstance().produceAiPlayer(AiFactory.AI_SPPFD_INSANE,this);		
 	}
 
 	/**
