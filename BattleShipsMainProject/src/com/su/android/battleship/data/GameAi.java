@@ -1,7 +1,7 @@
 package com.su.android.battleship.data;
 
 import com.su.android.battleship.data.ai.AiFactory;
-import com.su.android.battleship.data.ai.iface.AiPlayer;
+import com.su.android.battleship.data.ai.AiPlayer;
 
 
 public class GameAi extends Game{	

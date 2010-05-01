@@ -9,7 +9,7 @@ import com.su.android.battleship.data.BoardFieldStatus;
 import com.su.android.battleship.data.Game;
 import com.su.android.battleship.data.GameAi;
 import com.su.android.battleship.data.Ship;
-import com.su.android.battleship.data.ai.iface.AiPlayer;
+import com.su.android.battleship.data.ai.AiPlayer;
 
 public class AiRandomPlayer extends AiPlayer {
 	

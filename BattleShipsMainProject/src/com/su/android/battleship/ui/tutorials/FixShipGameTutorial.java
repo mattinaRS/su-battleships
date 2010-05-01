@@ -10,7 +10,7 @@ import com.su.android.battleship.data.GameAi;
 import com.su.android.battleship.data.Ship;
 import com.su.android.battleship.data.ShipPositionGenerator;
 import com.su.android.battleship.data.ai.AiFactory;
-import com.su.android.battleship.data.ai.iface.AiPlayer;
+import com.su.android.battleship.data.ai.AiPlayer;
 import com.su.android.battleship.ui.adapter.GameBoardImageAdapter;
 import com.su.android.battleship.ui.adapter.MinimapImageAdapter;
 
