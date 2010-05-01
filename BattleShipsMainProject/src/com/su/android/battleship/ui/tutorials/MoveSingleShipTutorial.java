@@ -41,7 +41,10 @@ public class MoveSingleShipTutorial extends Activity{
 			public boolean onTouch(View v, MotionEvent event) {
 		        short x, y, position;
 		        ImageView iv;
-		        
+		        //Vasko finds the numbers {4,4.5,27,28,31} "very well" and "obviously" co-relative 
+		        //TODO : board imageViews' sizes will be hard-coded as @values and the coordinate formulas should depend only
+		        //on those hard-coded values , if UI size properties are to be loosely coupled with the the coordinates business logic
+		        //otherwise changes in the UI size properties will reflect on and induce changes in the formulas.
 		        x = (short)((event.getX()-4)/31);
 				if (x>9) x = 9;
 				y = (short)((event.getY()-4.5)/28);

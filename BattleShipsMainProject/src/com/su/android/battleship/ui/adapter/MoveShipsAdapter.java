@@ -57,7 +57,13 @@ private static final int FIELDS_COUNT = 100;
         	imageView.setImageResource(pictures[0]); //blue represents water on the minimap
         }
         
-        fields[position] = imageView;
+        /**
+         * work-around @reference - getView method in GameBoardImageAdapter
+         */
+        if(fields[position] == null){
+        	fields[position] = imageView;
+        }
+        
         return imageView;
     }
 

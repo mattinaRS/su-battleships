@@ -57,10 +57,17 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
 				ImageView _iv = (ImageView) v;
+				
 				// means that there is second click on the same button - FIRE !
-				if (aimedField == position) {
+				if (aimedField == position) {					
 					executeFire(_iv);
-					continueGameProcess();
+					if(game.isGameOver()){
+						Toast.makeText(FixShipGameTutorial.this,
+								"Game over.Winner is the player.", 1000).show();
+						return;
+					}else{
+						continueGameProcess();
+					}
 				} else {
 					if (aimedField != NO_FIELD_IS_AIMED) {
 						ImageView _oldSelectedField = (ImageView) boardImageAdapter
@@ -79,8 +86,8 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 					Toast.makeText(FixShipGameTutorial.this,
 							"Aim board field in order to fire.", 1000).show();
 				} else {
-					ImageView field = (ImageView) boardGrid
-							.getItemAtPosition(aimedField);
+					//quite obvious error - communication with imageViews is through the adapted , not through the gridView
+					ImageView field = (ImageView) boardImageAdapter.getItem(aimedField);							
 					executeFire(field);
 					if(game.isGameOver()){
 						Toast.makeText(FixShipGameTutorial.this,
@@ -94,6 +101,8 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		});
 	}
 
+	
+	
 	private void executeFire(ImageView _iv) {
 		short newFieldStatus = game.executeMove((short) 0, (short) aimedField);
 		if (BoardFieldStatus.isShipAttackedStatus(newFieldStatus)) {
