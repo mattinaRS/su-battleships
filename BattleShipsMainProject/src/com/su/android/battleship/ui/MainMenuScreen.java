@@ -80,6 +80,8 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 			startActivity(intent);
 			break;
 		case R.id.ButtonOptions:
+			Intent intentPrefs = new Intent(this, PreferencesMenuScreen.class);
+			startActivity(intentPrefs);
 			break;
 		case R.id.ButtonAbout:
 			Intent intentAbout = new Intent(this, About.class);

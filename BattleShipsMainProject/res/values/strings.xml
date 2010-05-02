@@ -14,4 +14,8 @@
 	<string name="menu_tutorials">Tutorials</string>
 	<string name="menu_back">Back</string>
 	<string name="about">Android Battleships\nAuthors:\nRoss Nikola Ivo Vasko Tony</string>
+	<string name="settings_sound">Sound</string>
+	<string name="settings_vibration">Vibration</string>
+	<string name="settings_difficulty">Difficulty</string>
+	<string name="settings_apply_prefs">Apply</string>
 </resources>

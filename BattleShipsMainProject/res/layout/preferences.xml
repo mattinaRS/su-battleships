@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/menu_background">
+	
+	<ImageView
+		android:id="@+id/ImageLogo"
+		style="@style/MenuLogo"/>
+		
+	<Button
+		android:id="@+id/ButtonSound" 
+		android:text="@string/settings_sound"
+		style="@style/MenuButton"/>
+		
+	<Button
+		android:id="@+id/ButtonVibration" 
+		android:text="@string/settings_vibration"
+		style="@style/MenuButton"/>
+		
+	<Button
+		android:id="@+id/ButtonDifficulty" 
+		android:text="@string/settings_difficulty"
+		style="@style/MenuButton"/>
+		
+	<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="horizontal"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+		<Button
+			android:id="@+id/ButtonApplyPrefs" 
+			android:text="@string/settings_apply_prefs"
+			android:layout_weight="0.5"
+			style="@style/MenuButton"/>
+		<Button
+			android:id="@+id/ButtonBack" 
+			android:text="@string/menu_back"
+			android:layout_weight="0.5"
+			style="@style/MenuButton"/>
+	</LinearLayout>		
+</LinearLayout>
