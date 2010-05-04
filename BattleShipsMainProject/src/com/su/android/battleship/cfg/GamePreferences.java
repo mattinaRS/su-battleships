@@ -15,7 +15,7 @@ public class GamePreferences {
 	public static final String PREFERENCE_VIBRATION = "BSG_PREFERENCE_VIBRATION";
 	public static final String PREFERENCE_DIFFICULTY = "BSG_PREFERENCE_DIFFICULTY";
 	
-	private static final String BUNDLE_STATE = "BS_PREFERENCES";
+	public static final String BUNDLE_STATE = "BSG_PREFERENCES";
 	
 	private static HashMap<String, Object> mPreferences;
 	

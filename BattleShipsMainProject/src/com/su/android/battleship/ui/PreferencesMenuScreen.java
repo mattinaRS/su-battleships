@@ -47,9 +47,28 @@ public class PreferencesMenuScreen extends Activity implements OnClickListener {
 		mButtonBack = (Button) findViewById(R.id.ButtonBack);
 		mButtonBack.setOnClickListener(this);
 		
-		mHasSound = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND);
-		mHasVibration = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION);
-		mGameDifficulty = (GameDifficulty) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_DIFFICULTY);
+		String[] oldState = null;
+		if (savedInstanceState != null) {
+			oldState = savedInstanceState.getStringArray(GamePreferences.BUNDLE_STATE);
+		}
+		
+		if (oldState == null) {
+			mHasSound = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND);
+			mHasVibration = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION);
+			mGameDifficulty = (GameDifficulty) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_DIFFICULTY);
+		}		
+		else {
+			try {
+				mHasSound = Boolean.parseBoolean(oldState[0]);
+				mHasVibration = Boolean.parseBoolean(oldState[1]);
+				mGameDifficulty = GameDifficulty.valueOf(oldState[2]);
+			} catch (Exception e) {
+				e.printStackTrace();
+				mHasSound = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND);
+				mHasVibration = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION);
+				mGameDifficulty = (GameDifficulty) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_DIFFICULTY);
+			}
+		}
 				
 		setSoundButtonText();
 		setVibrationButtonText();
@@ -103,42 +122,34 @@ public class PreferencesMenuScreen extends Activity implements OnClickListener {
 	}
 	
 	/**
-	 * The settings are not saved in a Bundle. They are saved in the phone.
+	 * The settings are saved in a Bundle.
 	 * When the application become active again the settings will be
-	 * loaded from the phone when needed
+	 * loaded from the bundle
 	 */
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		saveState();
+		outState.putStringArray(GamePreferences.BUNDLE_STATE, new String[] {mHasSound + "", mHasVibration + "", mGameDifficulty.toString()});
 	}
 
 	/**
 	 * Not final. Experimental UI
 	 */
 	private void setSoundButtonText() {
-		if (mHasSound) {
-			mButtonSound.setText("Sound [on]");
-		} else {
-			mButtonSound.setText("Sound [off]");
-		}		
+		mButtonSound.setText("Sound " + (mHasSound?"[on]":"[off]"));
 	}
 	
 	/**
 	 * Not final. Experimental UI
 	 */
 	private void setVibrationButtonText() {
-		if (mHasVibration) {
-			mButtonVibration.setText("Vibration [on]");
-		} else {
-			mButtonVibration.setText("Vibration [off]");
-		}		
+		mButtonVibration.setText("Vibration " + (mHasVibration?"[on]":"[off]"));
 	}
 	
 	/**
 	 * Not final. Experimental UI
 	 */
 	private void setDifficultyButtonText() {
-		mButtonDifficulty.setText("Difficulty [" + mGameDifficulty.toString() + "]");		
+		mButtonDifficulty.setText("Difficulty [" + mGameDifficulty.toString().toLowerCase() + "]");		
 	}
 }
