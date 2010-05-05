@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="move_ship_tutorial">Move Ship</string>
     <string name="app_name">BattleShips</string>
 	<string name="view_tutorials">View Tutorials</string>
-	<string name="aim_fire_tutorial">Aim and Fire Tutorial</string>
-	<string name="fix_ship_game_tutorial">Fix Ship Game Tutorial</string>
+	<string name="aim_fire_tutorial">Aim and Fire</string>
+	<string name="set_ship_game_tutorial">Set Ships Game</string>
 	<string name="tutorials_label">Tutorials</string>
 	<string name="menu_play">Play</string>
 	<string name="menu_options">Settings</string>

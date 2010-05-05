@@ -26,7 +26,8 @@ public class AiPlayerNormal extends AiPlayer_ShipPositionsPerFieldDependant {
 		//this is normal AI - it know that a ship can not move through empty field
 		//but it does not know , that a ship can not run through another ship - not very sensible , but this is a smaller flaw in the algorithm than in the easy AI 
 		//as often as for every other field
-		resultList.add(AiCalculationBoardStatusManager.EMPTY);		
+		resultList.add(AiCalculationBoardStatusManager.EMPTY);
+		resultList.add(AiCalculationBoardStatusManager.DESTROYED_SHIP);
 
 		return resultList;
 	}

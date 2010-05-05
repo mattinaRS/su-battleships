@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridView xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/myGrid" 
-	      android:columnWidth="180dp" 
-	      android:numColumns="1"
-	      android:verticalSpacing="10dp"
-	      android:gravity="center"
-	      android:layout_height="fill_parent" android:layout_width="fill_parent">
-</GridView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="@drawable/menu_background">
+
+	<ImageView android:id="@+id/ImageLogo" style="@style/MenuLogo" />
+
+	<Button style="@style/MenuButton" android:id="@+id/ButtonAimFireTutorial"
+		android:text="@string/aim_fire_tutorial" />
+
+	<Button style="@style/MenuButton" android:text="@string/set_ship_game_tutorial"
+		android:id="@+id/ButtonSetShipsGameTutorial" />
+
+	<Button style="@style/MenuButton" android:id="@+id/ButtonMoveShipTutorial"
+		android:text="@string/move_ship_tutorial" />
+
+	<Button android:id="@+id/ButtonBackTutorials" android:text="@string/menu_back"
+		style="@style/MenuButton" />
+</LinearLayout>

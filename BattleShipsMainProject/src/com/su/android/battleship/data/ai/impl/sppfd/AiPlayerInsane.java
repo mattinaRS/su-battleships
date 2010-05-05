@@ -30,8 +30,9 @@ public class AiPlayerInsane extends AiPlayer_ShipPositionsPerFieldDependant {
 		List<Short> resultList = new ArrayList<Short>();
 		
 		//this AI knows everything and plays perfectly
-		resultList.add(AiCalculationBoardStatusManager.EMPTY);
 		resultList.add(AiCalculationBoardStatusManager.DESTROYED_SHIP);
+		resultList.add(AiCalculationBoardStatusManager.EMPTY);		
+		resultList.add(AiCalculationBoardStatusManager.CANT_BE_SHIP);
 		
 		return resultList;
 	}

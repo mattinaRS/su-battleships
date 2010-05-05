@@ -22,84 +22,61 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class TutorialsScreen extends Activity {
+public class TutorialsScreen extends Activity implements OnClickListener{
 
-	private GridView mGrid;
-
+	private Button mButtonAimAndFireTutorial;
+	private Button mButtonFixShipGameTutorial;
+	private Button mButtonMoveShipTutorial;
+	private Button mButtonBack;
 	
-	public void onCreate(Bundle savedInstanceState) {
+	
+	/**
+	 * Called when activity is starting
+	 * 
+	 * @param savedInstanceState
+	 */
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.tutorials_menu);
-						
-		mGrid = (GridView) findViewById(R.id.myGrid);
-        mGrid.setAdapter(new ImageAdapter(TutorialsScreen.this)); 
-        
-        mGrid.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View v,int position, long id) {
-				Intent mIntent = null;
-				switch (position) {
-				case 0: //this is AimAndFire tutorial
-					mIntent = new Intent(v.getContext(),AimAndFireTutorial.class);
-					startActivity(mIntent);
-					break;
-				case 1: //this is Fixed ship game tutorial
-					mIntent = new Intent(v.getContext(),FixShipGameTutorial.class);
-					startActivity(mIntent);
-					break;
-				case 3: //this is move single ship tutorial
-					mIntent = new Intent(v.getContext(), MoveSingleShipTutorial.class);
-					startActivity(mIntent);
-				default:
-					break;
-				}
-			}        	
-        });        
-	}
-	
-	public class ImageAdapter extends BaseAdapter {
-        private static final int TUTORIAL_MENU_BUTTONS_COUNT = 4;
-        private Context mContext;
-        private ImageView[] menuItems = new ImageView[TUTORIAL_MENU_BUTTONS_COUNT];
-
-        private Integer[] menuPictures = {
-        		R.drawable.aim_and_fire_tutorial,
-        		R.drawable.fix_ship_game,
-        		R.drawable.view_minimap,
-        		R.drawable.move_single_ship
-        };
-
+		setContentView(R.layout.tutorials_menu);				
 		
-		public ImageAdapter(Context c) {
-            mContext = c;
-        }
+		mButtonAimAndFireTutorial = (Button) findViewById(R.id.ButtonAimFireTutorial);
+		mButtonAimAndFireTutorial.setOnClickListener(this);
+		
+		mButtonFixShipGameTutorial = (Button) findViewById(R.id.ButtonSetShipsGameTutorial);
+		mButtonFixShipGameTutorial.setOnClickListener(this);
+		
+		mButtonMoveShipTutorial = (Button) findViewById(R.id.ButtonMoveShipTutorial);
+		mButtonMoveShipTutorial.setOnClickListener(this);
+		
+		mButtonBack = (Button) findViewById(R.id.ButtonBackTutorials);
+		mButtonBack.setOnClickListener(this);		
+	}
 
-        public int getCount() {
-            return menuPictures.length;
-        }
-
-        public Object getItem(int position) {
-            return menuItems[position];
-        }       
-       
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-        	ImageView imageView;
-            if (convertView == null) {  // if it's not recycled, initialize some attributes
-                imageView = new ImageView(mContext);
-                imageView.setLayoutParams(new GridView.LayoutParams(185, 65));                
-                imageView.setPadding(2, 2, 2, 2);
-            } else {
-                imageView = (ImageView) convertView;
-            }
-            
-            //ALWAYS use setImageResource and not setBackground - it disables click event somehow...
-            imageView.setImageResource(menuPictures[position]);
-            
-            menuItems[position] = imageView;
-            return imageView;
-        }
-    }
+	/**
+	 * Called when a menu button has been clicked
+	 * 
+	 * @param button	menu button instance
+	 */
+	public void onClick(View button) {
+		Intent mIntent = null;
+		switch (button.getId()) {
+		case R.id.ButtonAimFireTutorial:		
+			mIntent = new Intent(button.getContext(),AimAndFireTutorial.class);
+			startActivity(mIntent);			
+			break;
+		case R.id.ButtonSetShipsGameTutorial:
+			mIntent = new Intent(button.getContext(),FixShipGameTutorial.class);
+			startActivity(mIntent);
+			break;
+		case R.id.ButtonMoveShipTutorial:
+			mIntent = new Intent(button.getContext(), MoveSingleShipTutorial.class);
+			startActivity(mIntent);
+			break;
+		case R.id.ButtonBackTutorials:
+			finish();
+		default:
+			break;
+		}
+	}
 }

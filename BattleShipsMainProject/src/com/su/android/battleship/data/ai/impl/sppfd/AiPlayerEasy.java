@@ -25,8 +25,8 @@ public class AiPlayerEasy extends AiPlayer_ShipPositionsPerFieldDependant {
 		List<Short> resultList = new ArrayList<Short>();
 
 		//this is easy AI - it know only that a ship can not move through another ship
-		//but it does not know , that when a field is empty , there is no ship - ai will still try fields around the field 
-		//as often as for every other field  
+		//but it does not know , that when a field is empty  there is no ship.It also does not know anything about
+		//the "CANT_BE_SHIP" fields - that is for example - it plays as if 2 ships can touch each other.
 		resultList.add(AiCalculationBoardStatusManager.DESTROYED_SHIP);
 
 		return resultList;
