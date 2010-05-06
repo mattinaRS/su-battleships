@@ -29,6 +29,8 @@
 	
 	<activity android:name=".ui.PreferencesMenuScreen"></activity>
 	
+
+<activity android:name=".ui.ArrangeShips"></activity>
 </application>
 
 </manifest> 

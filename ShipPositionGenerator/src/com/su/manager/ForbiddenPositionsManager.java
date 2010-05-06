@@ -62,4 +62,8 @@ public class ForbiddenPositionsManager {
 	public Set<Short> getAllForbiddenFields(){
 		return forbiddenFieldsHolder.keySet();
 	}
+	
+	public boolean isForbidden(short field) {
+		return forbiddenFieldsHolder.containsKey(field);
+	}
 }

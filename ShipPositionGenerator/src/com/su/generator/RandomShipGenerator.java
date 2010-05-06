@@ -141,7 +141,7 @@ public class RandomShipGenerator {
 			}
 		}
 	}
-
+	
 	private SortedSet<Integer> encodeAllForbiddenShips(
 			Set<ShipFieldsHolder> allShips) {
 		SortedSet<Integer> resultSet = new TreeSet<Integer>();

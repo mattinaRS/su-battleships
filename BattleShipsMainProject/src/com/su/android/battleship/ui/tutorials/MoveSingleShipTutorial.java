@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class MoveSingleShipTutorial extends Activity{
 	private short shipPosition;
@@ -28,7 +27,7 @@ public class MoveSingleShipTutorial extends Activity{
 	protected void displayGameScreen(){
 		setContentView(R.layout.move_single_ship);		
 		
-		boardGrid = (GridView) findViewById(R.id.GridViewMSS);
+		boardGrid = (GridView) findViewById(R.id.GridViewMoveShips);
 		
 		short[] shipFields = {shipPosition};
 		moveShipsAdapter = new MoveShipsAdapter(this, shipFields);	

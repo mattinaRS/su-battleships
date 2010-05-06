@@ -47,13 +47,16 @@ public class GameMenuScreen extends Activity implements OnClickListener {
 	 * @param button	menu button instance
 	 */
 	public void onClick(View button) {
+		Intent intent = null;
 		switch (button.getId()) {
 		case R.id.ButtonSingle:
 			break;
 		case R.id.ButtonMulti:
+			intent = new Intent(this, ArrangeShips.class);
+			startActivity(intent);
 			break;
 		case R.id.ButtonTutorials:
-			Intent intent = new Intent(this, TutorialsScreen.class);
+			intent = new Intent(this, TutorialsScreen.class);
 			startActivity(intent);
 			break;
 		case R.id.ButtonBack:

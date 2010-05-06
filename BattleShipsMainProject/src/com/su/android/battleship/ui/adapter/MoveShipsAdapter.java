@@ -3,11 +3,8 @@ package com.su.android.battleship.ui.adapter;
 import com.su.android.battleship.R;
 
 import android.content.Context;
-import android.view.MotionEvent;
-import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnTouchListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
