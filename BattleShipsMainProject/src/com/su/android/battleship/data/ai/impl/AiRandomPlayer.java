@@ -42,4 +42,9 @@ public class AiRandomPlayer extends AiPlayer {
 		}
 		return possibleShots.remove(randomIndex);
 	}
+
+	@Override
+	public void updateAfterMove(short filed) {
+		//nothing should be done here - this bot plays random every time without saving any game state
+	}
 }

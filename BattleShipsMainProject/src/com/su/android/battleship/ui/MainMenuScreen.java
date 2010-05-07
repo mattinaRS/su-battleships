@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.su.android.battleship.R;
+import com.su.android.battleship.data.ai.TestAI_SPPFD;
 
 /**
  * First application screen. The main menu - Play, Options, Credits, Quit
@@ -149,7 +150,7 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 		@Override
 		protected Void doInBackground(Object... params) {
 			// simulate activity here
-
+//			TestAI_SPPFD.test();
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {

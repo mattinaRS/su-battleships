@@ -7,4 +7,6 @@ public abstract class AiPlayer {
 	protected GameAi game;	
 	 	
 	public abstract short generateMove();
+	
+	public abstract void updateAfterMove(short filed);
 }

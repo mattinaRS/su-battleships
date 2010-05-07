@@ -134,13 +134,12 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		// in order to continue the game process - to obtain second players move
 		// from a
 		// configurate place - Ai , BlueTooth , Http client/server communication
-		GameAi.AiMoveResponse moveResponse = game.makeMoveForAi();
-		short fieldAttackedByAi = moveResponse.getMoveField();
+		short fieldAttackedByAi = game.makeMoveForAi();		 
 		short fieldStatus = game.getPlayerBoard(GameAi.PLAYER_INDEX)[fieldAttackedByAi];
 
 		ImageView _iv = (ImageView) minimapImageAdapter
 				.getItem(fieldAttackedByAi);
-		if (BoardFieldStatus.isShipAttackedStatus(fieldStatus)) {
+		if (BoardFieldStatus.isShipAttackedStatus(fieldStatus) || BoardFieldStatus.isShipDestroyedStatus(fieldStatus)) {
 			// change minimap field color to red - ship is hit
 			_iv.setImageResource(R.drawable.red);
 			// other way is to use public resource ids stored in the adapter as

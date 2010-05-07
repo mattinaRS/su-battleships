@@ -26,18 +26,36 @@ public class ShipPositionsContainingFieldManager {
 	/**
 	 * Here for a ship we understand a possible ship position on the board.
 	 * @param fieldPosition - the field ,for which all the intersecting ships must be found
+	 * @param shipLength - ships' length
 	 * @return - all the ships that contain the given field. 
 	 */
 	public List<ShipFieldsHolder> getShipsCrossingField(int fieldPosition,int shipLength){
-		//init temp parameters
-		List<ShipFieldsHolder> actualShips = new ArrayList<ShipFieldsHolder>();		
+		List<ShipFieldsHolder> actualShips = new ArrayList<ShipFieldsHolder>();
+		
+		List<ShipFieldsHolder> actualHorizontalShips = getHorizontalShipsCrossingField(fieldPosition, shipLength);
+		actualShips.addAll(actualHorizontalShips);
+		
+		List<ShipFieldsHolder> actualVerticalShips = getVerticalShipsCrossingField(fieldPosition, shipLength);
+		actualShips.addAll(actualVerticalShips);
+		
+		return actualShips;
+	}
+	
+	/**
+	 * Here for a ship we understand a possible ship position on the board.
+	 * @param fieldPosition - the field ,for which all the intersecting ships must be found
+	 * @param shipLength - ships' length
+	 * @return - all the horizontal ships that contain the given field. 
+	 */
+	public List<ShipFieldsHolder> getHorizontalShipsCrossingField(int fieldPosition,int shipLength){
+		List<ShipFieldsHolder> actualShips = new ArrayList<ShipFieldsHolder>();
 		ShipFieldsHolder tempSFH;
 		BoardField tempBF;
 		int boardPosition;
 		
 		BoardField bf = BoardField.getBoardFieldFromIndex(fieldPosition, boardSideSize);
 		
-		//get Horizontal ships		
+		//get Horizontal ships
 		int lastPossibleVerticalStartIndex = bf.y;
 		int firstPossibleVerticalStartIndex = 
 			firstPossibleStartField(lastPossibleVerticalStartIndex, shipLength);				
@@ -51,8 +69,25 @@ public class ShipPositionsContainingFieldManager {
 			}
 		}
 		
-		//get Vertical ships
+		return actualShips;
+	}
+	
+	/**
+	 * Here for a ship we understand a possible ship position on the board.
+	 * @param fieldPosition - the field ,for which all the intersecting ships must be found
+	 * @param shipLength - ships' length
+	 * @return - all the vertical ships that contain the given field. 
+	 */
+	public List<ShipFieldsHolder> getVerticalShipsCrossingField(int fieldPosition,int shipLength){
+		List<ShipFieldsHolder> actualShips = new ArrayList<ShipFieldsHolder>();
 		
+		ShipFieldsHolder tempSFH;
+		BoardField tempBF;
+		int boardPosition;
+		
+		BoardField bf = BoardField.getBoardFieldFromIndex(fieldPosition, boardSideSize);
+		
+		//get Vertical ships		
 		int lastPossibleHorizontalStartIndex = bf.x;
 		int firstPossibleHorizontalStartIndex = 
 			firstPossibleStartField(lastPossibleHorizontalStartIndex, shipLength);
@@ -65,9 +100,9 @@ public class ShipPositionsContainingFieldManager {
 				actualShips.add(tempSFH);
 			}
 		}
+		
 		return actualShips;
-	}
-
+	}	
 	
 	private int firstPossibleStartField(int coordinateValue,int shipLength){
 		int possibleStartIndex =  Math.max(0, coordinateValue - (shipLength - 1));

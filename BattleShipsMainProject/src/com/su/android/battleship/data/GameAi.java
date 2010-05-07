@@ -20,27 +20,23 @@ public class GameAi extends Game{
 	 */
 	public GameAi(short playerOnMove,Ship[] firstPlayerShips,Ship[] secondPlayerShips) {		
 		super(playerOnMove,firstPlayerShips,secondPlayerShips);
-		bot = AiFactory.getInstance().produceAiPlayer(AiFactory.AI_RANDOM_PLAYER,this);		
+		bot = AiFactory.getInstance().produceAiPlayer(AiFactory.AI_SPPFD_INSANE,this);
 	}
 
 	/**
-	 * TODO : Should be deprecated and BoardFieldStatus short number should be returned instead
-	 * @return AiMoveResponse that holds the moveField and a flag whether there was a ship ti hit
+	 * @return the field position chosen by the ai as the next move.The board's field is already updated after this method returns
+	 * and the new status of the attacked field can be obtained via the fields position that is returned from this method 
 	 */
-	public AiMoveResponse makeMoveForAi(){
-		short field = bot.generateMove();
-		
+	public short makeMoveForAi(){
+		short field = bot.generateMove();		
 		short newFieldStatus = super.executeMove(AI_INDEX, field);
-		boolean isItaHit = BoardFieldStatus.isShipAttackedStatus(newFieldStatus);
-		if(isItaHit){
-			int shipIndex = BoardFieldStatus.getShipIndex(newFieldStatus);
-			Ship shipToUpdate = getPlayerShips(PLAYER_INDEX)[shipIndex];
-			shipToUpdate.updateShipState(field);
-		}
-		
-		return new AiMoveResponse(field,isItaHit);
-		
-	}	
+		//executeMove updates the game state.The bot's update method must be called	
+		bot.updateAfterMove(field);
+				
+		return field;		
+	}
+	
+	
 	
 	public class AiMoveResponse{
 		private short moveField;

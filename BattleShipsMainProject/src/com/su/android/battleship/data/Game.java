@@ -76,28 +76,28 @@ public class Game {
 	
 	/**
 	 * Updates the game state after player makes a move
-	 * @param player - should always be 0 or 1 - index of the player made the move
+	 * @param player - should always be 0 or 1 - index of the player who makes the move
 	 * @param fieldPosition - the position of the selected field
 	 * @return - the new status of the targeted field
 	 */
-	public short executeMove(short player,short fieldPosition){
-		player = getOppositePlayer(player);
-		Short[] board = playersBoards.get(player);
+	public final short executeMove(short attackingPlayer,short fieldPosition){
+		short attackedPlayer = getOppositePlayer(attackingPlayer);
+		Short[] board = playersBoards.get(attackedPlayer);
 		short prevFieldStatus = board[fieldPosition];		
 		short newFieldStatus = BoardFieldStatus.getAttackedFieldCode(prevFieldStatus);
 		board[fieldPosition] = newFieldStatus;
 
 		
 		if(BoardFieldStatus.isShipNotAttackedStatus(prevFieldStatus)){
-			int shipIndex = BoardFieldStatus.getShipIndex(prevFieldStatus);
-			Ship tempShip = playersShips.get(player)[shipIndex];
+			short shipIndex = BoardFieldStatus.getShipIndex(prevFieldStatus);
+			Ship tempShip = playersShips.get(attackedPlayer)[shipIndex];
 			boolean isHit = tempShip.updateShipState(fieldPosition);
-			if(isHit){
+			if(isHit){//it is always a hit!
 				if(tempShip.isShipDestroyed()){
-					short opponentPlayer = getOppositePlayer(player);
-					short oldCount = destroyedShipsCount.get(opponentPlayer);
-					destroyedShipsCount.set(opponentPlayer,(short) (oldCount+1));					
-					if(destroyedShipsCount.get(opponentPlayer) == SHIPS_COUNT){
+					newFieldStatus = updateDestroyedShipBoardState(attackedPlayer,tempShip,shipIndex);					 
+					short oldCount = destroyedShipsCount.get(attackedPlayer);
+					destroyedShipsCount.set(attackedPlayer,(short) (oldCount+1));					
+					if(destroyedShipsCount.get(attackedPlayer) == SHIPS_COUNT){
 						gameOver = true;
 					}
 				}
@@ -106,6 +106,14 @@ public class Game {
 			}
 		}
 		return newFieldStatus;
+	}
+	
+	private short updateDestroyedShipBoardState(short player,Ship ship,short shipIndex){
+		short destroyedShipFieldStatus = BoardFieldStatus.getDestroyedShipCode(shipIndex);
+		for(short s : ship.getBoardFields() ){
+			this.playersBoards.get(player)[s] = destroyedShipFieldStatus;
+		}
+		return destroyedShipFieldStatus;
 	}
 	
 	/**
@@ -140,7 +148,7 @@ public class Game {
 	private void updateBoardWithShipPosition(int boardIndex,int shipIndex,Ship ship){
 		Short[] board = this.playersBoards.get(boardIndex);
 		short[] shipFieldsAsBoardIndexes = ship.getBoardFields();
-		short boardMarker = BoardFieldStatus.getShipMarkerCode(shipIndex);
+		short boardMarker = BoardFieldStatus.getShipMarkerCode((short)shipIndex);
 		short index;
 		for(int i = 0 ; i < ship.getLength() ; i++){
 			index = shipFieldsAsBoardIndexes[i];

@@ -12,24 +12,30 @@ public class BoardFieldStatus {
 	 *The lower hex byte - the position in the Ship[] array*/
 	public static final short SHIP_0 = 0x00;
 	public static final short SHIP_0_ATTACKED = 0x10;
+	public static final short SHIP_0_DESTROYED = 0x20;
 	
 	public static final short SHIP_1 = 0x01;
 	public static final short SHIP_1_ATTACKED = 0x11;
+	public static final short SHIP_1_DESTROYED = 0x21;
 	
 	public static final short SHIP_2 = 0x02;
 	public static final short SHIP_2_ATTACKED = 0x12;
+	public static final short SHIP_2_DESTROYED = 0x22;
 	
 	public static final short SHIP_3 = 0x03;
 	public static final short SHIP_3_ATTACKED = 0x13;
+	public static final short SHIP_3_DESTROYED = 0x23;
 	
 	public static final short SHIP_4 = 0x04;
 	public static final short SHIP_4_ATTACKED = 0x14;
+	public static final short SHIP_4_DESTROYED = 0x24;
 	
 	public static short getAttackedFieldCode(short notAttackedFieldCode){
 		return (short) (notAttackedFieldCode + 0x10);
 	}
 	
-	public static short getShipMarkerCode(int shipIndex){
+	//TODO : refactor this method to use & operator
+	public static short getShipMarkerCode(short shipIndex){
 		short boardMarker;
 		switch (shipIndex) {
 		case 0:
@@ -54,8 +60,13 @@ public class BoardFieldStatus {
 		}
 		return boardMarker;		
 	}
+	
+	public static short getDestroyedShipCode(short index){
+		return (short) (index + 0x20);
+	}
+	
 	/**
-	 * 
+	 * TODO : recreate this method to use binary operators & and |
 	 * @param code
 	 * @return whether code is a ship that IS NOT attacked
 	 */
@@ -65,7 +76,7 @@ public class BoardFieldStatus {
 	}
 	
 	/**
-	 * 
+	 * TODO : recreate this method to use binary operators & and |
 	 * @param code
 	 * @return whether code is a ship that IS attacked
 	 */
@@ -76,20 +87,24 @@ public class BoardFieldStatus {
 	
 	/**
 	 * 
-	 * @param num
+	 * @param num - the shipCode - not_attacked , attacked or destroyed
 	 * @return - returns ship index - lower byte of the shipCode corresponds to the ship's game number
 	 */
-	public static int getShipIndex(short num){
-		if(!isShipNotAttackedStatus(num) && !isShipAttackedStatus(num)){
+	public static short getShipIndex(short num){
+		if(!isShipNotAttackedStatus(num) && !isShipAttackedStatus(num) && !isShipDestroyedStatus(num)){
 			//TODO : throw custom exception - can't get shipIndex from no-ship status
 			return -1;
-		}else{
+		}else{			
 			int shipIndex = num & 0x0F;
-			return shipIndex;
-		}		
+			return (short) shipIndex;
+		}
 	}
 	
 	public static boolean isAttackedFieldStatus(short code){
-		return (code & 0x10) == 0x10;
+		return (code & 0xF0) == 0x10;
+	}
+	
+	public static boolean isShipDestroyedStatus(short code){
+		return (code & 0xF0) == 0x20;
 	}
 }
