@@ -26,7 +26,8 @@ public class TestAI_SPPFD {
 			tempNumber = ai.generateMove();
 			isOptimalFirstMove = isInArray(tempNumber, optimalFirstMoves) ;
 			Log.d("AI_TEST","generated move is: "+tempNumber+" is in optimal numbers: "+isOptimalFirstMove);
-			ai.updateFieldAfterMove(tempNumber);
+			//NOTE : this test is seek mode only test - not connected with a real game
+			ai.updateFieldAfterMove(tempNumber,AiCalculationBoardStatusManager.WATER);
 		}
 	}
 	

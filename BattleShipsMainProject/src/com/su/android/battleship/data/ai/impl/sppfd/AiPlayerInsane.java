@@ -42,8 +42,9 @@ public class AiPlayerInsane extends AiPlayer_ShipPositionsPerFieldDependant {
 	}
 
 	@Override
-	public void updateAfterMove(short field) {
-		short statusCode = super.game.getPlayerBoard(GameAi.PLAYER_INDEX)[field];
+	public void updateAfterMove(short field,short newFieldStatus) {
+//		short statusCode = super.game.getPlayerBoard(GameAi.PLAYER_INDEX)[field];
+		short statusCode = newFieldStatus;
 		if (BoardFieldStatus.WATER_ATTACKED == statusCode) {
 			updateAfterEmptyShot(field, statusCode);
 		} else if (BoardFieldStatus.isShipAttackedStatus(statusCode)) {
@@ -55,8 +56,8 @@ public class AiPlayerInsane extends AiPlayer_ShipPositionsPerFieldDependant {
 
 	private void updateAfterEmptyShot(short field, short statusCode) {
 		boardForAiCalculations[field] = AiCalculationBoardStatusManager.EMPTY;
-		if(!fieldsFromNotYetDestroyedShip.isEmpty() && fieldsFromNotYetDestroyedShip.contains(field)){
-			fieldsFromNotYetDestroyedShip.remove(field);
+		if(!fieldsToContinueDestryingWith.isEmpty() && fieldsToContinueDestryingWith.contains(field)){
+			fieldsToContinueDestryingWith.remove(field);
 		}
 		
 	}
@@ -86,27 +87,48 @@ public class AiPlayerInsane extends AiPlayer_ShipPositionsPerFieldDependant {
 			while (iterator.hasNext()) {
 				max = iterator.next();
 			}
+			
+			short tempFieldPositon;
+			short tempBoardStatus;
 			if ((max - min) % boardSide == 0) {// vertical
 				if (min / boardSide > 0) {
-					fieldsToContinueDestryingWith.add((short) (min - boardSide));
+					tempFieldPositon = (short) (min - boardSide);
+					tempBoardStatus = boardForAiCalculations[tempFieldPositon];
+					if(!isaFieldStatusForbidden(tempBoardStatus)){
+						fieldsToContinueDestryingWith.add(tempFieldPositon);
+					}
 				}
 				if (max / boardSide < boardSide - 1) {
-					fieldsToContinueDestryingWith.add((short) (max + boardSide));
+					tempFieldPositon = (short) (max + boardSide);
+					tempBoardStatus = boardForAiCalculations[tempFieldPositon];
+					if(!isaFieldStatusForbidden(tempBoardStatus)){
+						fieldsToContinueDestryingWith.add(tempFieldPositon);
+					}					
 				}
-			} else {// horizontal
+			} else {// horizontal				
 				if (min % boardSide != 0) {
-					fieldsToContinueDestryingWith.add((short) (min - 1));
+					tempFieldPositon = (short) (min - 1);
+					tempBoardStatus = boardForAiCalculations[tempFieldPositon];
+					if(!isaFieldStatusForbidden(tempBoardStatus)){
+						fieldsToContinueDestryingWith.add(tempFieldPositon);
+					}					
 				}
-				if (max % boardSide != 9) {
-					fieldsToContinueDestryingWith.add((short) (max + 1));
+				if (max % boardSide != (boardSide-1)) {
+					tempFieldPositon = (short) (max + 1);
+					tempBoardStatus = boardForAiCalculations[tempFieldPositon];
+					if(!isaFieldStatusForbidden(tempBoardStatus)){
+						fieldsToContinueDestryingWith.add(tempFieldPositon);
+					}					
 				}
 			}
 		}
 	}
+	
+	
 
 	private void updateAfterDestroyedShot(short field, short statusCode) {
 		short shipIndex = BoardFieldStatus.getShipIndex(statusCode);
-		Ship ship = super.game.getPlayerShips(GameAi.AI_INDEX)[shipIndex];
+		Ship ship = super.game.getPlayerShips(GameAi.PLAYER_INDEX)[shipIndex];//get PLAYER's ship!!
 		short[] shipBoardFields = ship.getBoardFields();
 		short tempPosition;
 		// update from attacked to destroyed

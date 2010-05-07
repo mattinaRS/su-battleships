@@ -13,5 +13,5 @@ public class AiCalculationBoardStatusManager {
 	public static final short DESTROYED_SHIP = 0x12;
 	
 	
-	
+		
 }

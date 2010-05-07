@@ -1,5 +1,6 @@
 package com.su.android.battleship.ui;
 
+import java.nio.channels.spi.AbstractSelectableChannel;
 import java.util.List;
 
 import com.su.android.battleship.R;
@@ -8,6 +9,7 @@ import com.su.android.battleship.data.Ship;
 import com.su.android.battleship.data.ShipPositionGenerator;
 import com.su.android.battleship.data.transformer.ShipRepresentationTransformer;
 import com.su.android.battleship.ui.adapter.MoveShipsAdapter;
+import com.su.android.battleship.ui.data.ActivityShipComunicator;
 import com.su.android.battleship.util.ShipUtil;
 import com.su.data.Direction;
 import com.su.data.ShipFieldsHolder;
@@ -16,10 +18,13 @@ import com.su.generator.rule.FieldForbiddingRuleSquareImpl;
 import com.su.manager.ForbiddenPositionsManager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -29,6 +34,11 @@ import android.widget.Toast;
  *
  */
 public class ArrangeShips extends Activity{
+	
+	public static final int BACK = 0;
+	public static final int ACCEPT = 1;
+	
+	
 	private FieldForbiddingRule rule;
 	private Ship[] ships;
 	private ForbiddenPositionsManager forbiddenPositions;
@@ -40,8 +50,11 @@ public class ArrangeShips extends Activity{
 	private ShipFieldsHolder lastPossiblePosition;
 	private short oldCursorPosition;
 	
+	
 	protected MoveShipsAdapter moveShipsAdapter;
 	protected GridView boardGrid;
+	protected Button btnAccept;
+	protected Button btnCancel;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
@@ -53,8 +66,14 @@ public class ArrangeShips extends Activity{
 	protected void displayGameScreen(){
 		setContentView(R.layout.arrange_ships);		
 		
+		
+		btnAccept = (Button) findViewById(R.id.ButtonAccept);
+		btnCancel = (Button) findViewById(R.id.ButtonCancel);
+		
+		
 		boardGrid = (GridView) findViewById(R.id.GridViewMoveShips);
-		boardGrid.setAdapter(moveShipsAdapter);
+		boardGrid.setAdapter(moveShipsAdapter);		
+	
 	}
 
 	protected void attachActionListeners(){
@@ -80,6 +99,29 @@ public class ArrangeShips extends Activity{
 		            break;
 		        }
 		        return true;
+			}
+		});
+        
+        btnAccept.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Bundle b = new Bundle();
+				ActivityShipComunicator comm = new ActivityShipComunicator(ships);
+				b.putSerializable("ships", comm);
+				Intent intent = getIntent();
+				intent.putExtra("myBundle", b);
+				
+				setResult(ACCEPT, intent);
+				finish();
+			}
+		});
+        
+        btnCancel.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				setResult(BACK, new Intent());
+				finish();
 			}
 		});
 	}
@@ -142,6 +184,7 @@ public class ArrangeShips extends Activity{
 		ships = generator.getRandomShipsPosition();
 		short[] shipsFields = ShipUtil.getShipsFields(ships);
 		moveShipsAdapter = new MoveShipsAdapter(this, shipsFields);
+		
 
 		rule = new FieldForbiddingRuleSquareImpl(Game.BOARD_SIDE);
 		forbiddenPositions = new ForbiddenPositionsManager();

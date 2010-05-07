@@ -91,11 +91,11 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 	 * boardForAiCalculations will be always synchronized with the actual game
 	 * situations and ai will generate next moves correctly
 	 * 
-	 * @param field
-	 *            - the chosen game move.
+	 * @param field - the chosen game move.
+	 * @param newFieldSatus - the newStatus of the attacked field which is returned from the game update
 	 */
-	public void updateFieldAfterMove(short field) {
-		updateAfterMove(field);
+	public void updateFieldAfterMove(short field,short newFieldStatus) {
+		updateAfterMove(field,newFieldStatus);
 	}
 
 	private short seek() {
@@ -168,7 +168,11 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 				short max_count = Short.MIN_VALUE;
 				for(Short field : fieldsToContinueDestryingWith){					
 					short current_max = getCountOfShipsThroughTwoFields(theOnlyDestroyedField,field);
-					result = current_max > max_count ? field : result;
+					//TODO : implement random logic if there are more than one equal max_counts
+					if(current_max > max_count){
+						max_count = current_max;
+						result = field;
+					}
 				}
 			} else {// ship's direction is determined
 				if (fieldsToContinueDestryingWith.size() == 1) {
@@ -273,4 +277,9 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 		return result;
 	}
 
+	
+	public boolean isaFieldStatusForbidden(short fieldStatus){
+		boolean result = getFieldTypesThatExcludePotentialShipPositions().contains(fieldStatus);
+		return result;
+	}
 }

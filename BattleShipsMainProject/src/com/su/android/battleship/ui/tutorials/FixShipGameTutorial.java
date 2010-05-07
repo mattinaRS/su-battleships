@@ -11,11 +11,15 @@ import com.su.android.battleship.data.Ship;
 import com.su.android.battleship.data.ShipPositionGenerator;
 import com.su.android.battleship.data.ai.AiFactory;
 import com.su.android.battleship.data.ai.AiPlayer;
+import com.su.android.battleship.ui.ArrangeShips;
 import com.su.android.battleship.ui.adapter.GameBoardImageAdapter;
 import com.su.android.battleship.ui.adapter.MinimapImageAdapter;
+import com.su.android.battleship.ui.data.ActivityShipComunicator;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -32,12 +36,12 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);		
+		super.onCreate(savedInstanceState);
 	}
 
 	protected void displayGameScreen() {
 		setContentView(R.layout.fixed_ship_game);
-		
+
 		fireButton = (ImageView) findViewById(R.id.ImageViewFB);
 
 		boardGrid = (GridView) findViewById(R.id.GridViewAFD);
@@ -50,22 +54,22 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		minimapGrid.setAdapter(minimapImageAdapter);
 	}
 
-	protected void attachActionListeners() {		
+	protected void attachActionListeners() {
 		// boardGame GridView listener sets the aimedField property and changes
 		// aim color
 		boardGrid.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
 				ImageView _iv = (ImageView) v;
-				
+
 				// means that there is second click on the same button - FIRE !
-				if (aimedField == position) {					
+				if (aimedField == position) {
 					executeFire(_iv);
-					if(game.isGameOver()){
+					if (game.isGameOver()) {
 						Toast.makeText(FixShipGameTutorial.this,
 								"Game over.Winner is the player.", 1000).show();
 						return;
-					}else{
+					} else {
 						continueGameProcess();
 					}
 				} else {
@@ -82,50 +86,65 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 
 		fireButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				if (aimedField == NO_FIELD_IS_AIMED) {					
+				if (aimedField == NO_FIELD_IS_AIMED) {
 					Toast.makeText(FixShipGameTutorial.this,
 							"Aim board field in order to fire.", 1000).show();
 				} else {
-					//quite obvious error - communication with imageViews is through the adapted , not through the gridView
-					ImageView field = (ImageView) boardImageAdapter.getItem(aimedField);							
+					// quite obvious error - communication with imageViews is
+					// through the adapted , not through the gridView
+					ImageView field = (ImageView) boardImageAdapter
+							.getItem(aimedField);
 					executeFire(field);
-					if(game.isGameOver()){
+					if (game.isGameOver()) {
 						Toast.makeText(FixShipGameTutorial.this,
 								"Game over.Winner is the player.", 1000).show();
 						return;
-					}else{
+					} else {
 						continueGameProcess();
-					}					
+					}
 				}
 			}
 		});
 	}
 
-	
-	
 	private void executeFire(ImageView _iv) {
 		short newFieldStatus = game.executeMove((short) 0, (short) aimedField);
-		if (BoardFieldStatus.isShipAttackedStatus(newFieldStatus)) {
+		if (BoardFieldStatus.isShipAttackedStatus(newFieldStatus) || BoardFieldStatus.isShipDestroyedStatus(newFieldStatus)) {
 			_iv.setImageResource(R.drawable.red);// mark as fired
 		} else {
 			_iv.setImageResource(R.drawable.grey);// mark as fired
 		}
 		_iv.setClickable(false);// make imageView unclickable
-		//_iv.setFocusable(false);
+		// _iv.setFocusable(false);
 		aimedField = NO_FIELD_IS_AIMED;
 	}
 
 	protected void initGame() {
-		ShipPositionGenerator generator = new ShipPositionGenerator();
+		// Ship[] generatedShipPosition1 = generator.getHardcodedShipPosition();
+		// Ship[] generatedShipPosition2 = generator.getHardcodedShipPosition();
 
-//		Ship[] generatedShipPosition1 = generator.getHardcodedShipPosition();
-//		Ship[] generatedShipPosition2 = generator.getHardcodedShipPosition();
+		Intent intent = new Intent(this, ArrangeShips.class);
+		startActivityForResult(intent, 1);
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
-		Ship[] generatedShipPosition1 = generator.getRandomShipsPosition();
-		Ship[] generatedShipPosition2 = generator.getRandomShipsPosition();
+		if (resultCode == ArrangeShips.BACK) {
+			finish();
+		} else {
+			ShipPositionGenerator generator = new ShipPositionGenerator();
+			ActivityShipComunicator ships = (ActivityShipComunicator) data
+					.getBundleExtra("myBundle").getSerializable("ships");
+//			Ship[] generatedShipPosition1 = generator.getRandomShipsPosition();
+			Ship[] generatedShipPosition1 = ships.getShips();
+			Ship[] generatedShipPosition2 = generator.getRandomShipsPosition();
 
-		game = new GameAi((short) 0, generatedShipPosition1,
-				generatedShipPosition2);
+			game = new GameAi((short) 0, generatedShipPosition1,
+					generatedShipPosition2);
+			
+			displayGameScreen();
+			attachActionListeners();
+		}
 	}
 
 	private void continueGameProcess() {
@@ -134,12 +153,13 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		// in order to continue the game process - to obtain second players move
 		// from a
 		// configurate place - Ai , BlueTooth , Http client/server communication
-		short fieldAttackedByAi = game.makeMoveForAi();		 
+		short fieldAttackedByAi = game.makeMoveForAi();
 		short fieldStatus = game.getPlayerBoard(GameAi.PLAYER_INDEX)[fieldAttackedByAi];
 
 		ImageView _iv = (ImageView) minimapImageAdapter
 				.getItem(fieldAttackedByAi);
-		if (BoardFieldStatus.isShipAttackedStatus(fieldStatus) || BoardFieldStatus.isShipDestroyedStatus(fieldStatus)) {
+		if (BoardFieldStatus.isShipAttackedStatus(fieldStatus)
+				|| BoardFieldStatus.isShipDestroyedStatus(fieldStatus)) {
 			// change minimap field color to red - ship is hit
 			_iv.setImageResource(R.drawable.red);
 			// other way is to use public resource ids stored in the adapter as
@@ -148,8 +168,8 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 			// change it to grey - water is hit
 			_iv.setImageResource(R.drawable.grey);
 		}
-		
-		if(game.isGameOver()){
+
+		if (game.isGameOver()) {
 			Toast.makeText(FixShipGameTutorial.this,
 					"Game over.Winner is the AI.", 1000).show();
 		}

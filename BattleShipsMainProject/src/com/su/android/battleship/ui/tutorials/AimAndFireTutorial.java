@@ -39,8 +39,6 @@ public class AimAndFireTutorial extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
 		initGame();
-		displayGameScreen();
-		attachActionListeners();
 	}
 	
 	protected void displayGameScreen(){
@@ -91,6 +89,7 @@ public class AimAndFireTutorial extends Activity {
 	}
 	
 	protected void initGame(){
-		
+		displayGameScreen();
+		attachActionListeners();
 	}
 }

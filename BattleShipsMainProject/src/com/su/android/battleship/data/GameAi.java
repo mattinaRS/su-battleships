@@ -31,7 +31,7 @@ public class GameAi extends Game{
 		short field = bot.generateMove();		
 		short newFieldStatus = super.executeMove(AI_INDEX, field);
 		//executeMove updates the game state.The bot's update method must be called	
-		bot.updateAfterMove(field);
+		bot.updateAfterMove(field,newFieldStatus);
 				
 		return field;		
 	}

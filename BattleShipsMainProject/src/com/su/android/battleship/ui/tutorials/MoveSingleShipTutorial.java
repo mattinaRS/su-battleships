@@ -48,7 +48,7 @@ public class MoveSingleShipTutorial extends Activity{
 				if (x>9) x = 9;
 				y = (short)((event.getY()-4.5)/28);
 				if (y>9) y = 9;
-
+				
 		        position = (short)(y*10+x);
 		        iv = (ImageView) moveShipsAdapter.getItem(position);
 		        

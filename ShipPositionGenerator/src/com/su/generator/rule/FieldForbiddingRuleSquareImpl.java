@@ -123,5 +123,4 @@ public class FieldForbiddingRuleSquareImpl implements FieldForbiddingRule {
 		}
 		System.out.println();
 	}*/
-
 }

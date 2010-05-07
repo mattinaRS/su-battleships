@@ -2,6 +2,7 @@ package com.su.android.battleship.ui.adapter;
 
 import com.su.android.battleship.R;
 
+import android.R.color;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,8 +44,8 @@ private static final int FIELDS_COUNT = 100;
         ImageView imageView;
         if (convertView == null) {  // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(27, 27));            
-            imageView.setPadding(0, 0, 0, 0);
+            imageView.setLayoutParams(new GridView.LayoutParams(29, 29));            
+            imageView.setPadding(0, 0, 0, 0);            
         } else {
             imageView = (ImageView) convertView;
         }
@@ -66,7 +67,7 @@ private static final int FIELDS_COUNT = 100;
 
     // references to our images
     private Integer[] pictures = {
-    		R.drawable.blue, R.drawable.red , R.drawable.green
+    		R.drawable.miss, R.drawable.red , R.drawable.crash
     };
     
     private boolean isAShipField(short boardFieldIndex){

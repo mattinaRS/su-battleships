@@ -8,5 +8,5 @@ public abstract class AiPlayer {
 	 	
 	public abstract short generateMove();
 	
-	public abstract void updateAfterMove(short filed);
+	public abstract void updateAfterMove(short filed,short newFieldStatus);
 }

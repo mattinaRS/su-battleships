@@ -44,7 +44,7 @@ public class AiRandomPlayer extends AiPlayer {
 	}
 
 	@Override
-	public void updateAfterMove(short filed) {
+	public void updateAfterMove(short filed,short newFieldStatus) {
 		//nothing should be done here - this bot plays random every time without saving any game state
 	}
 }

@@ -35,8 +35,9 @@ public class AiPlayerEasy extends AiPlayer_ShipPositionsPerFieldDependant {
 	}
 
 	@Override
-	public void updateAfterMove(short field) {
-		short statusCode = super.game.getPlayerBoard(GameAi.AI_INDEX)[field];
+	public void updateAfterMove(short field,short newFieldStatys) {
+//		short statusCode = super.game.getPlayerBoard(GameAi.AI_INDEX)[field];
+		short statusCode = newFieldStatys;
 		if(BoardFieldStatus.WATER_ATTACKED == statusCode){
 			boardForAiCalculations[field] = AiCalculationBoardStatusManager.EMPTY;
 		}else if(BoardFieldStatus.isShipAttackedStatus(statusCode)){

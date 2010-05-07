@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"><GridView android:layout_width="wrap_content" 
-		  android:layout_height="wrap_content"
-		   android:numColumns="10" 
-		   android:gravity="center"
-		   android:columnWidth="25dp"
-		   android:verticalSpacing="1dp"
-    	   android:horizontalSpacing="1dp" android:id="@+id/GridViewMoveShips">
-</GridView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:padding="0dp" android:layout_margin="0dp">
+	
+	<GridView 
+		android:numColumns="10"
+		android:gravity="center" 
+		android:horizontalSpacing="1dp"
+		android:id="@+id/GridViewMoveShips" android:verticalSpacing="1dp" android:columnWidth="29dp" android:layout_height="301dp" android:layout_width="301dp" android:layout_margin="5dp" android:listSelector="@drawable/red" android:paddingLeft="1dp" android:paddingTop="1dp" android:background="@drawable/real_board">
+	</GridView>
+		
+	<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="horizontal"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+		<Button
+			android:id="@+id/ButtonAccept" 
+			android:text="@string/settings_apply_prefs"
+			android:layout_weight="0.5"
+			style="@style/MenuButton"/>
+		<Button
+			android:id="@+id/ButtonCancel" 
+			android:text="@string/menu_back"
+			android:layout_weight="0.5"
+			style="@style/MenuButton"/>
+	</LinearLayout>		
+
 </LinearLayout>
