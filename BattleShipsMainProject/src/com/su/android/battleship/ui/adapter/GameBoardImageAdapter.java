@@ -79,8 +79,16 @@ public class GameBoardImageAdapter extends BaseAdapter {
 
     // references to our images
     private Integer[] boardPictures = {
-    		R.drawable.transparent, R.drawable.crash , R.drawable.miss
+    		R.drawable.transparent, R.drawable.crash , R.drawable.miss , R.drawable.yellow
     };
+    
+    /**
+     * Get the Integer id for crash image
+     * @return
+     */
+    public Integer getTransparent(){
+    	return boardPictures[0];
+    }
     
     /**
      * Get the Integer id for crash image
@@ -96,6 +104,14 @@ public class GameBoardImageAdapter extends BaseAdapter {
      */
     public Integer getMiss(){
     	return boardPictures[2];
+    }
+    
+    /**
+     * Get the Integer id for miss image
+     * @return
+     */
+    public Integer getCrosair(){
+    	return boardPictures[3];
     }
     
 }

@@ -8,7 +8,7 @@
 		  android:numColumns="10" 
 		   android:gravity="center"
 		   android:verticalSpacing="1dp"
-    	   android:horizontalSpacing="1dp" android:listSelector="@drawable/red" android:background="@drawable/board" android:layout_width="301dp" android:layout_height="301dp" android:columnWidth="29dp" android:paddingLeft="1dp" android:paddingTop="1dp">
+    	   android:horizontalSpacing="1dp" android:background="@drawable/board" android:layout_width="301dp" android:layout_height="301dp" android:columnWidth="29dp" android:paddingLeft="1dp" android:paddingTop="1dp" android:listSelector="@drawable/transparent">
 </GridView>
 <LinearLayout android:id="@+id/LinearLayout00" android:layout_height="wrap_content" android:layout_gravity="left" android:layout_width="fill_parent">
 	<RelativeLayout 
@@ -19,7 +19,7 @@
 	<LinearLayout android:id="@+id/LinearLayout01" android:layout_height="wrap_content" android:layout_gravity="left" android:layout_width="wrap_content">
 	<GridView android:id="@+id/GridViewMiniMap" 
 				  android:numColumns="10" 
-				  android:gravity="left" android:paddingRight="0dp" android:paddingLeft="0dp" android:columnWidth="12dp" android:clipToPadding="true" android:background="@drawable/board" android:layout_width="131dp" android:layout_height="131dp" android:verticalSpacing="1dp" android:horizontalSpacing="1dp"></GridView>
+				  android:gravity="left" android:paddingRight="0dp" android:paddingLeft="0dp" android:columnWidth="12dp" android:clipToPadding="true" android:background="@drawable/board" android:layout_width="131dp" android:layout_height="131dp" android:verticalSpacing="1dp" android:horizontalSpacing="1dp" android:listSelector="@drawable/transparent"></GridView>
 	
 
 	</LinearLayout>

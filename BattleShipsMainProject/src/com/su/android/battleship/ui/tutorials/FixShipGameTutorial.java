@@ -78,9 +78,9 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 					if (aimedField != NO_FIELD_IS_AIMED) {
 						ImageView _oldSelectedField = (ImageView) boardImageAdapter
 								.getItem(aimedField);
-						_oldSelectedField.setImageResource(R.drawable.blue);
+						_oldSelectedField.setImageResource(boardImageAdapter.getTransparent());
 					}
-					_iv.setImageResource(R.drawable.yellow);
+					_iv.setImageResource(boardImageAdapter.getCrosair());
 					aimedField = position;
 				}
 			}
