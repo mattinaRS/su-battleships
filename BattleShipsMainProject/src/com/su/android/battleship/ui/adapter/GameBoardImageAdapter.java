@@ -46,8 +46,8 @@ public class GameBoardImageAdapter extends BaseAdapter {
         ImageView imageView;
         if (convertView == null) {  // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(25, 25));            
-            imageView.setPadding(1, 1, 1, 1);
+            imageView.setLayoutParams(new GridView.LayoutParams(29, 29));            
+            imageView.setPadding(0, 0, 0, 0);
         } else {
             imageView = (ImageView) convertView;
         }
@@ -79,6 +79,23 @@ public class GameBoardImageAdapter extends BaseAdapter {
 
     // references to our images
     private Integer[] boardPictures = {
-    		R.drawable.blue, R.drawable.red
+    		R.drawable.transparent, R.drawable.crash , R.drawable.miss
     };
+    
+    /**
+     * Get the Integer id for crash image
+     * @return
+     */
+    public Integer getCrash(){
+    	return boardPictures[1];
+    }
+    
+    /**
+     * Get the Integer id for miss image
+     * @return
+     */
+    public Integer getMiss(){
+    	return boardPictures[2];
+    }
+    
 }

@@ -67,7 +67,7 @@ private static final int FIELDS_COUNT = 100;
 
     // references to our images
     private Integer[] pictures = {
-    		R.drawable.miss, R.drawable.red , R.drawable.crash
+    		R.drawable.transparent, R.drawable.red , R.drawable.crash
     };
     
     private boolean isAShipField(short boardFieldIndex){

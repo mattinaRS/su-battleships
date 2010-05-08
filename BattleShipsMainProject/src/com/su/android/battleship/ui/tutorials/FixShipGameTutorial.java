@@ -110,9 +110,9 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 	private void executeFire(ImageView _iv) {
 		short newFieldStatus = game.executeMove((short) 0, (short) aimedField);
 		if (BoardFieldStatus.isShipAttackedStatus(newFieldStatus) || BoardFieldStatus.isShipDestroyedStatus(newFieldStatus)) {
-			_iv.setImageResource(R.drawable.red);// mark as fired
+			_iv.setImageResource(boardImageAdapter.getCrash());// mark as fired
 		} else {
-			_iv.setImageResource(R.drawable.grey);// mark as fired
+			_iv.setImageResource(boardImageAdapter.getMiss());// mark as fired
 		}
 		_iv.setClickable(false);// make imageView unclickable
 		// _iv.setFocusable(false);
