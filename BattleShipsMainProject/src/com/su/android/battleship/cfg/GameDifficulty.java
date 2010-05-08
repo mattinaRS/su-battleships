@@ -21,5 +21,5 @@ public enum GameDifficulty {
 	 */
 	public int getInfo() {
 		return mInfo;
-	}
+	}		
 }

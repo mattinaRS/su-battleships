@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.su.android.battleship.R;
+import com.su.android.battleship.cfg.GameDifficulty;
+import com.su.android.battleship.cfg.GamePreferences;
 import com.su.android.battleship.data.BoardFieldStatus;
 import com.su.android.battleship.data.Game;
 import com.su.android.battleship.data.GameAi;
@@ -138,9 +140,15 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 //			Ship[] generatedShipPosition1 = generator.getRandomShipsPosition();
 			Ship[] generatedShipPosition1 = ships.getShips();
 			Ship[] generatedShipPosition2 = generator.getRandomShipsPosition();
+			
+			
+				
+			GameDifficulty difficulty = (GameDifficulty)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_DIFFICULTY);
+			short code = (short) difficulty.getInfo();
+			
 
 			game = new GameAi((short) 0, generatedShipPosition1,
-					generatedShipPosition2);
+					generatedShipPosition2,code);
 			
 			displayGameScreen();
 			attachActionListeners();

@@ -14,6 +14,7 @@ import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.su.android.battleship.data.BoardFieldStatus;
 import com.su.android.battleship.data.GameAi;
 import com.su.android.battleship.data.Ship;
 import com.su.android.battleship.data.impl.AiGameProcessWrapper;
@@ -56,7 +57,15 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 	 * 
 	 * @return List with all potentially hiding ship fields
 	 */
-	protected abstract List<Short> getAllPotentialForAttackFields();
+	protected final List<Short> getAllPotentialForAttackFields(){
+		List<Short> resultList = new ArrayList<Short>();
+		for (int i = 0; i < boardForAiCalculations.length; i++) {
+			if (boardForAiCalculations[i] == AiCalculationBoardStatusManager.WATER) {
+				resultList.add((short) i);
+			}
+		}
+		return resultList;
+	}
 
 	/**
 	 * AI differ from each other in the way they determine how many ships can
@@ -69,6 +78,30 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 	 */
 	protected abstract List<Short> getFieldTypesThatExcludePotentialShipPositions();
 
+	/**
+	 * Different AI hold different state for the fields from which the pick to shoot
+	 * in the destroy mode.Implementation of this method provides the difference in their logic
+	 * @return
+	 */
+	protected abstract short chooseFromPossibleShipFields();
+	
+	
+	/**
+	 * Implements how the ai state will be updated after an "attacked ship" shot
+	 * @param field
+	 * @param statusCode
+	 */
+	protected abstract void updateAfterAttackedShot(short field,short statusCode);
+	
+	
+	/**
+	 * Implements how the ai state will be updated after a "destroyed ship" shot
+	 * @param field
+	 * @param statusCode
+	 */
+	protected abstract void updateAfterDestroyedShot(short field,short statusCode);
+	
+	
 	@Override
 	/**
 	 * This implementation of generateMove depends on the count of possible ship positions passing through every
@@ -77,7 +110,8 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 	 */
 	public final short generateMove() {
 		short result;
-		if (fieldsFromNotYetDestroyedShip.isEmpty()) {
+		//second condition is very important for EasyAi algorythm - it gives the ai the opportunity to return to seek mode before it destroys the current ship
+		if (fieldsFromNotYetDestroyedShip.isEmpty() || fieldsToContinueDestryingWith.isEmpty()) {
 			result = seek();
 		} else {
 			result = destroy();
@@ -97,6 +131,19 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 	public void updateFieldAfterMove(short field,short newFieldStatus) {
 		updateAfterMove(field,newFieldStatus);
 	}
+	
+	@Override
+	public void updateAfterMove(short field, short newFieldStatusCode) {
+		if (BoardFieldStatus.WATER_ATTACKED == newFieldStatusCode) {
+			updateAfterEmptyShot(field, newFieldStatusCode);
+		} else if (BoardFieldStatus.isShipAttackedStatus(newFieldStatusCode)) {
+			updateAfterAttackedShot(field, newFieldStatusCode);
+		} else if (BoardFieldStatus.isShipDestroyedStatus(newFieldStatusCode)) {
+			updateAfterDestroyedShot(field, newFieldStatusCode);
+		}
+	}
+	
+	
 
 	private short seek() {
 		Map<Short, Short> bestFieldsToChooseFrom = new HashMap<Short, Short>();
@@ -174,18 +221,18 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 						result = field;
 					}
 				}
-			} else {// ship's direction is determined
+			} else {// ship's direction can be determined
 				if (fieldsToContinueDestryingWith.size() == 1) {
 					result = fieldsToContinueDestryingWith.iterator().next();
 				} else {// there are 2 (min and max) possible fields to continue with
-					result = chooseFromTheTwoPendingFields();
+					result = chooseFromPossibleShipFields();
 				}
 			}
 		}
 		return result;
 	}
 	
-	private short getCountOfShipsThroughTwoFields(short f1,short f2){
+	protected short getCountOfShipsThroughTwoFields(short f1,short f2){
 		short resultCount = 0;
 		
 		Map<Short, Short> shipsMap = game.getShipsMapRepresentation();
@@ -198,36 +245,16 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 		}
 		
 		return resultCount;
-	}
+	}	
 
-	private short chooseFromTheTwoPendingFields() {
-		//TODO : implement some sort of UnitTest that fieldsToContinueDestroyingWith has exactly 2 elements in this specific case
-		Iterator<Short> _iterator = fieldsToContinueDestryingWith.iterator();
-		short min_pending = _iterator.next();
-		short max_pending = _iterator.next();
-		
-
-		Iterator<Short> iterator = fieldsFromNotYetDestroyedShip.iterator();
-		short min_destroyed = iterator.next();
-		short max_destroyed = iterator.next();
-		
-		while (iterator.hasNext()) {
-			max_destroyed = iterator.next();
-		}
-		//TODO : implement some sort of UnitTest that pending and destroyed fields are all in the same direction
-		short count_of_ships_through_min_pending = getCountOfShipsThroughTwoFields(min_pending,max_destroyed);
-		short count_of_ships_through_max_pending = getCountOfShipsThroughTwoFields(max_pending,min_destroyed);		
-
-		if (count_of_ships_through_max_pending == count_of_ships_through_min_pending) {
-			int random = (int) (Math.random() * 2);
-			return random == 0 ? min_pending : max_pending;
-		} else {
-			return count_of_ships_through_max_pending > count_of_ships_through_min_pending ? max_pending : min_pending;
-		}
-	}
-
-	// TODO : move this method to some sort of UTIL
-	private List<ShipFieldsHolder> getShipsThroughTwoFields(short field1,short field2, short shipLength) {
+	/**
+	 * Common method for AI algorithms implementation
+	 * @param field1
+	 * @param field2
+	 * @param shipLength
+	 * @return the ships through 2 fields
+	 */
+	protected List<ShipFieldsHolder> getShipsThroughTwoFields(short field1,short field2, short shipLength) {
 		List<ShipFieldsHolder> resultSHFList = new ArrayList<ShipFieldsHolder>();
 
 		List<ShipFieldsHolder> tempSfhList;
@@ -247,8 +274,12 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 		return resultSHFList;
 	}
 
-	
-	private short getCountOfOnlyPotentialShips(List<ShipFieldsHolder> allShips) {
+	/**
+	 * Common method for AI algorithms implementation
+	 * @param allShips
+	 * @return the count of only potential ships - that is - the impossible ships are removed from the result number
+	 */
+	protected short getCountOfOnlyPotentialShips(List<ShipFieldsHolder> allShips) {
 		short result = (short) allShips.size();
 		Ship tempShip;
 		short[] tempBoardFields;
@@ -277,9 +308,49 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 		return result;
 	}
 
-	
+	/**
+	 * 
+	 * @param fieldStatus
+	 * @return whether or not a field is in the AI's list of types that exclude potential ship positions
+	 */
 	public boolean isaFieldStatusForbidden(short fieldStatus){
 		boolean result = getFieldTypesThatExcludePotentialShipPositions().contains(fieldStatus);
 		return result;
+	}
+	
+	/**
+	 * 
+	 * @param field
+	 * @param boardSide
+	 * @return The neighbour fields of the specified board field
+	 */
+	public List<Short> getCrossNeighboursOfField(short field, short boardSide) {
+		List<Short> result = new ArrayList<Short>();
+		if (field % boardSide != 0) {
+			result.add((short) (field - 1));
+		}
+		if (field % boardSide != 9) {
+			result.add((short) (field + 1));
+		}
+		if (field / boardSide > 0) {
+			result.add((short) (field - boardSide));
+		}
+		if (field / boardSide < boardSide - 1) {
+			result.add((short) (field + boardSide));
+		}
+
+		return result;
+	}
+	
+	/**
+	 * This method is common for all the ai bots so it is implemented in parent abstract class
+	 * @param field
+	 * @param statusCode
+	 */
+	protected void updateAfterEmptyShot(short field, short statusCode) {
+		boardForAiCalculations[field] = AiCalculationBoardStatusManager.EMPTY;
+		if(fieldsToContinueDestryingWith.contains(field)){
+			fieldsToContinueDestryingWith.remove(field);
+		}		
 	}
 }

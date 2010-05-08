@@ -18,16 +18,7 @@ public class AiPlayerInsane extends AiPlayer_ShipPositionsPerFieldDependant {
 		super(game);
 	}
 
-	@Override
-	protected List<Short> getAllPotentialForAttackFields() {
-		List<Short> resultList = new ArrayList<Short>();
-		for (int i = 0; i < boardForAiCalculations.length; i++) {
-			if (boardForAiCalculations[i] == AiCalculationBoardStatusManager.WATER) {
-				resultList.add((short) i);
-			}
-		}
-		return resultList;
-	}
+	
 
 	@Override
 	protected List<Short> getFieldTypesThatExcludePotentialShipPositions() {
@@ -41,28 +32,9 @@ public class AiPlayerInsane extends AiPlayer_ShipPositionsPerFieldDependant {
 		return resultList;
 	}
 
-	@Override
-	public void updateAfterMove(short field,short newFieldStatus) {
-//		short statusCode = super.game.getPlayerBoard(GameAi.PLAYER_INDEX)[field];
-		short statusCode = newFieldStatus;
-		if (BoardFieldStatus.WATER_ATTACKED == statusCode) {
-			updateAfterEmptyShot(field, statusCode);
-		} else if (BoardFieldStatus.isShipAttackedStatus(statusCode)) {
-			updateAfterAttackedShot(field, statusCode);
-		} else if (BoardFieldStatus.isShipDestroyedStatus(statusCode)) {
-			updateAfterDestroyedShot(field, statusCode);
-		}
-	}
+	
 
-	private void updateAfterEmptyShot(short field, short statusCode) {
-		boardForAiCalculations[field] = AiCalculationBoardStatusManager.EMPTY;
-		if(!fieldsToContinueDestryingWith.isEmpty() && fieldsToContinueDestryingWith.contains(field)){
-			fieldsToContinueDestryingWith.remove(field);
-		}
-		
-	}
-
-	private void updateAfterAttackedShot(short field, short statusCode) {
+	protected void updateAfterAttackedShot(short field, short statusCode) {
 		short boardSide = GameAi.BOARD_SIDE;
 		// mark that field is attacked
 		boardForAiCalculations[field] = AiCalculationBoardStatusManager.SHIP;
@@ -126,7 +98,7 @@ public class AiPlayerInsane extends AiPlayer_ShipPositionsPerFieldDependant {
 	
 	
 
-	private void updateAfterDestroyedShot(short field, short statusCode) {
+	protected void updateAfterDestroyedShot(short field, short statusCode) {
 		short shipIndex = BoardFieldStatus.getShipIndex(statusCode);
 		Ship ship = super.game.getPlayerShips(GameAi.PLAYER_INDEX)[shipIndex];//get PLAYER's ship!!
 		short[] shipBoardFields = ship.getBoardFields();
@@ -159,24 +131,37 @@ public class AiPlayerInsane extends AiPlayer_ShipPositionsPerFieldDependant {
 		fieldsToContinueDestryingWith.clear();
 	}
 
-	// TODO : this method should be in Util - perhaps it already exist but Vasko
-	// is too tired to think about it
-	private List<Short> getCrossNeighboursOfField(short field, short boardSide) {
-		List<Short> result = new ArrayList<Short>();
-		if (field % boardSide != 0) {
-			result.add((short) (field - 1));
-		}
-		if (field % boardSide != 9) {
-			result.add((short) (field + 1));
-		}
-		if (field / boardSide > 0) {
-			result.add((short) (field - boardSide));
-		}
-		if (field / boardSide < boardSide - 1) {
-			result.add((short) (field + boardSide));
-		}
-
+	@Override
+	protected short chooseFromPossibleShipFields() {
+		short result = chooseFromTheTwoPendingFields();
 		return result;
 	}
+
+	private short chooseFromTheTwoPendingFields() {
+		//TODO : implement some sort of UnitTest that fieldsToContinueDestroyingWith has exactly 2 elements in this specific case
+		Iterator<Short> _iterator = fieldsToContinueDestryingWith.iterator();
+		short min_pending = _iterator.next();
+		short max_pending = _iterator.next();
+		
+
+		Iterator<Short> iterator = fieldsFromNotYetDestroyedShip.iterator();
+		short min_destroyed = iterator.next();
+		short max_destroyed = iterator.next();
+		
+		while (iterator.hasNext()) {
+			max_destroyed = iterator.next();
+		}
+		//TODO : implement some sort of UnitTest that pending and destroyed fields are all in the same direction
+		short count_of_ships_through_min_pending = getCountOfShipsThroughTwoFields(min_pending,max_destroyed);
+		short count_of_ships_through_max_pending = getCountOfShipsThroughTwoFields(max_pending,min_destroyed);		
+
+		if (count_of_ships_through_max_pending == count_of_ships_through_min_pending) {
+			int random = (int) (Math.random() * 2);
+			return random == 0 ? min_pending : max_pending;
+		} else {
+			return count_of_ships_through_max_pending > count_of_ships_through_min_pending ? max_pending : min_pending;
+		}
+	}
+	
 
 }

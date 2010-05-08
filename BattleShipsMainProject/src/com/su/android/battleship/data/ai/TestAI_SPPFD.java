@@ -16,7 +16,7 @@ public class TestAI_SPPFD {
 		Ship[] generatedShipPosition2 = generator.getRandomShipsPosition();
 
 		GameAi game = new GameAi((short) 0, generatedShipPosition1,
-				generatedShipPosition2);
+				generatedShipPosition2,AiFactory.AI_SPPFD_INSANE);
 		
 		AiPlayer_ShipPositionsPerFieldDependant ai = (AiPlayer_ShipPositionsPerFieldDependant) AiFactory.getInstance().produceAiPlayer(AiFactory.AI_SPPFD_INSANE, game);
 		short tempNumber;

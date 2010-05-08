@@ -66,7 +66,7 @@ private static final int FIELDS_COUNT = 100;
 
     // references to our images
     private Integer[] minimapPictures = {
-    		R.drawable.transparent, R.drawable.crash , R.drawable.green
+    		R.drawable.blue, R.drawable.crash , R.drawable.green
     };
     
     private boolean isAShipField(short boardFieldIndex){
@@ -76,6 +76,10 @@ private static final int FIELDS_COUNT = 100;
     		}
     	}
     	return false;
+    }
+    
+    public int getCrash(){
+    	return minimapPictures[1];
     }
 
 }
