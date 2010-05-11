@@ -6,9 +6,21 @@
 		android:numColumns="10"
 		android:gravity="center" 
 		android:horizontalSpacing="1dp"
-		android:id="@+id/GridViewMoveShips" android:verticalSpacing="1dp" android:columnWidth="29dp" android:layout_height="301dp" android:layout_width="301dp" android:layout_margin="5dp" android:listSelector="@drawable/red" android:paddingLeft="1dp" android:paddingTop="1dp" android:background="@drawable/real_board">
+		android:id="@+id/GridViewMoveShips" android:verticalSpacing="1dp" android:columnWidth="29dp" android:layout_height="301dp" android:layout_width="301dp" android:layout_margin="5dp" android:paddingLeft="1dp" android:paddingTop="1dp" android:background="@drawable/real_board" android:listSelector="@drawable/transparent">
 	</GridView>
 		
+	<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="horizontal"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+		<Button
+			android:id="@+id/ButtonRotate" 
+			android:text="Rotate"
+			android:layout_weight="0.5"
+			style="@style/MenuButton"/>
+	</LinearLayout>		
+
 	<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="horizontal"
