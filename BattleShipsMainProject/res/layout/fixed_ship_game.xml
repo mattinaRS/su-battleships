@@ -1,33 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content" android:orientation="vertical">
-
-<GridView android:id="@+id/GridViewAFD" 
-		  android:numColumns="10" 
-		   android:gravity="center"
-		   android:verticalSpacing="1dp"
-    	   android:horizontalSpacing="1dp" android:background="@drawable/board" android:layout_width="301dp" android:layout_height="301dp" android:columnWidth="29dp" android:paddingLeft="1dp" android:paddingTop="1dp" android:listSelector="@drawable/transparent">
-</GridView>
-<LinearLayout android:id="@+id/LinearLayout00" android:layout_height="wrap_content" android:layout_gravity="left" android:layout_width="fill_parent">
-	<RelativeLayout 
-	android:layout_width="fill_parent" 
-	android:layout_height="fill_parent" 
-	xmlns:android="http://schemas.android.com/apk/res/android">
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="320dp"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
 	
-	<LinearLayout android:id="@+id/LinearLayout01" android:layout_height="wrap_content" android:layout_gravity="left" android:layout_width="wrap_content">
-	<GridView android:id="@+id/GridViewMiniMap" 
-				  android:numColumns="10" 
-				  android:gravity="left" android:paddingRight="0dp" android:paddingLeft="0dp" android:columnWidth="12dp" android:clipToPadding="true" android:background="@drawable/board" android:layout_width="131dp" android:layout_height="131dp" android:verticalSpacing="1dp" android:horizontalSpacing="1dp" android:listSelector="@drawable/transparent"></GridView>
+	<GridView android:id="@+id/GridViewAFD" 
+		android:numColumns="10"
+		android:verticalSpacing="0dp"
+		android:horizontalSpacing="0dp"
+		android:layout_gravity="center"
+		android:background="@drawable/board"
+		android:layout_width="300dp"
+		android:layout_height="300dp"
+		android:columnWidth="30dp"
+		android:listSelector="@drawable/transparent"
+		android:stretchMode="none"/>
+		
+	<LinearLayout android:id="@+id/LinearLayout00" 
+		android:layout_height="wrap_content" 
+		android:layout_gravity="left" 
+		android:layout_width="fill_parent">
+		
+		<RelativeLayout 
+			android:layout_width="fill_parent" 
+			android:layout_height="fill_parent">
 	
-
+			<LinearLayout android:id="@+id/LinearLayout01" 
+				android:layout_height="wrap_content" 
+				android:layout_gravity="left" 
+				android:layout_width="wrap_content">
+		
+				<GridView android:id="@+id/GridViewMiniMap" 
+					android:numColumns="10" 
+					android:gravity="left" 
+					android:paddingRight="0dp" 
+					android:paddingLeft="0dp" 
+					android:columnWidth="12dp" 
+					android:clipToPadding="true" 
+					android:background="@drawable/board" 
+					android:layout_width="131dp" 
+					android:layout_height="131dp" 
+					android:verticalSpacing="1dp" 
+					android:horizontalSpacing="1dp" 
+					android:listSelector="@drawable/transparent"/>
+			</LinearLayout>
+			
+			<LinearLayout android:id="@+id/LinearLayout02" 
+				android:layout_height="wrap_content" 
+				android:layout_width="wrap_content" 
+				android:layout_gravity="right" 
+				android:layout_alignParentRight="true" 
+				android:layout_alignParentTop="true">
+				
+				<ImageView android:id="@+id/ImageViewFB" 
+					android:layout_width="wrap_content" 
+					android:layout_height="wrap_content" 
+					android:background="@drawable/fire_btn" 
+					android:layout_gravity="right"/>
+			</LinearLayout>
+			
+		</RelativeLayout>
+		
 	</LinearLayout>
-	<LinearLayout android:id="@+id/LinearLayout02" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_gravity="right" android:layout_alignParentRight="true" android:layout_alignParentTop="true">
-	<ImageView android:id="@+id/ImageViewFB" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/fire_btn" android:layout_gravity="right"></ImageView>
-	</LinearLayout>
-	</RelativeLayout>
-</LinearLayout>
+	
 </LinearLayout>
 
 
