@@ -2,8 +2,34 @@
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="320dp"
-	android:layout_height="wrap_content"
-	android:orientation="vertical">
+	android:layout_height="480dp"
+	android:layout_gravity="center"
+	android:orientation="vertical"
+	android:background="@drawable/menu_background">
+
+	<LinearLayout
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content">
+		
+		<TextView android:text="You"
+			style="@style/GameInfoLabel"/>
+			
+		<TextView android:text="6/10"
+			style="@style/GameInfoLabel"/>
+			
+		<TextView android:text="Enemy"
+			android:paddingLeft="12dp"
+			style="@style/GameInfoLabel"/>
+			
+		<TextView android:text="7/10"
+			style="@style/GameInfoLabel"/>
+			
+		<!-- <Button android:text="Quit"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="right"/>-->
+		
+	</LinearLayout>
 	
 	<GridView android:id="@+id/GridViewAFD" 
 		android:numColumns="10"
@@ -17,6 +43,33 @@
 		android:listSelector="@drawable/transparent"
 		android:stretchMode="none"/>
 		
+	<LinearLayout
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content">
+		
+		<GridView android:id="@+id/GridViewMiniMap" 
+			android:numColumns="10" 
+			android:gravity="left" 
+			android:paddingRight="0dp" 
+			android:paddingLeft="0dp" 
+			android:columnWidth="12dp" 
+			android:clipToPadding="true" 
+			android:background="@drawable/board" 
+			android:layout_width="131dp" 
+			android:layout_height="131dp" 
+			android:verticalSpacing="1dp" 
+			android:horizontalSpacing="1dp" 
+			android:listSelector="@drawable/transparent"/>
+		
+		<ImageView android:id="@+id/ImageViewFB" 
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" 
+			android:background="@drawable/fire_btn" 
+			android:layout_gravity="right"/>
+	</LinearLayout>
+		
+		
+	<!--
 	<LinearLayout android:id="@+id/LinearLayout00" 
 		android:layout_height="wrap_content" 
 		android:layout_gravity="left" 
@@ -62,8 +115,8 @@
 			
 		</RelativeLayout>
 		
-	</LinearLayout>
-	
+	</LinearLayout>-->
+
 </LinearLayout>
 
 
