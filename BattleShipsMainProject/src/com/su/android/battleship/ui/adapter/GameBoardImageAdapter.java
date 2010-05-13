@@ -79,7 +79,7 @@ public class GameBoardImageAdapter extends BaseAdapter {
 
     // references to our images
     private Integer[] boardPictures = {
-    		R.drawable.transparent, R.drawable.crash , R.drawable.miss , R.drawable.yellow
+    		R.drawable.transparent, R.drawable.crash , R.drawable.miss , R.drawable.crosshair
     };
     
     /**
