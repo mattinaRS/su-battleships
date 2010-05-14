@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ public class AimAndFireTutorial extends Activity {
 	protected int aimedField = NO_FIELD_IS_AIMED;
 	
 	protected GridView boardGrid;
-	protected ImageView fireButton;
+	protected Button fireButton;
 	
 		
 	@Override
@@ -43,7 +44,7 @@ public class AimAndFireTutorial extends Activity {
 	
 	protected void displayGameScreen(){
 		setContentView(R.layout.aim_fire_tutorial);		
-		fireButton = (ImageView) findViewById(R.id.ImageViewFB);
+		fireButton = (Button) findViewById(R.id.ImageViewFB);
 		
 		boardGrid = (GridView) findViewById(R.id.GridViewAFD);
 		

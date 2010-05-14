@@ -3,32 +3,28 @@ package com.su.android.battleship.ui.tutorials;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.su.android.battleship.R;
-import com.su.android.battleship.cfg.GameDifficulty;
-import com.su.android.battleship.cfg.GamePreferences;
-import com.su.android.battleship.data.BoardFieldStatus;
-import com.su.android.battleship.data.Game;
-import com.su.android.battleship.data.GameAi;
-import com.su.android.battleship.data.Ship;
-import com.su.android.battleship.data.ShipPositionGenerator;
-import com.su.android.battleship.data.ai.AiFactory;
-import com.su.android.battleship.data.ai.AiPlayer;
-import com.su.android.battleship.ui.ArrangeShips;
-import com.su.android.battleship.ui.adapter.GameBoardImageAdapter;
-import com.su.android.battleship.ui.adapter.MinimapImageAdapter;
-import com.su.android.battleship.ui.data.ActivityShipComunicator;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+
+import com.su.android.battleship.R;
+import com.su.android.battleship.cfg.GameDifficulty;
+import com.su.android.battleship.cfg.GamePreferences;
+import com.su.android.battleship.data.BoardFieldStatus;
+import com.su.android.battleship.data.GameAi;
+import com.su.android.battleship.data.Ship;
+import com.su.android.battleship.data.ShipPositionGenerator;
+import com.su.android.battleship.ui.ArrangeShips;
+import com.su.android.battleship.ui.adapter.GameBoardImageAdapter;
+import com.su.android.battleship.ui.adapter.MinimapImageAdapter;
+import com.su.android.battleship.ui.data.ActivityShipComunicator;
 
 public class FixShipGameTutorial extends AimAndFireTutorial {
 
@@ -44,7 +40,7 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 	protected void displayGameScreen() {
 		setContentView(R.layout.fixed_ship_game);
 
-		fireButton = (ImageView) findViewById(R.id.ImageViewFB);
+		fireButton = (Button) findViewById(R.id.FireButton);
 
 		boardGrid = (GridView) findViewById(R.id.GridViewAFD);
 		boardImageAdapter = new GameBoardImageAdapter(this);

@@ -44,7 +44,7 @@
 		<item name="android:paddingTop">5dp</item>
 		<item name="android:paddingRight">5dp</item>
 		<item name="android:paddingBottom">5dp</item>
-		<item name="android:paddingLeft">5dp</item>
+		<item name="android:paddingLeft">10dp</item>
 	</style>
 	
 	<style name="GameSquareButton">
@@ -57,5 +57,37 @@
 		<item name="android:textColor">#FF201000</item>
 		<item name="android:textSize">15sp</item>
 		<item name="android:background">@drawable/game_square_selector</item>
+	</style>
+	
+	<style name="GameBoard">
+		<item name="android:numColumns">10</item>
+		<item name="android:verticalSpacing">0dp</item>
+		<item name="android:horizontalSpacing">0dp</item>
+		<item name="android:layout_gravity">center</item>
+		<item name="android:background">@drawable/board</item>
+		<item name="android:layout_width">300dp</item>
+		<item name="android:layout_height">300dp</item>
+		<item name="android:columnWidth">30dp</item>
+		<item name="android:listSelector">@drawable/transparent</item>
+		<item name="android:stretchMode">none</item>
+	</style>
+	
+	<style name="GameMinimap">
+		<item name="android:numColumns">10</item>
+		<item name="android:columnWidth">10dp</item>
+		<item name="android:layout_width">100dp</item>
+		<item name="android:layout_height">100dp</item>
+		<item name="android:layout_margin">0dp</item>
+		<item name="android:listSelector">@drawable/transparent</item>
+	</style>
+	
+	<style name="GamePane">
+		<item name="android:layout_width">300dp</item>
+		<item name="android:layout_height">128dp</item>
+		<item name="android:layout_marginTop">10dp</item>
+		<item name="android:layout_gravity">center</item>
+		<item name="android:gravity">center_vertical</item>
+		<item name="android:padding">0dp</item>
+		<item name="android:background">@drawable/control_pane</item>
 	</style>
 </resources>

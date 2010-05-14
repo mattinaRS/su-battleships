@@ -19,4 +19,8 @@
 	<string name="settings_vibration">Vibration</string>
 	<string name="settings_difficulty">Difficulty</string>
 	<string name="settings_apply_prefs">Apply</string>
+	<string name="game_you">You</string>
+	<string name="game_enemy">Enemy</string>
+	<string name="game_button_menu">Menu</string>
+	<string name="game_button_fire">Fire</string>
 </resources>
