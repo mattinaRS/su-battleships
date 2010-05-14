@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="320dp"
-	android:layout_height="480dp"
-	android:layout_gravity="center"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
 	android:orientation="vertical"
 	android:background="@drawable/menu_background">
 
@@ -23,11 +22,6 @@
 			
 		<TextView android:text="7/10"
 			style="@style/GameInfoLabel"/>
-			
-		<!-- <Button android:text="Quit"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="right"/>-->
 		
 	</LinearLayout>
 	
@@ -44,10 +38,37 @@
 		android:stretchMode="none"/>
 		
 	<LinearLayout
+		android:layout_width="300dp"
+		android:layout_height="128dp"
+		android:layout_marginTop="8dp"
+		android:layout_gravity="center"
+		android:gravity="center_vertical"
+		android:padding="0dp"
+		android:background="@drawable/control_pane">
+		
+		<Button android:id="@+id/MenuButton"
+			android:text="  Menu"
+			style="@style/GameSquareButton"/>
+			
+		<GridView android:id="@+id/GridViewMiniMap"
+			android:numColumns="10"
+			android:columnWidth="10dp"
+			android:layout_width="100dp"
+			android:layout_height="100dp"
+			android:layout_margin="0dp"
+			android:listSelector="@drawable/transparent"/>
+			
+		<Button android:id="@+id/FireButton"
+			android:text="Fire  "
+			style="@style/GameSquareButton"/>
+	
+	</LinearLayout>
+		
+	<LinearLayout
 		android:layout_width="wrap_content" 
 		android:layout_height="wrap_content">
 		
-		<GridView android:id="@+id/GridViewMiniMap" 
+		<!-- <GridView android:id="@+id/GridViewMiniMap" 
 			android:numColumns="10" 
 			android:gravity="left" 
 			android:paddingRight="0dp" 
@@ -59,7 +80,7 @@
 			android:layout_height="131dp" 
 			android:verticalSpacing="1dp" 
 			android:horizontalSpacing="1dp" 
-			android:listSelector="@drawable/transparent"/>
+			android:listSelector="@drawable/transparent"/>-->
 		
 		<ImageView android:id="@+id/ImageViewFB" 
 			android:layout_width="wrap_content" 

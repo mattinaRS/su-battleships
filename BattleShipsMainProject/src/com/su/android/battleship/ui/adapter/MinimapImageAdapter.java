@@ -43,7 +43,7 @@ private static final int FIELDS_COUNT = 100;
         ImageView imageView;
         if (convertView == null) {  // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(12, 12));            
+            imageView.setLayoutParams(new GridView.LayoutParams(10, 10));            
             imageView.setPadding(0, 0, 0, 0);
         } else {
             imageView = (ImageView) convertView;
