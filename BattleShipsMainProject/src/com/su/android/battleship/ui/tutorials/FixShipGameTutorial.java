@@ -165,12 +165,12 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		if (BoardFieldStatus.isShipAttackedStatus(fieldStatus)
 				|| BoardFieldStatus.isShipDestroyedStatus(fieldStatus)) {
 			// change minimap field color to red - ship is hit
-			_iv.setImageResource(R.drawable.red);
+			_iv.setImageResource(R.drawable.crash_mini);
 			// other way is to use public resource ids stored in the adapter as
 			// it should be responsible for the gridView's rendering
 		} else {
 			// change it to grey - water is hit
-			_iv.setImageResource(R.drawable.grey);
+			_iv.setImageResource(R.drawable.miss_mini);
 		}
 
 		if (game.isGameOver()) {
