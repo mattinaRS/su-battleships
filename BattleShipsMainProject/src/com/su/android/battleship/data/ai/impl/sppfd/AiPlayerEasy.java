@@ -1,7 +1,6 @@
 package com.su.android.battleship.data.ai.impl.sppfd;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.su.android.battleship.data.BoardFieldStatus;

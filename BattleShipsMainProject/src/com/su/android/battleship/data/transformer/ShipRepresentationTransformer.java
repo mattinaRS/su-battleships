@@ -4,7 +4,6 @@ import com.su.android.battleship.data.Game;
 import com.su.android.battleship.data.Ship;
 import com.su.data.Direction;
 import com.su.data.ShipFieldsHolder;
-import com.su.generator.rule.FieldForbiddingRuleCrossImpl;
 
 
 /**

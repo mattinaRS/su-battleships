@@ -1,26 +1,14 @@
 package com.su.android.battleship.ui.tutorials;
 
 
-import java.util.List;
-
-
-import com.su.android.battleship.R;
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.su.android.battleship.R;
 
 public class TutorialsScreen extends Activity implements OnClickListener{
 

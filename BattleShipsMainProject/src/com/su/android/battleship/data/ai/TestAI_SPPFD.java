@@ -5,7 +5,6 @@ import android.util.Log;
 import com.su.android.battleship.data.GameAi;
 import com.su.android.battleship.data.Ship;
 import com.su.android.battleship.data.ShipPositionGenerator;
-import com.su.android.battleship.data.ai.impl.sppfd.AiPlayerInsane;
 
 public class TestAI_SPPFD {	
 

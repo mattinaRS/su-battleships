@@ -1,29 +1,19 @@
 package com.su.android.battleship.data.ai;
 
-import java.io.UTFDataFormatException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
-import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import com.su.android.battleship.data.BoardFieldStatus;
 import com.su.android.battleship.data.GameAi;
 import com.su.android.battleship.data.Ship;
-import com.su.android.battleship.data.impl.AiGameProcessWrapper;
 import com.su.android.battleship.data.transformer.ShipRepresentationTransformer;
 import com.su.android.battleship.util.CommonUtil;
 import com.su.data.ShipFieldsHolder;
-import com.su.generator.encoder.ShipPositionEncoder;
-import com.su.generator.encoder.ShipPositionEncoderDefaultImpl;
-import com.su.generator.randomizer.ExcludeRowRandomizer;
 import com.su.manager.ShipPositionsContainingFieldManager;
 
 public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {

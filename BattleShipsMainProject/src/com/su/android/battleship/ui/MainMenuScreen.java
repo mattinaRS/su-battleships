@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.su.android.battleship.R;
-import com.su.android.battleship.data.ai.TestAI_SPPFD;
 
 /**
  * First application screen. The main menu - Play, Options, Credits, Quit

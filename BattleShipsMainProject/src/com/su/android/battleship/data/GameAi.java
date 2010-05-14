@@ -1,6 +1,5 @@
 package com.su.android.battleship.data;
 
-import com.su.android.battleship.cfg.GamePreferences;
 import com.su.android.battleship.data.ai.AiFactory;
 import com.su.android.battleship.data.ai.AiPlayer;
 

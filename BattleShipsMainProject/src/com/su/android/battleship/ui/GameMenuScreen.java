@@ -1,15 +1,14 @@
 package com.su.android.battleship.ui;
 
-import com.su.android.battleship.R;
-import com.su.android.battleship.ui.tutorials.FixShipGameTutorial;
-import com.su.android.battleship.ui.tutorials.TutorialsScreen;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+
+import com.su.android.battleship.R;
+import com.su.android.battleship.ui.tutorials.FixShipGameTutorial;
 
 /**
  * Game menu screen - Singleplayer, Multiplayer, Tutorials, Back

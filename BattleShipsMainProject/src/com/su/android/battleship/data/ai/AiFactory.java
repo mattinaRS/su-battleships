@@ -1,15 +1,10 @@
 package com.su.android.battleship.data.ai;
 
-import java.util.Calendar;
-import java.util.Random;
-
 import com.su.android.battleship.data.GameAi;
 import com.su.android.battleship.data.ai.impl.AiRandomPlayer;
 import com.su.android.battleship.data.ai.impl.sppfd.AiPlayerEasy;
 import com.su.android.battleship.data.ai.impl.sppfd.AiPlayerInsane;
 import com.su.android.battleship.data.ai.impl.sppfd.AiPlayerNormal;
-
-import android.util.Log;
 
 public class AiFactory {
 	
