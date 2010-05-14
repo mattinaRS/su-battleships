@@ -1,15 +1,8 @@
 package com.su.manager;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import com.su.generator.encoder.ShipPositionEncoder;
-import com.su.generator.encoder.ShipPositionEncoderDefaultImpl;
-import com.su.generator.rule.FieldForbiddingRule;
-import com.su.generator.rule.FieldForbiddingRuleCrossImpl;
 /**
  * This class implements the logic for manipulation with the forbiddenFieldsPositions.
  * 

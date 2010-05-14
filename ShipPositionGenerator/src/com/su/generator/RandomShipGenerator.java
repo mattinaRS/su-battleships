@@ -1,7 +1,5 @@
 package com.su.generator;
 
-import java.text.RuleBasedCollator;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -15,7 +13,6 @@ import com.su.generator.encoder.ShipPositionEncoderDefaultImpl;
 import com.su.generator.randomizer.ExcludeRowRandomizer;
 import com.su.generator.randomizer.ExcludeRowRandomizerAllExcludedException;
 import com.su.generator.rule.FieldForbiddingRule;
-import com.su.generator.rule.FieldForbiddingRuleCrossImpl;
 import com.su.generator.rule.FieldForbiddingRuleSquareImpl;
 import com.su.manager.ForbiddenPositionsManager;
 import com.su.manager.ShipPositionsContainingFieldManager;
