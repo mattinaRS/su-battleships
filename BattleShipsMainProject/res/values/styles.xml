@@ -79,6 +79,9 @@
 		<item name="android:layout_height">100dp</item>
 		<item name="android:layout_margin">0dp</item>
 		<item name="android:listSelector">@drawable/transparent</item>
+		<item name="android:clickable">false</item>
+		<item name="android:focusable">false</item>
+		<item name="android:focusableInTouchMode">false</item>
 	</style>
 	
 	<style name="GamePane">

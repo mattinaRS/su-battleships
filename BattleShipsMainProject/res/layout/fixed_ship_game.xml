@@ -12,14 +12,16 @@
 		<TextView android:text="@string/game_you"
 			style="@style/GameInfoLabel"/>
 			
-		<TextView android:text="6/10"
+		<TextView android:id="@+id/PlayerShips"
+			android:text="6/10"
 			style="@style/GameInfoLabel"/>
 			
 		<TextView android:text="@string/game_enemy"
 			android:paddingLeft="18dp"
 			style="@style/GameInfoLabel"/>
 			
-		<TextView android:text="7/10"
+		<TextView android:id="@+id/EnemyShips"
+			android:text="7/10"
 			style="@style/GameInfoLabel"/>
 		
 	</LinearLayout>

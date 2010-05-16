@@ -11,47 +11,72 @@ import android.widget.ImageView;
 
 public class MinimapImageAdapter extends BaseAdapter {
 
-private static final int FIELDS_COUNT = 100;
+	private static final int FIELDS_COUNT = 100;
+	private static final int IMG_WATER = R.drawable.transparent;
+	private static final int IMG_CRASH = R.drawable.crash_mini;
+	private static final int IMG_MISS  = R.drawable.miss_mini;
+	private static final int IMG_SHIP  = R.drawable.ship_mini;
 	
 	private Context mContext;	
 	private ImageView[] minimapFields = new ImageView[FIELDS_COUNT];
 	
 	private short[] shipFiledIndexes;
 	
-    public MinimapImageAdapter(Context c,short[] shipFields) {
+	/**
+	 * MinimapImageAdapter constructor
+	 * 
+	 * @param c				Activity context
+	 * @param shipFields	Array with ships' starting positions in minimap board
+	 */
+    public MinimapImageAdapter(Context c, short[] shipFields) {
         mContext = c;
         shipFiledIndexes = shipFields;
     }
 
-    /**
-     * Very important method - this tells android UI framework how many times to call getView
+    /*
+     * (non-Javadoc)
+     * @see android.widget.Adapter#getCount()
      */
     public int getCount() {
         return FIELDS_COUNT;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see android.widget.Adapter#getItem(int)
+     */
     public Object getItem(int position) {
         return minimapFields[position];
     }
 
+    /*
+     * (non-Javadoc)
+     * @see android.widget.Adapter#getItemId(int)
+     */
     public long getItemId(int position) {
         return position;
     }
 
-    // create a new ImageView for each item referenced by the Adapter
+    /*
+     * (non-Javadoc)
+     * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
+     */
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         if (convertView == null) {  // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
             imageView.setLayoutParams(new GridView.LayoutParams(10, 10));            
             imageView.setPadding(0, 0, 0, 0);
+            imageView.setClickable(false);
+            imageView.setFocusable(false);
+            imageView.setFocusableInTouchMode(false);
         } else {
             imageView = (ImageView) convertView;
         }
         if(isAShipField((short) position)){
-        	imageView.setImageResource(minimapPictures[2]); //green represents ship on the minimap
+        	imageView.setImageResource(IMG_SHIP); //green represents ship on the minimap
         }else{
-        	imageView.setImageResource(minimapPictures[0]); //blue represents water on the minimap
+        	imageView.setImageResource(IMG_WATER); //blue represents water on the minimap
         }
         
         /**
@@ -63,11 +88,6 @@ private static final int FIELDS_COUNT = 100;
         
         return imageView;
     }
-
-    // references to our images
-    private Integer[] minimapPictures = {
-    		R.drawable.transparent, R.drawable.crash_mini , R.drawable.ship_mini
-    };
     
     private boolean isAShipField(short boardFieldIndex){
     	for(int i = 0 ; i < shipFiledIndexes.length ; i++){
@@ -78,8 +98,22 @@ private static final int FIELDS_COUNT = 100;
     	return false;
     }
     
-    public int getCrash(){
-    	return minimapPictures[1];
+    /**
+     * Set ImageView at a given position to Crash image
+     * 
+     * @param position	Integer value representing position index in minimap board
+     */
+    public void setCrash(short position) {
+    	((ImageView) getItem(position)).setImageResource(IMG_CRASH);
+    }
+    
+    /**
+     * Set ImageView at a given position to Miss image
+     * 
+     * @param position	Integer value representing position index in minimap board
+     */
+    public void setMiss(short position) {
+    	((ImageView) getItem(position)).setImageResource(IMG_MISS);
     }
 
 }

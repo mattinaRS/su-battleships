@@ -159,8 +159,15 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		// configurate place - Ai , BlueTooth , Http client/server communication
 		short fieldAttackedByAi = game.makeMoveForAi();
 		short fieldStatus = game.getPlayerBoard(GameAi.PLAYER_INDEX)[fieldAttackedByAi];
+		
+		if (BoardFieldStatus.isShipAttackedStatus(fieldStatus)
+				|| BoardFieldStatus.isShipDestroyedStatus(fieldStatus)) {
+			minimapImageAdapter.setCrash(fieldAttackedByAi);
+		} else {
+			minimapImageAdapter.setMiss(fieldAttackedByAi);
+		}
 
-		ImageView _iv = (ImageView) minimapImageAdapter
+		/*ImageView _iv = (ImageView) minimapImageAdapter
 				.getItem(fieldAttackedByAi);
 		if (BoardFieldStatus.isShipAttackedStatus(fieldStatus)
 				|| BoardFieldStatus.isShipDestroyedStatus(fieldStatus)) {
@@ -171,7 +178,7 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		} else {
 			// change it to grey - water is hit
 			_iv.setImageResource(R.drawable.miss_mini);
-		}
+		}*/
 
 		if (game.isGameOver()) {
 			Toast.makeText(FixShipGameTutorial.this,
