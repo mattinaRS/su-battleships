@@ -89,7 +89,23 @@ public class MinimapImageAdapter extends BaseAdapter {
         return imageView;
     }
     
-    private boolean isAShipField(short boardFieldIndex){
+    /*
+     * (non-Javadoc)
+     * @see android.widget.BaseAdapter#areAllItemsEnabled()
+     */
+	public boolean areAllItemsEnabled() {
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see android.widget.BaseAdapter#isEnabled(int)
+	 */
+	public boolean isEnabled(int position) {
+		return false;
+	}
+
+	private boolean isAShipField(short boardFieldIndex){
     	for(int i = 0 ; i < shipFiledIndexes.length ; i++){
     		if(boardFieldIndex == shipFiledIndexes[i]){
     			return true;

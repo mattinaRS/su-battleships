@@ -177,7 +177,7 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 		private static final int MAX_PROGRESS_STEPS = 15;
 		private int status = STATUS_RUNNING_NORMAL;
 		public static final int STATUS_RUNNING_NORMAL = 1;;
-		public static final int STATUS_RUNNING_FAST = 2;
+		//public static final int STATUS_RUNNING_FAST = 2;
 		public static final int STATUS_FINISHED = 3;
 
 		@Override
