@@ -154,9 +154,11 @@ public class RandomShipGenerator {
 	}
 
 	public static void main(String[] args) {
-		testOnBoard4();
+//		testOnBoard4();
+//		testOnBoard10();
 	}
 	
+	@SuppressWarnings("unused") //this is test method and is sometimes commented
 	private static void testOnBoard4(){
 		short boardSideSize = 4;
 		ShipFieldsHolder temp;
@@ -178,6 +180,7 @@ public class RandomShipGenerator {
 		}
 	}
 	
+	@SuppressWarnings("unused") //this is test method and is sometimes commented
 	private static void testOnBoard10(){
 		short boardSideSize = 10;
 		ShipFieldsHolder temp;

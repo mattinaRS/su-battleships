@@ -7,6 +7,11 @@ package com.su.generator.randomizer;
  */
 public class ExcludeRowRandomizerAllExcludedException extends Exception {
 	
+	/**
+	 * Vasko has no idea what this field is used for
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public ExcludeRowRandomizerAllExcludedException(String msg) {
 		super("msg");
 	}

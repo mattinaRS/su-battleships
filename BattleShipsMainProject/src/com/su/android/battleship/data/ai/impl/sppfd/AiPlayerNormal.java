@@ -36,8 +36,9 @@ public class AiPlayerNormal extends AiPlayer_ShipPositionsPerFieldDependant {
 	@Override
 	protected short chooseFromPossibleShipFields() {
 		short result;
-		int size = fieldsToContinueDestryingWith.size();		
-		
+		//NOTE : implementation can be made so that normal to choose randomly from fieldsToContinueDestryingWith array
+		//		int size = fieldsToContinueDestryingWith.size();		
+
 		result = fieldsToContinueDestryingWith.iterator().next();
 		fieldsToContinueDestryingWith.remove(result);
 		return result;

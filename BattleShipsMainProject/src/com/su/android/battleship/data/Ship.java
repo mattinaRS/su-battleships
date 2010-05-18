@@ -18,6 +18,7 @@ public class Ship implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@SuppressWarnings("unused") //needed if there is superweapons mode,or "move ship mode"
 	private Short[] board;
 	
 	private short length;

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import com.su.android.battleship.data.BoardFieldStatus;
+import com.su.android.battleship.data.Game;
 import com.su.android.battleship.data.GameAi;
 import com.su.android.battleship.data.Ship;
 import com.su.android.battleship.data.transformer.ShipRepresentationTransformer;
@@ -23,7 +23,7 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 	protected SortedSet<Short> fieldsToContinueDestryingWith = new TreeSet<Short>();
 
 	private ShipPositionsContainingFieldManager shipPositionManager = new ShipPositionsContainingFieldManager(
-			game.BOARD_SIDE);
+			Game.BOARD_SIDE);
 
 	public AiPlayer_ShipPositionsPerFieldDependant(GameAi game) {
 		this.game = game;
@@ -144,8 +144,7 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 		// polymorphic
 		// call
 
-		Map<Short, Short> shipsMap = game.getShipsMapRepresentation();
-		Set<Short> shipsLengthSet = shipsMap.keySet();
+		Map<Short, Short> shipsMap = game.getShipsMapRepresentation();		
 
 		List<ShipFieldsHolder> tempSfhList;
 
@@ -225,8 +224,7 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 	protected short getCountOfShipsThroughTwoFields(short f1,short f2){
 		short resultCount = 0;
 		
-		Map<Short, Short> shipsMap = game.getShipsMapRepresentation();
-		Set<Short> shipsLengthSet = shipsMap.keySet();
+		Map<Short, Short> shipsMap = game.getShipsMapRepresentation();		
 		
 		List<ShipFieldsHolder> tempSFH;
 		for (Short shipLength : shipsMap.keySet()) {
@@ -256,7 +254,7 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 
 		for (ShipFieldsHolder sfh : tempSfhList) {
 			tempFieldsList = ShipFieldsHolder.getShipFields(sfh,
-					game.BOARD_SIDE);
+					Game.BOARD_SIDE);
 			if (tempFieldsList.contains(field2)) {
 				resultSHFList.add(sfh);
 			}

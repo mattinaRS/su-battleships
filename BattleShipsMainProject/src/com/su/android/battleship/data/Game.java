@@ -13,6 +13,7 @@ public class Game {
 		
 	
 	/*Can take values 0 and 1 - stands for the index of the player which is to make move*/
+	@SuppressWarnings("unused") //will be used in the future
 	private short playerOnMove;
 	
 	/*Has two elements - the boardArray of player0 and the boardArray of player_1*/

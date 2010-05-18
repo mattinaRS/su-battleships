@@ -22,10 +22,7 @@ public class AiRandomPlayer extends AiPlayer {
 	}
 	
 	@Override
-	public short generateMove() {
-		Short[] playerBoard = game.getPlayerBoard((short)1);//ai is always the second player
-
-		
+	public short generateMove() {		
 		short possibleShotsCount = (short) possibleShots.size();
 		
 		Calendar calendar = Calendar.getInstance();
