@@ -1,40 +1,66 @@
 package com.su.android.battleship.data;
 
+/**
+ * This class holds the values of the game board fields and business methods to manipulate them
+ * @author vasko
+ *
+ */
 public class BoardFieldStatus {
 	
 	private BoardFieldStatus(){		
 	}
 	
+	/**
+	 * Code for a WATER FIELD
+	 */
 	public static final short WATER = 0x0F;
+	
+	/**
+	 * Code for a ATTACKE WATER FIELD
+	 */
 	public static final short WATER_ATTACKED = 0x1F;
 	
 	/*Ship index is corresponding to the length of the ship 
 	 *The lower hex byte - the position in the Ship[] array*/
-	public static final short SHIP_0 = 0x00;
-	public static final short SHIP_0_ATTACKED = 0x10;
-	public static final short SHIP_0_DESTROYED = 0x20;
+	private static final short SHIP_0 = 0x00;
+	private static final short SHIP_0_ATTACKED = 0x10;
+	@SuppressWarnings("unused")
+	private static final short SHIP_0_DESTROYED = 0x20;
 	
-	public static final short SHIP_1 = 0x01;
-	public static final short SHIP_1_ATTACKED = 0x11;
-	public static final short SHIP_1_DESTROYED = 0x21;
+	private static final short SHIP_1 = 0x01;
+	private static final short SHIP_1_ATTACKED = 0x11;
+	@SuppressWarnings("unused")
+	private static final short SHIP_1_DESTROYED = 0x21;
 	
-	public static final short SHIP_2 = 0x02;
-	public static final short SHIP_2_ATTACKED = 0x12;
-	public static final short SHIP_2_DESTROYED = 0x22;
+	private static final short SHIP_2 = 0x02;
+	private static final short SHIP_2_ATTACKED = 0x12;
+	@SuppressWarnings("unused")
+	private static final short SHIP_2_DESTROYED = 0x22;
 	
-	public static final short SHIP_3 = 0x03;
-	public static final short SHIP_3_ATTACKED = 0x13;
-	public static final short SHIP_3_DESTROYED = 0x23;
+	private static final short SHIP_3 = 0x03;
+	private static final short SHIP_3_ATTACKED = 0x13;
+	@SuppressWarnings("unused")
+	private static final short SHIP_3_DESTROYED = 0x23;
 	
-	public static final short SHIP_4 = 0x04;
-	public static final short SHIP_4_ATTACKED = 0x14;
-	public static final short SHIP_4_DESTROYED = 0x24;
+	private static final short SHIP_4 = 0x04;
+	private static final short SHIP_4_ATTACKED = 0x14;
+	@SuppressWarnings("unused")
+	private static final short SHIP_4_DESTROYED = 0x24;
 	
+	/**
+	 * 
+	 * @param notAttackedFieldCode
+	 * @return corresponding attackedFieldCode
+	 */
 	public static short getAttackedFieldCode(short notAttackedFieldCode){
 		return (short) (notAttackedFieldCode + 0x10);
 	}
 	
-	//TODO : refactor this method to use & operator
+	/**
+	 * 
+	 * @param shipIndex
+	 * @return the shipMarkerCode that is hold as a value in this manager
+	 */
 	public static short getShipMarkerCode(short shipIndex){
 		short boardMarker;
 		switch (shipIndex) {
@@ -61,6 +87,11 @@ public class BoardFieldStatus {
 		return boardMarker;		
 	}
 	
+	/**
+	 * 
+	 * @param index
+	 * @return the attacked ship marker value
+	 */
 	public static short getDestroyedShipCode(short index){
 		return (short) (index + 0x20);
 	}
@@ -100,10 +131,20 @@ public class BoardFieldStatus {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param code
+	 * @return whether or not the field is attacked
+	 */
 	public static boolean isAttackedFieldStatus(short code){
 		return (code & 0xF0) == 0x10;
 	}
 	
+	/**
+	 * 
+	 * @param code
+	 * @return whether or not this is a code of a destroyed ship
+	 */
 	public static boolean isShipDestroyedStatus(short code){
 		return (code & 0xF0) == 0x20;
 	}

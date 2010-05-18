@@ -5,9 +5,15 @@ import android.util.Log;
 import com.su.android.battleship.data.GameAi;
 import com.su.android.battleship.data.Ship;
 import com.su.android.battleship.data.ShipPositionGenerator;
-
+/**
+ * Test class
+ * @author vasko
+ *
+ */
 public class TestAI_SPPFD {	
-
+    /**
+     * test method
+     */
 	public static void test(){
 		ShipPositionGenerator generator = new ShipPositionGenerator();
 		
@@ -15,9 +21,9 @@ public class TestAI_SPPFD {
 		Ship[] generatedShipPosition2 = generator.getRandomShipsPosition();
 
 		GameAi game = new GameAi((short) 0, generatedShipPosition1,
-				generatedShipPosition2,AiFactory.AI_SPPFD_INSANE);
+				generatedShipPosition2,(short) 3);
 		
-		AiPlayer_ShipPositionsPerFieldDependant ai = (AiPlayer_ShipPositionsPerFieldDependant) AiFactory.getInstance().produceAiPlayer(AiFactory.AI_SPPFD_INSANE, game);
+		AiPlayer_ShipPositionsPerFieldDependant ai = (AiPlayer_ShipPositionsPerFieldDependant) AiFactory.getInstance().produceAiPlayer(3, game);
 		short tempNumber;
 		boolean isOptimalFirstMove;
 		short[] optimalFirstMoves = {44,45,54,55};

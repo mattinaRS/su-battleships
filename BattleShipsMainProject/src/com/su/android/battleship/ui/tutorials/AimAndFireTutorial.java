@@ -27,12 +27,29 @@ import android.widget.AdapterView.OnItemClickListener;
  */
 public class AimAndFireTutorial extends Activity {
 	
+	/**
+	 * flag to check whether or not a field is targeted when a fire is executed
+	 */
 	protected static final int NO_FIELD_IS_AIMED = -1;
 	
+	/**
+	 * boardImageAdapter
+	 */
 	protected GameBoardImageAdapter boardImageAdapter;
+	
+	/**
+	 * used to save the currently marked field
+	 */
 	protected int aimedField = NO_FIELD_IS_AIMED;
 	
+	/**
+	 * boardGrid
+	 */
 	protected GridView boardGrid;
+	
+	/**
+	 * fireButton
+	 */
 	protected Button fireButton;
 	
 		
@@ -42,6 +59,9 @@ public class AimAndFireTutorial extends Activity {
 		initGame();
 	}
 	
+	/**
+	 * displays the GameScreen
+	 */
 	protected void displayGameScreen(){
 		setContentView(R.layout.aim_fire_tutorial);		
 		fireButton = (Button) findViewById(R.id.ImageViewFB);
@@ -52,6 +72,9 @@ public class AimAndFireTutorial extends Activity {
 		boardGrid.setAdapter(boardImageAdapter);
 	}
 	
+	/**
+	 * attaches the ActionListeners
+	 */
 	protected void attachActionListeners(){
 		//boardGame GridView listener sets the aimedField property and changes aim color
 		boardGrid.setOnItemClickListener(new OnItemClickListener() {
@@ -88,7 +111,9 @@ public class AimAndFireTutorial extends Activity {
 		_iv.setClickable(false);//make imageView unclickable
 		aimedField = NO_FIELD_IS_AIMED;
 	}
-	
+	/**
+	 * inits the Game
+	 */
 	protected void initGame(){
 		displayGameScreen();
 		attachActionListeners();

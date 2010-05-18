@@ -9,8 +9,17 @@ import com.su.android.battleship.data.Ship;
 import com.su.android.battleship.data.ai.AiCalculationBoardStatusManager;
 import com.su.android.battleship.data.ai.AiPlayer_ShipPositionsPerFieldDependant;
 
+/**
+ * Easy Implementation of the AiPlayer
+ * @author vasko
+ *
+ */
 public class AiPlayerEasy extends AiPlayer_ShipPositionsPerFieldDependant {
 
+	/**
+	 * 
+	 * @param game
+	 */
 	public AiPlayerEasy(GameAi game) {
 		super(game);
 	}

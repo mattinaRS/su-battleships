@@ -2,7 +2,11 @@ package com.su.android.battleship.util;
 
 import java.util.Calendar;
 import java.util.Random;
-
+/**
+ * Class with common utility methods
+ * @author vasko
+ *
+ */
 public class CommonUtil {
 	
 	private static Random random = new Random(Calendar.getInstance().getTimeInMillis());

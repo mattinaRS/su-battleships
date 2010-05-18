@@ -10,6 +10,11 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+/**
+ * Class for the GameBoard ImageAdapter 
+ * @author vasko
+ *
+ */
 public class GameBoardImageAdapter extends BaseAdapter {
 	
 	private static final int FIELDS_COUNT = 100;
@@ -17,6 +22,10 @@ public class GameBoardImageAdapter extends BaseAdapter {
 	private Context mContext;	
 	private ImageView[] boardFields = new ImageView[FIELDS_COUNT];
 
+	/**
+	 * 
+	 * @param c
+	 */
     public GameBoardImageAdapter(Context c) {
         mContext = c;        
     }
@@ -85,32 +94,31 @@ public class GameBoardImageAdapter extends BaseAdapter {
     };
     
     /**
-     * Get the Integer id for crash image
-     * @return
+     * 
+     * @return the Integer id for crash image
      */
     public Integer getTransparent(){
     	return boardPictures[0];
     }
     
     /**
-     * Get the Integer id for crash image
-     * @return
+     * @return the Integer id for crash image
      */
     public Integer getCrash(){
     	return boardPictures[1];
     }
     
     /**
-     * Get the Integer id for miss image
-     * @return
+     * 
+     * @return the Integer id for miss image
      */
     public Integer getMiss(){
     	return boardPictures[2];
     }
     
     /**
-     * Get the Integer id for miss image
-     * @return
+     * 
+     * @return the Integer id for miss image
      */
     public Integer getCrosair(){
     	return boardPictures[3];

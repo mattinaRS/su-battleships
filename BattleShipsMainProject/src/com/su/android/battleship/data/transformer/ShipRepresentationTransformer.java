@@ -14,9 +14,9 @@ import com.su.data.ShipFieldsHolder;
 public class ShipRepresentationTransformer {
 	
 	/**
-	 * Return different representation of the ship's fields - the method name says enough
+	 * 
 	 * @param ship
-	 * @return
+	 * @return different representation of the ship's fields - the method name says enough
 	 */
 	public static ShipFieldsHolder getShipFieldsHolderFromShip(Ship ship){
 		int len = ship.getLength();
@@ -54,9 +54,8 @@ public class ShipRepresentationTransformer {
 	
 	
 	/**
-	 * Return different representation of the ship's fields - the method name says enough
 	 * @param ship
-	 * @return
+	 * @return different representation of the ship's fields - the method name says enough
 	 */
 	public static Ship getShipFromShipFieldsHolder(ShipFieldsHolder holder){
 		int length = holder.getLength();

@@ -9,10 +9,19 @@ import com.su.android.battleship.data.Game;
 import com.su.android.battleship.data.GameAi;
 import com.su.android.battleship.data.ai.AiPlayer;
 
+/**
+ * Random implementation of AiPlayer
+ * @author vasko
+ *
+ */
 public class AiRandomPlayer extends AiPlayer {
 	
 	private List<Short> possibleShots;	
 	
+	/**
+	 * 
+	 * @param game
+	 */
 	public AiRandomPlayer(GameAi game) {
 		super.game = game;
 		possibleShots = new ArrayList<Short>(Game.BOARD_SIZE);

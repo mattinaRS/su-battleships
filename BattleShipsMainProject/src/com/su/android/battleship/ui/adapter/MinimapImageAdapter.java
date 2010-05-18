@@ -8,7 +8,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-
+/**
+ * MinimapImageAdapter
+ * @author vasko
+ *
+ */
 public class MinimapImageAdapter extends BaseAdapter {
 
 	private static final int FIELDS_COUNT = 100;

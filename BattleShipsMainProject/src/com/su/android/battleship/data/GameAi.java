@@ -3,18 +3,32 @@ package com.su.android.battleship.data;
 import com.su.android.battleship.data.ai.AiFactory;
 import com.su.android.battleship.data.ai.AiPlayer;
 
+/**
+ * @author vasko
+ * This class extends the Game functionality and also provides business methods to play the game with an Ai opponent
+ */
 public class GameAi extends Game {
+	
+	/**index of the PLAYER used in the storing of boards and ships in the GameAi*/
 	public static final short PLAYER_INDEX = 0;
+	
+	/**index of the AI used in the storing of boards and ships in the GameAi*/
 	public static final short AI_INDEX = 1;
 
 	private short gameDifficulty;
 
 	private AiPlayer bot;
 
+	/**
+	 * @return the game difficulty
+	 */
 	public short getGameDifficulty() {
 		return gameDifficulty;
 	}
 
+	/**
+	 * @param gameDifficulty
+	 */
 	public void setGameDifficulty(short gameDifficulty) {
 		this.gameDifficulty = gameDifficulty;
 	}
@@ -30,6 +44,10 @@ public class GameAi extends Game {
 	 *            - first player's ships configuration
 	 * @param secondPlayerShips
 	 *            - second player's (which is ai) ships configuration
+	 * @param gameDifficulty 
+	 * 			  - the GameAi is responsible for creating its bot so the game difficulty must be known
+	 * so that the bot can be created accordingly
+	 *
 	 */
 	public GameAi(short playerOnMove, Ship[] firstPlayerShips,
 			Ship[] secondPlayerShips, short gameDifficulty) {
@@ -54,28 +72,29 @@ public class GameAi extends Game {
 		return field;
 	}
 
-	public class AiMoveResponse {
-		private short moveField;
-		private boolean isItaHit;
-
-		public AiMoveResponse(short m, boolean h) {
-			this.moveField = m;
-			this.isItaHit = h;
-		}
-
-		/**
-		 * @return the moveField
-		 */
-		public short getMoveField() {
-			return moveField;
-		}
-
-		/**
-		 * @return the isItaHit
-		 */
-		public boolean isItaHit() {
-			return isItaHit;
-		}
-	}
+//	@Deprecated
+//	public class AiMoveResponse {
+//		private short moveField;
+//		private boolean isItaHit;
+//
+//		public AiMoveResponse(short m, boolean h) {
+//			this.moveField = m;
+//			this.isItaHit = h;
+//		}
+//
+//		/**
+//		 * @return the moveField
+//		 */
+//		public short getMoveField() {
+//			return moveField;
+//		}
+//
+//		/**
+//		 * @return the isItaHit
+//		 */
+//		public boolean isItaHit() {
+//			return isItaHit;
+//		}
+//	}
 
 }

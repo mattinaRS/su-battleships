@@ -4,11 +4,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * Class that holds the business logic of the battleship game
+ * @author vasko
+ *
+ */
 public class Game {
+	/**
+	 * hard-coded game board board side
+	 */
 	public static final short BOARD_SIDE = 10;
+	
+	/**
+	 * hard-coded game board size
+	 */
 	public static final short BOARD_SIZE = 100;
+	
+	/**
+	 * hard-coded ships count
+	 */
 	public static final short SHIPS_COUNT = 5;
+	
+	/**
+	 * hard-coded ships sizes
+	 */
 	public static final short[] SHIPS_SIZES = new short[]{5,4,3,2,2};
 		
 	
@@ -29,6 +48,12 @@ public class Game {
 	 */
 	private List<Short> destroyedShipsCount;
 	
+	/**
+	 * 
+	 * @param playerOnMove - the player to make the first move
+	 * @param firstPlayerShips
+	 * @param secondPlayerShips
+	 */
 	public Game(short playerOnMove,Ship[] firstPlayerShips,Ship[] secondPlayerShips) {
 		this.playerOnMove = playerOnMove;
 		
@@ -77,7 +102,7 @@ public class Game {
 	
 	/**
 	 * Updates the game state after player makes a move
-	 * @param player - should always be 0 or 1 - index of the player who makes the move
+	 * @param attackingPlayer - should always be 0 or 1 - index of the player who makes the move
 	 * @param fieldPosition - the position of the selected field
 	 * @return - the new status of the targeted field
 	 */

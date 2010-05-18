@@ -16,15 +16,35 @@ import com.su.android.battleship.util.CommonUtil;
 import com.su.data.ShipFieldsHolder;
 import com.su.manager.ShipPositionsContainingFieldManager;
 
+/**
+ * Abstract class for the Ai's that implements AiPlayer logic in a ShipPositionsPerFieldDependant way
+ * @author vasko
+ *
+ */
 public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 
+	/**
+	 * boardForAiCalculations
+	 */
 	protected short[] boardForAiCalculations;
+	
+	/**
+	 * Those are the fields that are attacked from the ship that is currently being destroyed
+	 */
 	protected SortedSet<Short> fieldsFromNotYetDestroyedShip = new TreeSet<Short>();
+	
+	/**
+	 * Those are the field that possibly are part of the ship that is currenlty being destroyed
+	 */
 	protected SortedSet<Short> fieldsToContinueDestryingWith = new TreeSet<Short>();
 
 	private ShipPositionsContainingFieldManager shipPositionManager = new ShipPositionsContainingFieldManager(
 			Game.BOARD_SIDE);
 
+	/**
+	 * 
+	 * @param game
+	 */
 	public AiPlayer_ShipPositionsPerFieldDependant(GameAi game) {
 		this.game = game;
 
@@ -64,14 +84,14 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 	 * ,cant_be_ship_field.The more cleaver the AiPlayer is , the more detailed
 	 * list this method will return
 	 * 
-	 * @return
+	 * @return - (what else except) the field types that exclude potential ship positions
 	 */
 	protected abstract List<Short> getFieldTypesThatExcludePotentialShipPositions();
 
 	/**
-	 * Different AI hold different state for the fields from which the pick to shoot
+	 * Different AI hold different state for the fields from which to pick a shot
 	 * in the destroy mode.Implementation of this method provides the difference in their logic
-	 * @return
+	 * @return - the chosen field
 	 */
 	protected abstract short chooseFromPossibleShipFields();
 	
@@ -116,7 +136,7 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 	 * situations and ai will generate next moves correctly
 	 * 
 	 * @param field - the chosen game move.
-	 * @param newFieldSatus - the newStatus of the attacked field which is returned from the game update
+	 * @param newFieldStatus - the newStatus of the attacked field which is returned from the game update 
 	 */
 	public void updateFieldAfterMove(short field,short newFieldStatus) {
 		updateAfterMove(field,newFieldStatus);
@@ -221,6 +241,12 @@ public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param f1 first field
+	 * @param f2 second field
+	 * @return the number of possible ships that pass through both fields - f1 and f2
+	 */
 	protected short getCountOfShipsThroughTwoFields(short f1,short f2){
 		short resultCount = 0;
 		

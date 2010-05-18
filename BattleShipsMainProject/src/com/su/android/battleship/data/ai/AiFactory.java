@@ -6,20 +6,37 @@ import com.su.android.battleship.data.ai.impl.sppfd.AiPlayerEasy;
 import com.su.android.battleship.data.ai.impl.sppfd.AiPlayerInsane;
 import com.su.android.battleship.data.ai.impl.sppfd.AiPlayerNormal;
 
+/**
+ * Factory that creates AI objects
+ * @author vasko
+ *
+ */
 public class AiFactory {
 	
-	public static final short AI_RANDOM_PLAYER = 0;
-	public static final short AI_SPPFD_EASY = 1;
-	public static final short AI_SPPFD_NORMAL = 2;
-	public static final short AI_SPPFD_INSANE = 3;
+	private static final short AI_RANDOM_PLAYER = 0;
+	private static final short AI_SPPFD_EASY = 1;
+	private static final short AI_SPPFD_NORMAL = 2;
+	private static final short AI_SPPFD_INSANE = 3;
+	
+	private AiFactory() {
+	}
 	
 	private static AiFactory instance = new AiFactory();
 	
+	/**
+	 * 
+	 * @return the single instance of the Factory
+	 */
 	public static AiFactory getInstance(){
 		return instance;
 	}
 	
-	//TODO : change aiType from int to enum
+	/**
+	 * Produces ai player from:
+	 * @param type - ai player type
+	 * @param game - game in which the ai will participate
+	 * @return the created AiPlayer instance
+	 */
 	public AiPlayer produceAiPlayer(int type,GameAi game){
 		switch (type) {
 		case AI_RANDOM_PLAYER:

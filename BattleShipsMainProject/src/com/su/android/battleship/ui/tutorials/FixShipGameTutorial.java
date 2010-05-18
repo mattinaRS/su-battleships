@@ -26,6 +26,14 @@ import com.su.android.battleship.ui.adapter.GameBoardImageAdapter;
 import com.su.android.battleship.ui.adapter.MinimapImageAdapter;
 import com.su.android.battleship.ui.data.ActivityShipComunicator;
 
+/**
+ * Activity for a Game Tutorial
+ * NOTE : code has developer in time so ships positions are now generated and the name should be changed 
+ * NOTE : because of lack of time , this Activity was used in Single player which is not correct.
+ * This Activity IS and WILL BE TUTORIAL activiry - a SinglePlayer Acvitivy has to be design and created. 
+ * @author vasko
+ *
+ */
 public class FixShipGameTutorial extends AimAndFireTutorial {
 
 	private GameAi game;
@@ -36,7 +44,7 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
-
+	
 	protected void displayGameScreen() {
 		setContentView(R.layout.fixed_ship_game);
 
@@ -152,7 +160,7 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 	}
 
 	private void continueGameProcess() {
-		// TODO : here should be implemented logic that communicates with a
+		// NOTE : here should be implemented logic that communicates with a
 		// GameProcessWrapper
 		// in order to continue the game process - to obtain second players move
 		// from a

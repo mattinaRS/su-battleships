@@ -11,9 +11,17 @@ import com.su.android.battleship.data.ai.AiCalculationBoardStatusManager;
 import com.su.android.battleship.data.ai.AiPlayer_ShipPositionsPerFieldDependant;
 import com.su.generator.rule.FieldForbiddingRule;
 import com.su.generator.rule.FieldForbiddingRuleSquareImpl;
-
+/**
+ * Insane implementation of the AiPlayer
+ * @author vasko
+ *
+ */
 public class AiPlayerInsane extends AiPlayer_ShipPositionsPerFieldDependant {
 
+	/**
+	 * 
+	 * @param game
+	 */
 	public AiPlayerInsane(GameAi game) {
 		super(game);
 	}
