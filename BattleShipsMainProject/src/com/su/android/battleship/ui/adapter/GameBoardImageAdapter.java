@@ -46,7 +46,9 @@ public class GameBoardImageAdapter extends BaseAdapter {
         ImageView imageView;
         if (convertView == null) {  // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(30, 30));            
+            // create device independent pixels
+            int imageSize = (int) (30.0f * mContext.getResources().getDisplayMetrics().density);
+            imageView.setLayoutParams(new GridView.LayoutParams(imageSize, imageSize));            
             imageView.setPadding(0, 0, 0, 0);
         } else {
             imageView = (ImageView) convertView;

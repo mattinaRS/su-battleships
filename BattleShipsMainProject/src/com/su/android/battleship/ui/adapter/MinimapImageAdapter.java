@@ -65,11 +65,10 @@ public class MinimapImageAdapter extends BaseAdapter {
         ImageView imageView;
         if (convertView == null) {  // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(10, 10));            
+            // create device independent pixels
+            int imageSize = (int) (10.0f * mContext.getResources().getDisplayMetrics().density);
+            imageView.setLayoutParams(new GridView.LayoutParams(imageSize, imageSize));            
             imageView.setPadding(0, 0, 0, 0);
-            imageView.setClickable(false);
-            imageView.setFocusable(false);
-            imageView.setFocusableInTouchMode(false);
         } else {
             imageView = (ImageView) convertView;
         }

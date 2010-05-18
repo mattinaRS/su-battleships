@@ -45,7 +45,10 @@ public class MoveShipsAdapter extends BaseAdapter {
 		if (convertView == null) { // if it's not recycled, initialize some
 			// attributes
 			imageView = new ImageView(mContext);
-			imageView.setLayoutParams(new GridView.LayoutParams(29, 29));
+			// TODO fix this with new design
+			// create device independent pixels
+            int imageSize = (int) (29.0f * mContext.getResources().getDisplayMetrics().density);
+			imageView.setLayoutParams(new GridView.LayoutParams(imageSize, imageSize));
 			imageView.setPadding(0, 0, 0, 0);
 		} else {
 			imageView = (ImageView) convertView;
