@@ -153,6 +153,10 @@ public class RandomShipGenerator {
 		return resultSet;
 	}
 
+	/**
+	 * main method for test issues
+	 * @param args
+	 */
 	public static void main(String[] args) {
 //		testOnBoard4();
 //		testOnBoard10();

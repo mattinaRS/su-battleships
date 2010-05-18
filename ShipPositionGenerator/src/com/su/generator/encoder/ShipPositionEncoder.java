@@ -2,6 +2,11 @@ package com.su.generator.encoder;
 
 import com.su.data.ShipFieldsHolder;
 
+/**
+ * Class that encodes and decodes ship positions
+ * @author vasko
+ *
+ */
 public interface ShipPositionEncoder {
 	
 	/**

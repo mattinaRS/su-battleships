@@ -15,6 +15,9 @@ public class ForbiddenPositionsManager {
 	 * so that this class can be reused in the ship positioning implementation*/
 	private Map<Short, Short> forbiddenFieldsHolder;
 	
+	/**
+	 * 
+	 */
 	public ForbiddenPositionsManager() {
 		this.forbiddenFieldsHolder = new HashMap<Short, Short>();
 	}
@@ -56,6 +59,11 @@ public class ForbiddenPositionsManager {
 		return forbiddenFieldsHolder.keySet();
 	}
 	
+	/**
+	 * 
+	 * @param field
+	 * @return whether or not a field is forbidden
+	 */
 	public boolean isForbidden(short field) {
 		return forbiddenFieldsHolder.containsKey(field);
 	}

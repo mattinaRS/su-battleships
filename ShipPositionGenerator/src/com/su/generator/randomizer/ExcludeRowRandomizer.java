@@ -23,6 +23,9 @@ public class ExcludeRowRandomizer {
 
 	private  Random random;
 
+	/**
+	 * 
+	 */
 	public ExcludeRowRandomizer() {
 		random = new Random(Calendar.getInstance()
 				.getTimeInMillis());
@@ -71,6 +74,11 @@ public class ExcludeRowRandomizer {
 		return result;
 	}
 
+	/**
+	 * test method 
+	 * @param args
+	 * @throws ExcludeRowRandomizerAllExcludedException
+	 */
 	public static void main(String[] args) throws ExcludeRowRandomizerAllExcludedException {
 		ExcludeRowRandomizer test = new ExcludeRowRandomizer();
 		

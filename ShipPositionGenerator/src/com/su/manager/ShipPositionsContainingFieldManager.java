@@ -19,6 +19,10 @@ public class ShipPositionsContainingFieldManager {
 	
 	private short boardSideSize;
 	
+	/**
+	 * 
+	 * @param boardSideSize
+	 */
 	public ShipPositionsContainingFieldManager(short boardSideSize) {
 		this.boardSideSize = boardSideSize;
 	}
@@ -113,6 +117,10 @@ public class ShipPositionsContainingFieldManager {
 		return boardSideSize >= (coordinate + shipLength);
 	}
 	
+	/**
+	 * test method
+	 * @param args
+	 */
 	public static void main(String[] args){
 		ShipPositionsContainingFieldManager test = new ShipPositionsContainingFieldManager((short)4);
 		List<ShipFieldsHolder> list;

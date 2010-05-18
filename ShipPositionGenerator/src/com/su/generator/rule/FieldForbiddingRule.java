@@ -2,6 +2,11 @@ package com.su.generator.rule;
 
 import java.util.List;
 
+/**
+ * Interface for classes that implement a rule for Field prohibiton
+ * @author vasko
+ *
+ */
 public interface FieldForbiddingRule {
 
 		/**

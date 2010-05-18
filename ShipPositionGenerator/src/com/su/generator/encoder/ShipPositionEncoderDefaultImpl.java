@@ -26,6 +26,10 @@ public class ShipPositionEncoderDefaultImpl implements ShipPositionEncoder {
 
 	private short boardSideSize;
 	
+	/**
+	 * 
+	 * @param boardSideSize
+	 */
 	public ShipPositionEncoderDefaultImpl(short boardSideSize) {
 		this.boardSideSize = boardSideSize;
 	}

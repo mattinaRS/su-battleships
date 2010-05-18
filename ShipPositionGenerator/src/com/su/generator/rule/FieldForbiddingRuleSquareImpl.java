@@ -5,11 +5,19 @@ import java.util.List;
 
 import com.su.data.BoardField;
 import com.su.data.Orientation;
-
+/**
+ * Square implementation of the FieldForbiddinRule interface
+ * @author vasko
+ *
+ */
 public class FieldForbiddingRuleSquareImpl implements FieldForbiddingRule {
 
 	private int boardSideSize;
 
+	/**
+	 * 
+	 * @param boardSideSize
+	 */
 	public FieldForbiddingRuleSquareImpl(int boardSideSize) {
 		this.boardSideSize = boardSideSize;
 	}

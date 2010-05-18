@@ -12,6 +12,10 @@ public class ExcludeRowRandomizerAllExcludedException extends Exception {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 
+	 * @param msg
+	 */
 	public ExcludeRowRandomizerAllExcludedException(String msg) {
 		super("msg");
 	}

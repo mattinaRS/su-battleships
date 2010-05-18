@@ -18,6 +18,10 @@ public class FieldForbiddingRuleCrossImpl implements FieldForbiddingRule {
 
 	private int boardSideSize;
 
+	/**
+	 * 
+	 * @param boardSideSize
+	 */
 	public FieldForbiddingRuleCrossImpl(int boardSideSize) {
 		this.boardSideSize = boardSideSize;
 	}
@@ -78,7 +82,10 @@ public class FieldForbiddingRuleCrossImpl implements FieldForbiddingRule {
 	
 
 	
-	
+	/**
+	 * test method
+	 * @param args
+	 */
 	public static void main(String[] args){
 		FieldForbiddingRuleCrossImpl test = new FieldForbiddingRuleCrossImpl(10);
 		

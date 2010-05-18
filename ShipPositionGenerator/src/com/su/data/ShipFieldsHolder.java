@@ -2,13 +2,23 @@ package com.su.data;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Holder class for a Ship's fields
+ * @author vasko
+ *
+ */
 public class ShipFieldsHolder {
 	
 	private int length;
 	private int firstField;
 	private Direction direction;
 	
+	/**
+	 * 
+	 * @param length
+	 * @param firstField
+	 * @param direction
+	 */
 	public ShipFieldsHolder(int length, int firstField, Direction direction) {
 		super();
 		this.length = length;
@@ -60,6 +70,7 @@ public class ShipFieldsHolder {
 	
 	/**
 	 * @param sfh - the ShipFieldsHolder ship representation from which a List with all ship fields should be returned
+	 * @param boardSideSize - board's side size
 	 * @return - returns List with the ship's fields 
 	 */
 	public static List<Short> getShipFields(ShipFieldsHolder sfh,short boardSideSize){
