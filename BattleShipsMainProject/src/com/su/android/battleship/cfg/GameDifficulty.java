@@ -5,8 +5,19 @@ package com.su.android.battleship.cfg;
  * @author Ivaylo Stoykov
  */
 public enum GameDifficulty {
+	/**
+	 * easy level
+	 */
 	EASY(1),
+	
+	/**
+	 * normal level
+	 */
 	NORMAL(2),
+	
+	/**
+	 * hard level 
+	 */
 	HARD(3);
 	
 	// future use

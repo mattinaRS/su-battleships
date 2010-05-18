@@ -11,10 +11,24 @@ import android.content.SharedPreferences;
  */
 public class GamePreferences {
 	
+	/**
+	 * variable, representing sound setting in a bundle 
+	 */
 	public static final String PREFERENCE_SOUND = "BSG_PREFERENCE_SOUND";
+	
+	/**
+	 * variable, representing vibration setting in a bundle
+	 */
 	public static final String PREFERENCE_VIBRATION = "BSG_PREFERENCE_VIBRATION";
+	
+	/**
+	 * variable, representing difficulty level setting in a bundle
+	 */
 	public static final String PREFERENCE_DIFFICULTY = "BSG_PREFERENCE_DIFFICULTY";
 	
+	/**
+	 * variable, representing saved settings in a bundle
+	 */
 	public static final String BUNDLE_STATE = "BSG_PREFERENCES";
 	
 	private static HashMap<String, Object> mPreferences;
