@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.su.android.battleship.R;
+import com.su.android.battleship.service.SoundService;
 
 /**
  * First application screen. The main menu - Play, Options, Credits, Quit
@@ -65,6 +66,8 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 
 		Button buttonQuit = (Button) findViewById(R.id.ButtonQuit);
 		buttonQuit.setOnClickListener(this);
+		
+		startService(new Intent(this, SoundService.class));
 	}	
 
 	/**
@@ -88,6 +91,7 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 			startActivity(intentAbout);
 			break;
 		case R.id.ButtonQuit:
+			stopService(new Intent(this, SoundService.class));
 			finish();
 			break;
 		}
@@ -237,5 +241,11 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 		}
 
 	}
+	
+	    protected void onDestroy() {
+		  super.onDestroy();
+		  stopService(new Intent(this, SoundService.class));
+		}
+
 
 }
