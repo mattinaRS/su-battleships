@@ -96,7 +96,10 @@ public class ShipPositionEncoderDefaultImpl implements ShipPositionEncoder {
 		return result;
 	}
 
-	
+	/**
+	 * Main
+	 * @param args
+	 */
 	public static void main(String[] args){
 		ShipPositionEncoderDefaultImpl testEncoder = new ShipPositionEncoderDefaultImpl((short)3);
 		
