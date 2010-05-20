@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+
 /**
  * MinimapImageAdapter
  * @author vasko
@@ -30,7 +31,7 @@ public class MinimapImageAdapter extends BaseAdapter {
 	 * MinimapImageAdapter constructor
 	 * 
 	 * @param c				Activity context
-	 * @param shipFields	Array with ships' starting positions in minimap board
+	 * @param shipFields	Array with ships' starting positions on board
 	 */
     public MinimapImageAdapter(Context c, short[] shipFields) {
         mContext = c;
