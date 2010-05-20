@@ -24,6 +24,7 @@ public class About extends Activity implements OnClickListener {
 		buttonBack.setOnClickListener(this);
 	}
 	
+	
 	public void onClick(View button) {
 		switch(button.getId()) {
 		case R.id.ButtonBack:
