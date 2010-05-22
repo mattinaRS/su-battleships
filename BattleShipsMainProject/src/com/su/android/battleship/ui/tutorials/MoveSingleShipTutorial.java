@@ -11,6 +11,7 @@ import android.view.View.OnTouchListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+
 public class MoveSingleShipTutorial extends Activity{
 	private short shipPosition;
 	private boolean shipIsSelected;
