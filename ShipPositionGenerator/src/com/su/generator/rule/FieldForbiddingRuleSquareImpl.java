@@ -22,7 +22,6 @@ public class FieldForbiddingRuleSquareImpl implements FieldForbiddingRule {
 		this.boardSideSize = boardSideSize;
 	}
 
-	//TODO : create tests for this method
 	@Override
 	public List<Integer> getForbiddenFields(int field) {
 		List<Integer> resultList = new ArrayList<Integer>();

@@ -8,17 +8,22 @@ public enum GameDifficulty {
 	/**
 	 * easy level
 	 */
-	EASY(1),
+	EASY(0),
 	
 	/**
 	 * normal level
 	 */
-	NORMAL(2),
+	NORMAL(1),
 	
 	/**
 	 * hard level 
 	 */
-	HARD(3);
+	HARD(2),
+	
+	/**
+	 * insane level
+	 */
+	INSANE(3);
 	
 	// future use
 	private int mInfo;

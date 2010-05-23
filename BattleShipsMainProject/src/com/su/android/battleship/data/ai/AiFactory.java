@@ -13,10 +13,11 @@ import com.su.android.battleship.data.ai.impl.sppfd.AiPlayerNormal;
  */
 public class AiFactory {
 	
-	private static final short AI_RANDOM_PLAYER = 0;
-	private static final short AI_SPPFD_EASY = 1;
-	private static final short AI_SPPFD_NORMAL = 2;
-	private static final short AI_SPPFD_INSANE = 3;
+	
+	private static final short AI_EASY = 0;
+	private static final short AI_NORMAL = 1;
+	private static final short AI_HARD = 2;	
+	private static final short AI_INSANE = 3;
 	
 	private AiFactory() {
 	}
@@ -39,13 +40,13 @@ public class AiFactory {
 	 */
 	public AiPlayer produceAiPlayer(int type,GameAi game){
 		switch (type) {
-		case AI_RANDOM_PLAYER:
+		case AI_EASY:
 			return new AiRandomPlayer(game);
-		case AI_SPPFD_EASY:
+		case AI_NORMAL:
 			return new AiPlayerEasy(game);
-		case AI_SPPFD_NORMAL:
+		case AI_HARD:
 			return new AiPlayerNormal(game);
-		case AI_SPPFD_INSANE:
+		case AI_INSANE:
 			return new AiPlayerInsane(game);
 		default:
 			return null;			

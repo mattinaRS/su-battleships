@@ -6,14 +6,27 @@ import com.su.data.ShipFieldsHolder;
 import com.su.generator.AllShipPositionsForbiddenException;
 import com.su.generator.RandomShipGenerator;
 
+/**
+ * Wrapper class that uses RandomShipGenerator instance to generate randomly positioned ships
+ * on the Game's board.
+ * @author vasko
+ *
+ */
 public class ShipPositionGenerator {
 	
 	private RandomShipGenerator generator;
 	
+	/**
+	 * Public constructor
+	 */
 	public ShipPositionGenerator() {
 		generator = new RandomShipGenerator(Game.BOARD_SIDE);
 	}
 	
+	/**
+	 * 
+	 * @return hard-coded ship positions
+	 */
 	public Ship[] getHardcodedShipPosition(){
 		Ship[] resultShips = new Ship[Game.SHIPS_COUNT]; //5
 		
@@ -32,6 +45,10 @@ public class ShipPositionGenerator {
 		return resultShips;
 	}
 	
+	/**
+	 * 
+	 * @return - randomly generated ship positions
+	 */
 	public Ship[] getRandomShipsPosition(){		
 		short currentShipSize;
 		ShipFieldsHolder tempSFH;
@@ -53,7 +70,7 @@ public class ShipPositionGenerator {
 				//DO NOT forget to update generator with the currently randomized ship, or else ships may intersect
 				generator.addShipUpdateState(tempSFH);
 			} catch (AllShipPositionsForbiddenException e) {
-				// TODO Auto-generated catch block
+				// TODO : design and implement Exception handling mechanism when all ship positions are forbidden and another ship position is yet to be generated
 				e.printStackTrace();
 			}
 		}

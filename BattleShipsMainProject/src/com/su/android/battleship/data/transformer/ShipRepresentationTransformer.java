@@ -54,7 +54,7 @@ public class ShipRepresentationTransformer {
 	
 	
 	/**
-	 * @param ship
+	 * @param holder
 	 * @return different representation of the ship's fields - the method name says enough
 	 */
 	public static Ship getShipFromShipFieldsHolder(ShipFieldsHolder holder){

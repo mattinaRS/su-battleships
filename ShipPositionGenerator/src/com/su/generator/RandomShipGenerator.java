@@ -1,5 +1,6 @@
 package com.su.generator;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -54,9 +55,10 @@ public class RandomShipGenerator {
 		this.encoder = new ShipPositionEncoderDefaultImpl(
 				(short) (boardSideSize));
 		this.positionManager = new ForbiddenPositionsManager();
-		this.shipsManager = new ShipPositionsContainingFieldManager(boardSideSize);
-		
-//		this.rule = new FieldForbiddingRuleCrossImpl(boardSideSize);
+		this.shipsManager = new ShipPositionsContainingFieldManager(
+				boardSideSize);
+
+		// this.rule = new FieldForbiddingRuleCrossImpl(boardSideSize);
 		this.rule = new FieldForbiddingRuleSquareImpl(boardSideSize);
 	}
 
@@ -84,6 +86,7 @@ public class RandomShipGenerator {
 
 		// from every forbidden field determine all forbidden ship positions
 		Set<ShipFieldsHolder> allForbiddenShips = new HashSet<ShipFieldsHolder>();
+
 		List<ShipFieldsHolder> tempForbiddenShips;
 		short tempField;
 		while (iterator.hasNext()) {
@@ -94,7 +97,7 @@ public class RandomShipGenerator {
 		}
 
 		// encode all forbiddenShips
-		SortedSet<Integer> encodedForbiddenShips = encodeAllForbiddenShips(allForbiddenShips);
+		SortedSet<Integer> encodedForbiddenShips = getAllEncodedForbiddenShips(shipLength);
 
 		// generate random position
 		int encodedPositionsCount = encoder.encodedPositionsCount(shipLength);
@@ -113,6 +116,28 @@ public class RandomShipGenerator {
 		}
 	}
 
+	SortedSet<Integer> getAllEncodedForbiddenShips(short shipLength) {
+		// first get all forbidden fields
+		Set<Short> currentForbiddenFields = positionManager
+				.getAllForbiddenFields();
+		Iterator<Short> iterator = currentForbiddenFields.iterator();
+
+		// from every forbidden field determine all forbidden ship positions
+		Set<ShipFieldsHolder> allForbiddenShips = new HashSet<ShipFieldsHolder>();
+
+		List<ShipFieldsHolder> tempForbiddenShips;
+		short tempField;
+		while (iterator.hasNext()) {
+			tempField = iterator.next();
+			tempForbiddenShips = shipsManager.getShipsCrossingField(tempField,
+					shipLength);
+			allForbiddenShips.addAll(tempForbiddenShips);
+		}
+
+		SortedSet<Integer> result = encodeAllForbiddenShips(allForbiddenShips);
+		return result;
+	}
+
 	/**
 	 * Use this method a generated random ship should be used for further
 	 * calculations - that is its forbidden fields are to be considered in an
@@ -122,23 +147,36 @@ public class RandomShipGenerator {
 	 *            - ship with which the forbiddenFields state should be updated
 	 */
 	public void addShipUpdateState(ShipFieldsHolder ship) {
+		List<Integer> forbiddenFieldsFromShipField = determineForbiddenFields(ship);
+		for (Integer i : forbiddenFieldsFromShipField) {
+			int _i = i;
+			short s = (short) _i;
+			positionManager.addForbiddenField(s);
+		}
+	}
 
+	/**
+	 * 
+	 * @param ship
+	 * @return - List of forbidden fields WITH REPETITIONS - the repetition can be used in the future
+	 * design of the game ,so Vasko decided not to implement logic for separation of the duplications.
+	 * Besides the arrange ships algorithm requires that for every forbidden ship is kept the number of fields
+	 * that this field is forbidden from.The logic for ForbiddenFields repetition is already implemented in the
+	 * ForbiddenPositionsManager add/remove methods so there is no problem at all with the repetition here.
+	 */
+	List<Integer> determineForbiddenFields(ShipFieldsHolder ship) {
 		List<Short> shipFields = ShipFieldsHolder.getShipFields(ship,
 				boardSideSize);
 		Iterator<Short> iterator = shipFields.iterator();
 		short temp;
-		List<Integer> forbiddenFieldsFromShipField;
+		List<Integer> forbiddenFieldsFromShipField = new ArrayList<Integer>();
 		while (iterator.hasNext()) {
 			temp = iterator.next();
-			forbiddenFieldsFromShipField = rule.getForbiddenFields(temp);
-			for (Integer i : forbiddenFieldsFromShipField) {
-				int _i = i;
-				short s = (short) _i;
-				positionManager.addForbiddenField(s);
-			}
+			forbiddenFieldsFromShipField.addAll(rule.getForbiddenFields(temp));
 		}
+		return forbiddenFieldsFromShipField;
 	}
-	
+
 	private SortedSet<Integer> encodeAllForbiddenShips(
 			Set<ShipFieldsHolder> allShips) {
 		SortedSet<Integer> resultSet = new TreeSet<Integer>();
@@ -155,15 +193,17 @@ public class RandomShipGenerator {
 
 	/**
 	 * main method for test issues
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
-//		testOnBoard4();
-//		testOnBoard10();
+		// testOnBoard4();
+		// testOnBoard10();
 	}
-	
-	@SuppressWarnings("unused") //this is test method and is sometimes commented
-	private static void testOnBoard4(){
+
+	@SuppressWarnings("unused")
+	// this is test method and is sometimes commented
+	private static void testOnBoard4() {
 		short boardSideSize = 4;
 		ShipFieldsHolder temp;
 
@@ -183,9 +223,10 @@ public class RandomShipGenerator {
 			System.err.println(e.getMessage());
 		}
 	}
-	
-	@SuppressWarnings("unused") //this is test method and is sometimes commented
-	private static void testOnBoard10(){
+
+	@SuppressWarnings("unused")
+	// this is test method and is sometimes commented
+	private static void testOnBoard10() {
 		short boardSideSize = 10;
 		ShipFieldsHolder temp;
 
@@ -201,11 +242,11 @@ public class RandomShipGenerator {
 			test.addShipUpdateState(temp);
 			temp = test.generateRandomShipPosition((short) 3);
 			printTest(temp, boardSideSize);
-			
+
 			test.addShipUpdateState(temp);
 			temp = test.generateRandomShipPosition((short) 3);
 			printTest(temp, boardSideSize);
-			
+
 			test.addShipUpdateState(temp);
 			temp = test.generateRandomShipPosition((short) 3);
 			printTest(temp, boardSideSize);
