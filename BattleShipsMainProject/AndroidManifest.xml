@@ -33,13 +33,18 @@
 		
 	 	<activity android:name=".ui.tutorials.FixShipGameTutorial" android:label="@string/set_ship_game_tutorial">
 		</activity> 
-	<activity android:name=".ui.tutorials.MoveSingleShipTutorial" android:label="MoveSingleShipTutorial"></activity>
+		<activity android:name=".ui.tutorials.MoveSingleShipTutorial" android:label="MoveSingleShipTutorial"></activity>
+		
+		<activity android:name=".ui.PreferencesMenuScreen"></activity>
+		
+		<service android:enabled="true" android:name=".service.SoundService" />
 	
-	<activity android:name=".ui.PreferencesMenuScreen"></activity>
+		<activity android:name=".ui.ArrangeShips"></activity>
+		
+		<uses-library android:name="android.test.runner" />
+	</application>
 	
-	<service android:enabled="true" android:name=".service.SoundService" />
-
-<activity android:name=".ui.ArrangeShips"></activity>
-</application>
-
+	<instrumentation android:label="Preferences Tests"
+		android:name="com.su.android.battleship.unittests.preferences.PreferencesInstrumentationTestRunner"
+		android:targetPackage="com.su.android.battleship" />
 </manifest> 
