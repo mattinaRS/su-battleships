@@ -132,5 +132,10 @@ public class ShipFieldsHolder {
 		return false;
 	}
 	
+	public int hashCode(){
+		int directionMap = this.direction.equals(Direction.HORIZONTAL) ? 0 : 1;
+		int hashCode = (this.length*31 + this.firstField)*31 + directionMap;
+		return hashCode;
+	}
 	
 }

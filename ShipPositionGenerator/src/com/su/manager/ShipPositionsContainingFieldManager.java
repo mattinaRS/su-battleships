@@ -49,9 +49,9 @@ public class ShipPositionsContainingFieldManager {
 	 * Here for a ship we understand a possible ship position on the board.
 	 * @param fieldPosition - the field ,for which all the intersecting ships must be found
 	 * @param shipLength - ships' length
-	 * @return - all the horizontal ships that contain the given field. 
+	 * @return - all the vertical ships that contain the given field. 
 	 */
-	public List<ShipFieldsHolder> getHorizontalShipsCrossingField(int fieldPosition,int shipLength){
+	public List<ShipFieldsHolder> getVerticalShipsCrossingField(int fieldPosition,int shipLength){
 		List<ShipFieldsHolder> actualShips = new ArrayList<ShipFieldsHolder>();
 		ShipFieldsHolder tempSFH;
 		BoardField tempBF;
@@ -76,13 +76,16 @@ public class ShipPositionsContainingFieldManager {
 		return actualShips;
 	}
 	
+	
+	
+	
 	/**
 	 * Here for a ship we understand a possible ship position on the board.
 	 * @param fieldPosition - the field ,for which all the intersecting ships must be found
 	 * @param shipLength - ships' length
-	 * @return - all the vertical ships that contain the given field. 
+	 * @return - all the horizontal ships that contain the given field. 
 	 */
-	public List<ShipFieldsHolder> getVerticalShipsCrossingField(int fieldPosition,int shipLength){
+	public List<ShipFieldsHolder> getHorizontalShipsCrossingField(int fieldPosition,int shipLength){
 		List<ShipFieldsHolder> actualShips = new ArrayList<ShipFieldsHolder>();
 		
 		ShipFieldsHolder tempSFH;
