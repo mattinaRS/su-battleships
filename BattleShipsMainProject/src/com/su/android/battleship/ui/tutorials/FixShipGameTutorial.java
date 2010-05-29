@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -117,12 +118,23 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		short newFieldStatus = game.executeMove((short) 0, (short) aimedField);
 		if (BoardFieldStatus.isShipAttackedStatus(newFieldStatus) || BoardFieldStatus.isShipDestroyedStatus(newFieldStatus)) {
 			_iv.setImageResource(boardImageAdapter.getCrash());// mark as fired
+			
+			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION) ) {
+				Vibrator v = (Vibrator) getSystemService(FixShipGameTutorial.VIBRATOR_SERVICE); 
+				v.vibrate(500);
+			}
 		} else {
 			_iv.setImageResource(boardImageAdapter.getMiss());// mark as fired
+			
+			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION) ) {
+				Vibrator v = (Vibrator) getSystemService(FixShipGameTutorial.VIBRATOR_SERVICE); 
+				v.vibrate(200);
+			}
 		}
 		_iv.setClickable(false);// make imageView unclickable
 		// _iv.setFocusable(false);
 		aimedField = NO_FIELD_IS_AIMED;
+		
 	}
 
 	protected void initGame() {
