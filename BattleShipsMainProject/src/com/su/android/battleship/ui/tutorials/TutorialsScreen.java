@@ -10,6 +10,11 @@ import android.widget.Button;
 
 import com.su.android.battleship.R;
 
+/**
+ * 
+ * @author Vasko
+ *
+ */
 public class TutorialsScreen extends Activity implements OnClickListener{
 
 	private Button mButtonAimAndFireTutorial;

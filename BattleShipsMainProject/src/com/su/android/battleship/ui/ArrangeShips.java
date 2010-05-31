@@ -2,20 +2,6 @@ package com.su.android.battleship.ui;
 
 import java.util.List;
 
-import com.su.android.battleship.R;
-import com.su.android.battleship.data.Game;
-import com.su.android.battleship.data.Ship;
-import com.su.android.battleship.data.ShipPositionGenerator;
-import com.su.android.battleship.data.transformer.ShipRepresentationTransformer;
-import com.su.android.battleship.ui.adapter.MoveShipsAdapter;
-import com.su.android.battleship.ui.data.ActivityShipComunicator;
-import com.su.android.battleship.util.ShipUtil;
-import com.su.data.Direction;
-import com.su.data.ShipFieldsHolder;
-import com.su.generator.rule.FieldForbiddingRule;
-import com.su.generator.rule.FieldForbiddingRuleSquareImpl;
-import com.su.manager.ForbiddenPositionsManager;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +15,20 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+
+import com.su.android.battleship.R;
+import com.su.android.battleship.data.Game;
+import com.su.android.battleship.data.Ship;
+import com.su.android.battleship.data.ShipPositionGenerator;
+import com.su.android.battleship.data.transformer.ShipRepresentationTransformer;
+import com.su.android.battleship.ui.adapter.MoveShipsAdapter;
+import com.su.android.battleship.ui.data.ActivityShipComunicator;
+import com.su.android.battleship.util.ShipUtil;
+import com.su.data.Direction;
+import com.su.data.ShipFieldsHolder;
+import com.su.generator.rule.FieldForbiddingRule;
+import com.su.generator.rule.FieldForbiddingRuleSquareImpl;
+import com.su.manager.ForbiddenPositionsManager;
 
 /**
  * @author User

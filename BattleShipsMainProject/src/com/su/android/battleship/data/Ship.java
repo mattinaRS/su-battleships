@@ -41,7 +41,12 @@ public class Ship implements Serializable {
 		return boardFields;
 	}
 	
-	public Ship(short length,short[] _fields) {
+	/**
+	 * Constructor
+	 * @param length
+	 * @param _fields
+	 */
+	public Ship(short length, short[] _fields) {
 		this.length = length;
 		//TODO : check for correctness of _fields length
 		this.boardFields = _fields;

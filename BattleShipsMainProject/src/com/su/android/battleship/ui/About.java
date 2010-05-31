@@ -2,7 +2,6 @@ package com.su.android.battleship.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;

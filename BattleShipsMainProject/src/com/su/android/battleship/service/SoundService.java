@@ -1,11 +1,17 @@
 package com.su.android.battleship.service;
 
-import com.su.android.battleship.R;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 
+import com.su.android.battleship.R;
+
+/**
+ * 
+ * @author Rosen
+ *
+ */
 public class SoundService extends Service {
 	private MediaPlayer player;
 	
@@ -21,6 +27,9 @@ public class SoundService extends Service {
 		player.start();
 	}
 	
+	/**
+	 * Start the service
+	 */
 	public void onStart() {
 		player.start();
 	}
