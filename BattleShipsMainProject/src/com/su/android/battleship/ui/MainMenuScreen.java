@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.su.android.battleship.R;
+import com.su.android.battleship.cfg.GamePreferences;
 import com.su.android.battleship.service.SoundService;
 
 /**
@@ -67,7 +68,13 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 		Button buttonQuit = (Button) findViewById(R.id.ButtonQuit);
 		buttonQuit.setOnClickListener(this);
 		
-		startService(new Intent(this, SoundService.class));
+		if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
+			startService(new Intent(this, SoundService.class));
+		}
+		
+		if ( !(Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
+			stopService(new Intent(this, SoundService.class));
+		}
 	}	
 
 	/**
@@ -242,10 +249,29 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 
 	}
 	
+		/**
+		 * Stops the background music when finishing the application
+		 */
 	    protected void onDestroy() {
 		  super.onDestroy();
 		  stopService(new Intent(this, SoundService.class));
 		}
-
+	    
+	    /**
+	     * Starts/stops sound when the activity is restarted 
+	     * (useful when returned to after changes in settings menu)
+	     */
+		@Override
+		protected void onRestart() {
+			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
+				startService(new Intent(this, SoundService.class));
+			}
+	    	
+	    	if ( !(Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
+				stopService(new Intent(this, SoundService.class));
+			}
+			// TODO Auto-generated method stub
+			super.onRestart();
+		}
 
 }

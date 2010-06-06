@@ -22,10 +22,12 @@ import com.su.android.battleship.data.BoardFieldStatus;
 import com.su.android.battleship.data.GameAi;
 import com.su.android.battleship.data.Ship;
 import com.su.android.battleship.data.ShipPositionGenerator;
+import com.su.android.battleship.service.SoundService;
 import com.su.android.battleship.ui.ArrangeShips;
 import com.su.android.battleship.ui.adapter.GameBoardImageAdapter;
 import com.su.android.battleship.ui.adapter.MinimapImageAdapter;
 import com.su.android.battleship.ui.data.ActivityShipComunicator;
+import com.su.android.battleship.util.GameSounds;
 
 /**
  * Activity for a Game Tutorial
@@ -40,10 +42,16 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 	private GameAi game;
 	private GridView minimapGrid;
 	private MinimapImageAdapter minimapImageAdapter;
-
+	private GameSounds gameSounds;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		gameSounds = new GameSounds(this);
+		if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
+			gameSounds.playSound(1);
+		}
 	}
 	
 	protected void displayGameScreen() {
@@ -59,6 +67,7 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		short[] playerShipFields = getPlayerShipFields();
 		minimapImageAdapter = new MinimapImageAdapter(this, playerShipFields);
 		minimapGrid.setAdapter(minimapImageAdapter);
+		
 	}
 
 	protected void attachActionListeners() {
@@ -121,7 +130,11 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 			
 			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION) ) {
 				Vibrator v = (Vibrator) getSystemService(FixShipGameTutorial.VIBRATOR_SERVICE); 
-				v.vibrate(500);
+				v.vibrate(600);
+			}
+			
+			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
+				gameSounds.playSound(2);
 			}
 		} else {
 			_iv.setImageResource(boardImageAdapter.getMiss());// mark as fired
@@ -130,17 +143,26 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 				Vibrator v = (Vibrator) getSystemService(FixShipGameTutorial.VIBRATOR_SERVICE); 
 				v.vibrate(200);
 			}
+			
+			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
+				gameSounds.playSound(3);
+			}
 		}
 		_iv.setClickable(false);// make imageView unclickable
 		// _iv.setFocusable(false);
 		aimedField = NO_FIELD_IS_AIMED;
-		
+		if (game.isGameOver()) {
+			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
+				gameSounds.playSound(4);
+			}
+		}
 	}
 
 	protected void initGame() {
 		// Ship[] generatedShipPosition1 = generator.getHardcodedShipPosition();
 		// Ship[] generatedShipPosition2 = generator.getHardcodedShipPosition();
-
+		stopService(new Intent(this, SoundService.class));
+		
 		Intent intent = new Intent(this, ArrangeShips.class);
 		startActivityForResult(intent, 1);
 	}
@@ -222,4 +244,14 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		}
 		return result;
 	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
+			startService(new Intent(this, SoundService.class));
+		}
+	}
+	
+	
 }
