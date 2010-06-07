@@ -15,7 +15,7 @@ import com.su.android.battleship.R;
  */
 public class GameSounds {
 	
-	/*
+	/**
 	 * constructor
 	 * @param Context
 	 */
@@ -25,11 +25,34 @@ public class GameSounds {
 		this.initSounds();
 	}
 
-	
+	/**
+	 * sound on game start
+	 * @value 1
+	 */
 	public static final int SOUND_GAME_START = 1;
+	
+	/**
+	 * sound on hitting an opponent's ship
+	 * @value 2
+	 */
 	public static final int SOUND_HIT = 2;
+	
+	/**
+	 * sound on missing a shot
+	 * @value 3
+	 */
 	public static final int SOUND_MISS = 3;
+	
+	/**
+	 * sound on winning the game
+	 * * @value 4
+	 */
 	public static final int SOUND_YOU_WIN = 4;
+	
+	/**
+	 * sound on losing the game
+	 * @value 5
+	 */
 	public static final int SOUND_YOU_LOSE = 5;
 
 	
@@ -53,12 +76,12 @@ public class GameSounds {
 		soundPoolMap.put(SOUND_YOU_LOSE, soundPool.load(myContext, R.raw.lose, 5));
 	}
 	
-	/*
+	/**
 	 * Method for playing a sound
 	 * @param sound - index of the sound to be played
 	 */
 	public void playSound(int sound) {
-	        AudioManager mgr = (AudioManager)myContext.getSystemService(myContext.AUDIO_SERVICE);
+	        AudioManager mgr = (AudioManager)myContext.getSystemService(Context.AUDIO_SERVICE);
 	        int streamVolume = mgr.getStreamVolume(AudioManager.STREAM_MUSIC);
 	        soundPool.play(soundPoolMap.get(sound), streamVolume, streamVolume, 1, 0, 1f);
 	}

@@ -17,12 +17,14 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.su.android.battleship.R;
+import com.su.android.battleship.cfg.GamePreferences;
 import com.su.android.battleship.data.Game;
 import com.su.android.battleship.data.Ship;
 import com.su.android.battleship.data.ShipPositionGenerator;
 import com.su.android.battleship.data.transformer.ShipRepresentationTransformer;
 import com.su.android.battleship.ui.adapter.MoveShipsAdapter;
 import com.su.android.battleship.ui.data.ActivityShipComunicator;
+import com.su.android.battleship.util.GameSounds;
 import com.su.android.battleship.util.ShipUtil;
 import com.su.data.Direction;
 import com.su.data.ShipFieldsHolder;
@@ -55,12 +57,19 @@ public class ArrangeShips extends Activity {
 	protected Button btnAccept;
 	protected Button btnCancel;
 	protected Button btnRotate;
-
+	
+	private GameSounds gameSounds;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initGame();
 		displayGameScreen();
 		attachActionListeners();
+		
+		gameSounds = new GameSounds(this);
+		if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
+			gameSounds.playSound(1);
+		}
 	}
 
 	protected void displayGameScreen() {

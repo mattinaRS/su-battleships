@@ -225,6 +225,9 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		if (game.isGameOver()) {
 			Toast.makeText(FixShipGameTutorial.this,
 					"Game over.Winner is the AI.", 1000).show();
+			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
+				gameSounds.playSound(5);
+			}
 		}
 	}
 
