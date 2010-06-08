@@ -9,7 +9,7 @@ import android.media.SoundPool;
 import com.su.android.battleship.R;
 
 /**
- * Class for  sound playback during the game
+ * Class for sound playback during the game
  * @author Rosen
  *
  */
@@ -17,7 +17,7 @@ public class GameSounds {
 	
 	/**
 	 * constructor
-	 * @param Context
+	 * @param context Activity context
 	 */
 	public GameSounds(Context context) {
 		super();
@@ -27,31 +27,26 @@ public class GameSounds {
 
 	/**
 	 * sound on game start
-	 * @value 1
 	 */
 	public static final int SOUND_GAME_START = 1;
 	
 	/**
 	 * sound on hitting an opponent's ship
-	 * @value 2
 	 */
 	public static final int SOUND_HIT = 2;
 	
 	/**
 	 * sound on missing a shot
-	 * @value 3
 	 */
 	public static final int SOUND_MISS = 3;
 	
 	/**
 	 * sound on winning the game
-	 * * @value 4
 	 */
 	public static final int SOUND_YOU_WIN = 4;
 	
 	/**
 	 * sound on losing the game
-	 * @value 5
 	 */
 	public static final int SOUND_YOU_LOSE = 5;
 
