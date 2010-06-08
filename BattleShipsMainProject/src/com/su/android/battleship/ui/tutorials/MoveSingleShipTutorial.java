@@ -12,10 +12,21 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 
+/**
+ * An UI screen for a move a single ship tutorial
+ * @author Tony
+ *
+ */
 public class MoveSingleShipTutorial extends Activity{
 	private short shipPosition;
 	private boolean shipIsSelected;
+	/**
+	 * An ImageAdapter for moving ships
+	 */
 	protected MoveShipsAdapter moveShipsAdapter;
+	/**
+	 * the board grid
+	 */
 	protected GridView boardGrid;
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +36,9 @@ public class MoveSingleShipTutorial extends Activity{
 		attachActionListeners();
 	}
 
+	/**
+	 * Displays the game screen
+	 */
 	protected void displayGameScreen(){
 		setContentView(R.layout.move_single_ship);		
 		
@@ -35,6 +49,11 @@ public class MoveSingleShipTutorial extends Activity{
 		boardGrid.setAdapter(moveShipsAdapter);
 	}
 
+	/**
+	 * attaches action listeners to:
+	 * touch events
+	 * clicking the buttons
+	 */
 	protected void attachActionListeners(){
         boardGrid.setOnTouchListener(new OnTouchListener() {
 			@Override
@@ -83,6 +102,10 @@ public class MoveSingleShipTutorial extends Activity{
 		});
 
 	}
+	
+	/**
+	 * Initializes the state of the board
+	 */
 	protected void initGame(){
 		shipPosition = 2;
 		shipIsSelected = false;

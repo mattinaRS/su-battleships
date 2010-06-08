@@ -6,7 +6,17 @@ import java.util.List;
 import com.su.android.battleship.data.Ship;
 import com.su.generator.rule.FieldForbiddingRule;
 
+/**
+ * A class with ship related utilities
+ * @author Vasko and Tony
+ *
+ */
 public class ShipUtil {
+	/**
+	 * converts an array of ships into a an array of their fields
+	 * @param ships
+	 * @return
+	 */
 	public static short[] getShipsFields(Ship[] ships) {
 		List<Short> resultList = new ArrayList<Short>();
 		Ship tempShip;
@@ -23,6 +33,12 @@ public class ShipUtil {
 		return result;
 	}
 	
+	/**
+	 * Applying a forbidding rule get the fields that a ship forbids 
+	 * @param ship
+	 * @param rule
+	 * @return
+	 */
 	public static List<Short> getForbiddenFieldsFromShip(Ship ship, FieldForbiddingRule rule) {
 		List<Short> result = new ArrayList<Short>();
 		short[] shipFields = ship.getBoardFields();

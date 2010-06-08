@@ -31,7 +31,7 @@ import com.su.android.battleship.util.GameSounds;
 
 /**
  * Activity for a Game Tutorial
- * NOTE : code has developer in time so ships positions are now generated and the name should be changed 
+ * NOTE : code has developed in time so ships positions are now generated and the name should be changed 
  * NOTE : because of lack of time , this Activity was used in Single player which is not correct.
  * This Activity IS and WILL BE TUTORIAL activiry - a SinglePlayer Acvitivy has to be design and created. 
  * @author vasko

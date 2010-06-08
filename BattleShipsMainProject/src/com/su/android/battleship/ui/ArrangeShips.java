@@ -33,12 +33,21 @@ import com.su.generator.rule.FieldForbiddingRuleSquareImpl;
 import com.su.manager.ForbiddenPositionsManager;
 
 /**
- * @author User
+ * A UI screen for arranging ships
+ * @author Tony
  * 
  */
 public class ArrangeShips extends Activity {
 
+	/**
+	 * value returned to the single player activity 
+	 * when the back button is pressed
+	 */
 	public static final int BACK = 0;
+	/**
+	 * value returned to the single player activity 
+	 * when the apply button is pressed
+	 */
 	public static final int ACCEPT = 1;
 
 	private FieldForbiddingRule rule;
@@ -52,10 +61,25 @@ public class ArrangeShips extends Activity {
 	private ShipFieldsHolder lastPossiblePosition;
 	private short oldCursorPosition;
 
+	/**
+	 * ImageAdapter for moving ships
+	 */
 	protected MoveShipsAdapter moveShipsAdapter;
+	/**
+	 * the board
+	 */
 	protected GridView boardGrid;
+	/**
+	 * accept button
+	 */
 	protected Button btnAccept;
+	/**
+	 * cancel button
+	 */
 	protected Button btnCancel;
+	/**
+	 * rotate button
+	 */
 	protected Button btnRotate;
 	
 	private GameSounds gameSounds;
@@ -72,6 +96,9 @@ public class ArrangeShips extends Activity {
 		}
 	}
 
+	/**
+	 * Displays the game screen
+	 */
 	protected void displayGameScreen() {
 		setContentView(R.layout.arrange_ships);
 
@@ -84,6 +111,11 @@ public class ArrangeShips extends Activity {
 
 	}
 
+	/**
+	 * attaches action listeners to:
+	 * touch events
+	 * clicking the buttons
+	 */
 	protected void attachActionListeners() {
 
 		boardGrid.setOnTouchListener(new OnTouchListener() {
@@ -124,6 +156,7 @@ public class ArrangeShips extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (selectedShipIndex != -1) {
+					boolean isRotatable = true;
 					Ship ship = ships[selectedShipIndex];
 					ShipFieldsHolder oldSFH = ShipRepresentationTransformer
 							.getShipFieldsHolderFromShip(ship);
@@ -134,11 +167,21 @@ public class ArrangeShips extends Activity {
 						forbiddenPositions.removeForbiddenField(forbiddenField);
 					}
 					if (tmpSFH.getDirection() == Direction.HORIZONTAL) {
+						int newLastFieldVerticalCoordinate;
+						newLastFieldVerticalCoordinate = tmpSFH.getFirstField()/Game.BOARD_SIDE;
+						newLastFieldVerticalCoordinate += (tmpSFH.getLength() - 1);
+						if(newLastFieldVerticalCoordinate >= Game.BOARD_SIDE)
+							isRotatable = false;
 						tmpSFH.setDirection(Direction.VERTICAL);
 					} else {
+						int newLastFieldHorizontalCoordinate;
+						newLastFieldHorizontalCoordinate = tmpSFH.getFirstField()%Game.BOARD_SIDE;
+						newLastFieldHorizontalCoordinate += (tmpSFH.getLength() - 1);
+						if(newLastFieldHorizontalCoordinate >= Game.BOARD_SIDE)
+							isRotatable = false;
 						tmpSFH.setDirection(Direction.HORIZONTAL);
 					}
-					if (isShipOk(tmpSFH)) {
+					if (isShipOk(tmpSFH) && isRotatable) {
 						paint(oldSFH, moveShipsAdapter.getSeaPicture(),
 								moveShipsAdapter.getSeaPicture(),
 								PaintAction.RESTORE);
@@ -192,26 +235,6 @@ public class ArrangeShips extends Activity {
 		});
 	}
 
-	// private void rotateShip(ShipFieldsHolder ship, int position) {
-	// int xr, yr, x0Old, y0Old, x0New, y0New;
-	//
-	// xr = position % Game.BOARD_SIDE;
-	// yr = position / Game.BOARD_SIDE;
-	// x0Old = ship.getFirstField() % Game.BOARD_SIDE;
-	// y0Old = ship.getFirstField() / Game.BOARD_SIDE;
-	//
-	// if (ship.getDirection() == Direction.HORIZONTAL) {
-	// x0New = yr;
-	// y0New = yr + x0Old - xr;
-	// ship.setDirection(Direction.VERTICAL);
-	// } else {
-	// x0New = xr + y0Old - yr;
-	// y0New = xr;
-	// ship.setDirection(Direction.HORIZONTAL);
-	// }
-	// short newFirstField = (short) (Game.BOARD_SIDE * y0New + x0New);
-	// ship.setFirstField(newFirstField);
-	// }
 
 	private boolean isShipOk(ShipFieldsHolder ship) {
 		Ship tmpShip = ShipRepresentationTransformer
@@ -299,6 +322,9 @@ public class ArrangeShips extends Activity {
 
 	}
 
+	/**
+	 * Initializes the state of the board
+	 */
 	protected void initGame() {
 		selectedShipIndex = -1;
 		ShipPositionGenerator generator = new ShipPositionGenerator();
