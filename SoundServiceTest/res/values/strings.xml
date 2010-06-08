@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, SoundServiceTest!</string>
+    <string name="app_name">SoundServiceTest</string>
+<string name="click_sound">Click Sound</string>
+<string name="fire_missle_sound">Fire Missle</string>
+<string name="splash_rock_sound">Splash Rock</string>
+<string name="explosion_sound">Explosion</string>
+<string name="ship_sink_sound">Ship Sink</string>
+</resources>
