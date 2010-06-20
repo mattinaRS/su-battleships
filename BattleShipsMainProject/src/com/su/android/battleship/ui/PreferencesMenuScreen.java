@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.su.android.battleship.R;
 import com.su.android.battleship.cfg.GameDifficulty;
@@ -27,6 +28,9 @@ public class PreferencesMenuScreen extends Activity implements OnClickListener {
 	private Button mButtonApply;
 	private Button mButtonBack;
 	
+	private String mNickname;
+	private EditText mTextViewNickname;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,6 +51,8 @@ public class PreferencesMenuScreen extends Activity implements OnClickListener {
 		mButtonBack = (Button) findViewById(R.id.ButtonBack);
 		mButtonBack.setOnClickListener(this);
 		
+		mTextViewNickname = (EditText) findViewById(R.id.Nickname); 
+		
 		String[] oldState = null;
 		if (savedInstanceState != null) {
 			oldState = savedInstanceState.getStringArray(GamePreferences.BUNDLE_STATE);
@@ -56,23 +62,29 @@ public class PreferencesMenuScreen extends Activity implements OnClickListener {
 			mHasSound = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND);
 			mHasVibration = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION);
 			mGameDifficulty = (GameDifficulty) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_DIFFICULTY);
+			mNickname = (String) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_NICKNAME);
+			//mNickname = "yeah";
 		}		
 		else {
 			try {
 				mHasSound = Boolean.parseBoolean(oldState[0]);
 				mHasVibration = Boolean.parseBoolean(oldState[1]);
 				mGameDifficulty = GameDifficulty.valueOf(oldState[2]);
+				mNickname = (String)oldState[3];
 			} catch (Exception e) {
 				e.printStackTrace();
 				mHasSound = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND);
 				mHasVibration = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION);
 				mGameDifficulty = (GameDifficulty) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_DIFFICULTY);
+				mNickname = (String) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_NICKNAME);
 			}
 		}
 				
 		setSoundButtonText();
 		setVibrationButtonText();
 		setDifficultyButtonText();
+		setNicknameText();
+		
 	}
 
 	/**
@@ -104,7 +116,8 @@ public class PreferencesMenuScreen extends Activity implements OnClickListener {
 			}
 			setDifficultyButtonText();
 			break;
-		case R.id.ButtonApplyPrefs:			
+		case R.id.ButtonApplyPrefs:
+			mNickname = mTextViewNickname.getText().toString();
 			saveState();
 			finish();
 			break;
@@ -118,6 +131,8 @@ public class PreferencesMenuScreen extends Activity implements OnClickListener {
 		GamePreferences.setPreference(this, GamePreferences.PREFERENCE_SOUND, mHasSound);
 		GamePreferences.setPreference(this, GamePreferences.PREFERENCE_VIBRATION, mHasVibration);
 		GamePreferences.setPreference(this, GamePreferences.PREFERENCE_DIFFICULTY, mGameDifficulty);
+		GamePreferences.setPreference(this, GamePreferences.PREFERENCE_NICKNAME, mNickname);
+		
 		GamePreferences.savePreferences(this);
 	}
 	
@@ -151,5 +166,10 @@ public class PreferencesMenuScreen extends Activity implements OnClickListener {
 	 */
 	private void setDifficultyButtonText() {
 		mButtonDifficulty.setText("Difficulty [" + mGameDifficulty.toString().toLowerCase() + "]");		
+	}
+	
+	private void setNicknameText() {
+		mTextViewNickname.setText(mNickname);
+
 	}
 }

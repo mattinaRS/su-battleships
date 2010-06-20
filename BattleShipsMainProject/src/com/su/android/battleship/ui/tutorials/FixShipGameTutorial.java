@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -75,6 +76,13 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		short[] playerShipFields = getPlayerShipFields();
 		minimapImageAdapter = new MinimapImageAdapter(this, playerShipFields);
 		minimapGrid.setAdapter(minimapImageAdapter);
+		
+		TextView textYou = (TextView) findViewById(R.id.text_nickname);
+		if ( GamePreferences.getPreference(this, GamePreferences.PREFERENCE_NICKNAME).toString().equals("") ) {
+			textYou.setText("Player");
+		} else {
+			textYou.setText(GamePreferences.getPreference(this, GamePreferences.PREFERENCE_NICKNAME).toString());
+		}
 		
 	}
 

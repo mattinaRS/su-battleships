@@ -27,6 +27,11 @@ public class GamePreferences {
 	public static final String PREFERENCE_DIFFICULTY = "BSG_PREFERENCE_DIFFICULTY";
 	
 	/**
+	 * variable, representing nickname setting in a bundle
+	 */
+	public static final String PREFERENCE_NICKNAME = "BSG_PREFERENCE_NICKNAME";
+	
+	/**
 	 * variable, representing saved settings in a bundle
 	 */
 	public static final String BUNDLE_STATE = "BSG_PREFERENCES";
@@ -46,6 +51,7 @@ public class GamePreferences {
 		mPreferences.put(PREFERENCE_DIFFICULTY, GameDifficulty.valueOf(dif));
 		mPreferences.put(PREFERENCE_SOUND, settings.getBoolean(PREFERENCE_SOUND, true));
 		mPreferences.put(PREFERENCE_VIBRATION, settings.getBoolean(PREFERENCE_VIBRATION, true));
+		mPreferences.put(PREFERENCE_NICKNAME, settings.getString(PREFERENCE_NICKNAME, "Player"));
 	}
 	
 	/**
@@ -89,6 +95,7 @@ public class GamePreferences {
 		editor.putBoolean(PREFERENCE_SOUND, (Boolean) mPreferences.get(PREFERENCE_SOUND));
 		editor.putBoolean(PREFERENCE_VIBRATION, (Boolean) mPreferences.get(PREFERENCE_VIBRATION));
 		editor.putString(PREFERENCE_DIFFICULTY, mPreferences.get(PREFERENCE_DIFFICULTY).toString());
+		editor.putString(PREFERENCE_NICKNAME, mPreferences.get(PREFERENCE_NICKNAME).toString());
 		
 		editor.commit();
 	}
