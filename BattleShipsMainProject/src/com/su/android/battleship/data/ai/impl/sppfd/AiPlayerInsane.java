@@ -18,6 +18,8 @@ import com.su.generator.rule.FieldForbiddingRuleSquareImpl;
  */
 public class AiPlayerInsane extends AiPlayer_ShipPositionsPerFieldDependant {
 
+	private static final long serialVersionUID = 1082517376767098454L;
+
 	/**
 	 * 
 	 * @param game

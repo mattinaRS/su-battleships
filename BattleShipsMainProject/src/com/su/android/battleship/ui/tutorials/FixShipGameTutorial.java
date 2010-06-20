@@ -44,6 +44,14 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 	private MinimapImageAdapter minimapImageAdapter;
 	private GameSounds gameSounds;
 	
+	// collections holding boards hit/missed positions.
+	// for restoring state purpose	
+	private ArrayList<Short> minimapHits = new ArrayList<Short>();
+	private ArrayList<Short> minimapMisses = new ArrayList<Short>();
+	
+	private static final String BUNDLE_GAME = "BSG_FSG";	
+	private static final String BUNDLE_MINIMAP = "BSG_FSG_MM";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -80,7 +88,7 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 
 				// means that there is second click on the same button - FIRE !
 				if (aimedField == position) {
-					executeFire(_iv);
+					executeFire(_iv, position);
 					if (game.isGameOver()) {
 						Toast.makeText(FixShipGameTutorial.this,
 								"Game over.Winner is the player.", 1000).show();
@@ -110,7 +118,7 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 					// through the adapted , not through the gridView
 					ImageView field = (ImageView) boardImageAdapter
 							.getItem(aimedField);
-					executeFire(field);
+					executeFire(field, aimedField);
 					if (game.isGameOver()) {
 						Toast.makeText(FixShipGameTutorial.this,
 								"Game over.Winner is the player.", 1000).show();
@@ -123,11 +131,11 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		});
 	}
 
-	private void executeFire(ImageView _iv) {
+	private void executeFire(ImageView _iv, int position) {
 		short newFieldStatus = game.executeMove((short) 0, (short) aimedField);
 		if (BoardFieldStatus.isShipAttackedStatus(newFieldStatus) || BoardFieldStatus.isShipDestroyedStatus(newFieldStatus)) {
 			_iv.setImageResource(boardImageAdapter.getCrash());// mark as fired
-			
+			boardHits.add(position);
 			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION) ) {
 				Vibrator v = (Vibrator) getSystemService(FixShipGameTutorial.VIBRATOR_SERVICE); 
 				v.vibrate(600);
@@ -138,7 +146,7 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 			}
 		} else {
 			_iv.setImageResource(boardImageAdapter.getMiss());// mark as fired
-			
+			boardMisses.add(position);
 			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION) ) {
 				Vibrator v = (Vibrator) getSystemService(FixShipGameTutorial.VIBRATOR_SERVICE); 
 				v.vibrate(200);
@@ -205,8 +213,10 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		if (BoardFieldStatus.isShipAttackedStatus(fieldStatus)
 				|| BoardFieldStatus.isShipDestroyedStatus(fieldStatus)) {
 			minimapImageAdapter.setCrash(fieldAttackedByAi);
+			minimapHits.add(fieldAttackedByAi);
 		} else {
 			minimapImageAdapter.setMiss(fieldAttackedByAi);
+			minimapMisses.add(fieldAttackedByAi);
 		}
 
 		/*ImageView _iv = (ImageView) minimapImageAdapter
@@ -256,5 +266,62 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		}
 	}
 	
+	/**
+	 * The settings are saved in a Bundle.
+	 * When the application become active again the settings will be
+	 * loaded from the bundle
+	 */
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putSerializable(BUNDLE_GAME, game);
+		ArrayList<ArrayList<Short>> minimapList = new ArrayList<ArrayList<Short>>();
+		minimapList.add(minimapHits);
+		minimapList.add(minimapMisses);
+		outState.putSerializable(BUNDLE_MINIMAP, minimapList);
+	}
 	
+	/**
+	 * Restores the state of the arrange ships board as it was before 
+	 * the app was killed 
+	 * @param oldState state before app was killed
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void restoreState(Bundle oldState) {
+		game = (GameAi) oldState.getSerializable(BUNDLE_GAME);
+		
+		displayGameScreen();
+		attachActionListeners();
+		
+		ArrayList<ArrayList<Integer>> boardOldState = (ArrayList<ArrayList<Integer>>) oldState.getSerializable(BUNDLE_BOARD);
+		boardHits = boardOldState.get(0);
+		boardMisses = boardOldState.get(1);
+		
+		for (Integer i : boardHits) {
+			ImageView view = (ImageView) boardGrid.getItemAtPosition(i);
+			view.setImageResource(boardImageAdapter.getCrash());
+		}
+		for (Integer i : boardMisses) {
+			ImageView view = (ImageView) boardGrid.getItemAtPosition(i);
+			view.setImageResource(boardImageAdapter.getMiss());
+		}
+		
+		ArrayList<ArrayList<Short>> minimapOldState = (ArrayList<ArrayList<Short>>) oldState.getSerializable(BUNDLE_MINIMAP);
+		minimapHits = minimapOldState.get(0);
+		minimapMisses = minimapOldState.get(1);				
+		
+		for (Short i : minimapHits) {
+			minimapImageAdapter.setCrash(i);
+		}
+		for (Short i : minimapMisses) {
+			minimapImageAdapter.setMiss(i);
+		}
+		
+		aimedField = oldState.getInt(BUNDLE_AIMED_FIELD);
+		if (aimedField != NO_FIELD_IS_AIMED) {
+			ImageView view = (ImageView) boardGrid.getItemAtPosition(aimedField);
+			view.setImageResource(boardImageAdapter.getCrosair());
+		}
+	}
 }

@@ -1,5 +1,6 @@
 package com.su.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -7,8 +8,10 @@ import java.util.List;
  * @author vasko
  *
  */
-public class ShipFieldsHolder {
-	
+public class ShipFieldsHolder implements Serializable {
+
+	private static final long serialVersionUID = -8340928517403013527L;
+
 	private int length;
 	private int firstField;
 	private Direction direction;

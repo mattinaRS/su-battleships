@@ -1,5 +1,6 @@
 package com.su.android.battleship.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +10,10 @@ import java.util.Map;
  * @author vasko
  *
  */
-public class Game {
+public class Game implements Serializable {
+
+	private static final long serialVersionUID = 6204938308440070031L;
+
 	/**
 	 * hard-coded game board board side
 	 */

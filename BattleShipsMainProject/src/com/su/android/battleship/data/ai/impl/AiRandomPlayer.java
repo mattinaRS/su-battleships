@@ -16,6 +16,8 @@ import com.su.android.battleship.data.ai.AiPlayer;
  */
 public class AiRandomPlayer extends AiPlayer {
 	
+	private static final long serialVersionUID = 2120471770922165021L;
+	
 	private List<Short> possibleShots;	
 	
 	/**

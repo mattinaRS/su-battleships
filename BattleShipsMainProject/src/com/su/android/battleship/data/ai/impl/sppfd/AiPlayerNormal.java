@@ -16,6 +16,8 @@ import com.su.android.battleship.data.ai.AiPlayer_ShipPositionsPerFieldDependant
  */
 public class AiPlayerNormal extends AiPlayer_ShipPositionsPerFieldDependant {
 
+	private static final long serialVersionUID = 3706681779806123286L;
+
 	/**
 	 * 
 	 * @param game

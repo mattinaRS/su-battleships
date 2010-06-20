@@ -9,6 +9,8 @@ import com.su.android.battleship.data.ai.AiPlayer;
  */
 public class GameAi extends Game {
 	
+	private static final long serialVersionUID = 5640927081793011987L;
+
 	/**index of the PLAYER used in the storing of boards and ships in the GameAi*/
 	public static final short PLAYER_INDEX = 0;
 	

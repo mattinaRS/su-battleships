@@ -39,6 +39,10 @@ import com.su.manager.ForbiddenPositionsManager;
  */
 public class ArrangeShips extends Activity {
 
+	private static final String BUNDLE_SHIPS = "BSG_ARS_SHP";
+	private static final String BUNDLE_FORBIDDEN_POSITION = "BSG_ARS_FPOS";
+	private static final String BUNDLE_BOARD = "BSG_ARS_BRD";
+	
 	/**
 	 * value returned to the single player activity 
 	 * when the back button is pressed
@@ -86,7 +90,13 @@ public class ArrangeShips extends Activity {
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		initGame();
+		
+		if (savedInstanceState != null) {
+			restoreState(savedInstanceState);
+		} else {
+			initGame();
+		}		
+		
 		displayGameScreen();
 		attachActionListeners();
 		
@@ -351,6 +361,27 @@ public class ArrangeShips extends Activity {
 		}
 		selectedShip = lastPossiblePosition = null;
 	}
+	
+	/**
+	 * Restores the state of the arrange ships board as it was before 
+	 * the app was killed 
+	 * @param oldState state before app was killed
+	 */
+	private void restoreState(Bundle oldState) {
+		selectedShipIndex = -1;
+		
+		ships = (Ship[]) oldState.getSerializable(BUNDLE_SHIPS);
+		short[] shipsFields = ShipUtil.getShipsFields(ships);
+		moveShipsAdapter = new MoveShipsAdapter(this, shipsFields);
+		
+		rule = new FieldForbiddingRuleSquareImpl(Game.BOARD_SIDE);
+		
+		forbiddenPositions = (ForbiddenPositionsManager) oldState.getSerializable(BUNDLE_FORBIDDEN_POSITION);
+		board = (short[]) oldState.getSerializable(BUNDLE_BOARD);
+		selectedShip = null;
+		lastPossiblePosition = null;
+		
+	}
 
 	/**
 	 * This function paints the fields of a ship that is being moved or restores
@@ -465,6 +496,19 @@ public class ArrangeShips extends Activity {
 
 	private enum PaintAction {
 		PAINT_OVER, RESTORE
-	};
-
+	}
+	
+	/**
+	 * The settings are saved in a Bundle.
+	 * When the application become active again the settings will be
+	 * loaded from the bundle
+	 */
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putSerializable(BUNDLE_SHIPS, ships);
+		outState.putSerializable(BUNDLE_FORBIDDEN_POSITION, forbiddenPositions);
+		outState.putSerializable(BUNDLE_BOARD, board);				
+	}
+			
 }

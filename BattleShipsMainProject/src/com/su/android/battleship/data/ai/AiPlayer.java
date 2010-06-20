@@ -1,12 +1,17 @@
 package com.su.android.battleship.data.ai;
 
+import java.io.Serializable;
+
 import com.su.android.battleship.data.GameAi;
 /**
  * Abstract class for the AiPlayers
  * @author vasko
  *
  */
-public abstract class AiPlayer {
+public abstract class AiPlayer implements Serializable {
+	
+	private static final long serialVersionUID = 304881475627007210L;
+	
 	/**
 	 * the game for the AiPlayer to participate in
 	 */

@@ -1,5 +1,7 @@
 package com.su.android.battleship.ui.tutorials;
 
+import java.util.ArrayList;
+
 import com.su.android.battleship.ui.adapter.GameBoardImageAdapter;
 
 import com.su.android.battleship.R;
@@ -26,6 +28,24 @@ import android.widget.AdapterView.OnItemClickListener;
  *
  */
 public class AimAndFireTutorial extends Activity {
+	
+	/** collections holding boards hit/missed positions.
+	 *  for restoring state purpose
+	 */
+	protected ArrayList<Integer> boardHits = new ArrayList<Integer>();
+	/**
+	 * misses
+	 */
+	protected ArrayList<Integer> boardMisses = new ArrayList<Integer>();
+	
+	/**
+	 * aimed field bundle identifier
+	 */
+	protected static final String BUNDLE_AIMED_FIELD = "BSG_FSG_AF";
+	/**
+	 * board bundle identifier
+	 */
+	protected static final String BUNDLE_BOARD = "BSG_FSG_BRD";
 	
 	/**
 	 * flag to check whether or not a field is targeted when a fire is executed
@@ -56,7 +76,13 @@ public class AimAndFireTutorial extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
-		initGame();
+		
+		if (savedInstanceState != null) {
+			restoreState(savedInstanceState);
+		} else {
+			initGame();
+		}
+		
 	}
 	
 	/**
@@ -82,7 +108,7 @@ public class AimAndFireTutorial extends Activity {
 				ImageView _iv = (ImageView) v;
 				//means that there is second click on the same button - FIRE !
 				if(aimedField == position){
-					executeFire(_iv);
+					executeFire(_iv, position);
 				}else{
 					if(aimedField != NO_FIELD_IS_AIMED){
 						ImageView _oldSelectedField = (ImageView)boardImageAdapter.getItem(aimedField);
@@ -100,14 +126,15 @@ public class AimAndFireTutorial extends Activity {
 					Toast.makeText(AimAndFireTutorial.this, "Aim board field in order to fire.", 1000).show();
 				}else{
 					ImageView field = (ImageView) boardGrid.getItemAtPosition(aimedField);
-					executeFire(field);
+					executeFire(field, aimedField);
 				}
 			}			
 		});		
 	}
 	
-	private void executeFire(ImageView _iv){
+	private void executeFire(ImageView _iv, int position) {
 		_iv.setImageResource(R.drawable.red);//mark as fired
+		boardHits.add(position);
 		_iv.setClickable(false);//make imageView unclickable
 		aimedField = NO_FIELD_IS_AIMED;
 	}
@@ -117,5 +144,45 @@ public class AimAndFireTutorial extends Activity {
 	protected void initGame(){
 		displayGameScreen();
 		attachActionListeners();
+	}
+	
+	/**
+	 * Restores the state of the arrange ships board as it was before 
+	 * the app was killed 
+	 * @param oldState state before app was killed
+	 */
+	@SuppressWarnings("unchecked")
+	protected void restoreState(Bundle oldState) {
+		displayGameScreen();
+		attachActionListeners();
+		
+		ArrayList<ArrayList<Integer>> boardOldState = (ArrayList<ArrayList<Integer>>) oldState.getSerializable(BUNDLE_BOARD);
+		boardHits = boardOldState.get(0);
+		
+		for (Integer i : boardHits) {
+			ImageView view = (ImageView) boardGrid.getItemAtPosition(i);
+			view.setImageResource(R.drawable.red);
+		}
+		
+		aimedField = oldState.getInt(BUNDLE_AIMED_FIELD);
+		if (aimedField != NO_FIELD_IS_AIMED) {
+			ImageView view = (ImageView) boardGrid.getItemAtPosition(aimedField);
+			view.setImageResource(R.drawable.yellow);
+		}
+	}
+	
+	/**
+	 * The settings are saved in a Bundle.
+	 * When the application become active again the settings will be
+	 * loaded from the bundle
+	 */
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt(BUNDLE_AIMED_FIELD, aimedField);
+		ArrayList<ArrayList<Integer>> boardList = new ArrayList<ArrayList<Integer>>();
+		boardList.add(boardHits);
+		boardList.add(boardMisses);
+		outState.putSerializable(BUNDLE_BOARD, boardList);
 	}
 }

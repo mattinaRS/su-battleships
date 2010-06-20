@@ -23,6 +23,8 @@ import com.su.manager.ShipPositionsContainingFieldManager;
  */
 public abstract class AiPlayer_ShipPositionsPerFieldDependant extends AiPlayer {
 
+	private static final long serialVersionUID = 683956867114239298L;
+
 	/**
 	 * boardForAiCalculations
 	 */

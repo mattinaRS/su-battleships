@@ -1,5 +1,6 @@
 package com.su.manager;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -10,9 +11,12 @@ import java.util.Set;
  * @author vasil.konstantinov
  *
  */
-public class ForbiddenPositionsManager {	
+public class ForbiddenPositionsManager implements Serializable {	
+	
+	private static final long serialVersionUID = 7554218396166492471L;
+	
 	/*It is important to store the count of times a field is forbidden
-	 * so that this class can be reused in the ship positioning implementation*/
+	 * so that this class can be reused in the ship positioning implementation*/		
 	private Map<Short, Short> forbiddenFieldsHolder;
 	
 	/**
