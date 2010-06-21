@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,6 +46,9 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 	private GridView minimapGrid;
 	private MinimapImageAdapter minimapImageAdapter;
 	private GameSounds gameSounds;
+	
+	private View animationView;
+	private AnimationDrawable animation;
 	
 	// collections holding boards hit/missed positions.
 	// for restoring state purpose	
@@ -84,6 +89,7 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 			textYou.setText(GamePreferences.getPreference(this, GamePreferences.PREFERENCE_NICKNAME).toString());
 		}
 		
+		animationView = (View) findViewById(R.id.AnimationView);
 	}
 
 	protected void attachActionListeners() {
@@ -143,6 +149,10 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		short newFieldStatus = game.executeMove((short) 0, (short) aimedField);
 		if (BoardFieldStatus.isShipAttackedStatus(newFieldStatus) || BoardFieldStatus.isShipDestroyedStatus(newFieldStatus)) {
 			_iv.setImageResource(boardImageAdapter.getCrash());// mark as fired
+			
+			// start explode animation
+			startAnimation(aimedField % 10, aimedField / 10, R.drawable.frame);
+			
 			boardHits.add(position);
 			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION) ) {
 				Vibrator v = (Vibrator) getSystemService(FixShipGameTutorial.VIBRATOR_SERVICE); 
@@ -331,5 +341,32 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 			ImageView view = (ImageView) boardGrid.getItemAtPosition(aimedField);
 			view.setImageResource(boardImageAdapter.getCrosair());
 		}
+	}
+	
+	/**
+	 * Execute frame animation at given grid position (x, y)
+	 * 
+	 * @param x			Grid column index
+	 * @param y			Grid row index
+	 * @param resource	Animation resource to play
+	 */
+	protected void startAnimation(int x, int y, int resource) {
+		animationView.setBackgroundResource(resource);
+		
+		FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) animationView.getLayoutParams();
+		
+		int dps = (int) getResources().getDisplayMetrics().density;
+		params.width = params.height = 40 * dps;
+		params.leftMargin = (x * 30 - 5) * dps;
+		params.topMargin = (y * 30 - 5) * dps;
+		
+		animationView.setLayoutParams(params);
+		
+		animation = (AnimationDrawable) animationView.getBackground();
+		
+		if (animation.isRunning()) {
+			animation.stop();
+		}
+		animation.start();
 	}
 }

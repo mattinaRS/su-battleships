@@ -59,6 +59,12 @@
 		<item name="android:background">@drawable/game_square_selector</item>
 	</style>
 	
+	<style name="GameBoardContainer">
+		<item name="android:layout_width">300dp</item>
+		<item name="android:layout_height">300dp</item>
+		<item name="android:layout_gravity">center</item>
+	</style>
+	
 	<style name="GameBoard">
 		<item name="android:numColumns">10</item>
 		<item name="android:verticalSpacing">0dp</item>

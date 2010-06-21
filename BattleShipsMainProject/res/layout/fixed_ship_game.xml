@@ -27,8 +27,14 @@
 		
 	</LinearLayout>
 	
-	<GridView android:id="@+id/GridViewAFD" 
-		style="@style/GameBoard"/>
+	<FrameLayout android:id="@+id/GridContainer" style="@style/GameBoardContainer">
+		<GridView android:id="@+id/GridViewAFD" style="@style/GameBoard"/>
+		<View android:id="@+id/AnimationView"
+			android:layout_gravity="fill"
+			android:layout_width="100dp"
+			android:layout_height="100dp"
+			android:layout_marginTop="1000dp"/>
+	</FrameLayout>
 		
 	<LinearLayout style="@style/GamePane">
 		
@@ -46,6 +52,7 @@
 			style="@style/GameSquareButton"/>
 	
 	</LinearLayout>
+
 
 </LinearLayout>
 
