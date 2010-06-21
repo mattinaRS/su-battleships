@@ -15,7 +15,7 @@ public class ShipUtil {
 	/**
 	 * converts an array of ships into a an array of their fields
 	 * @param ships
-	 * @return
+	 * @return Description
 	 */
 	public static short[] getShipsFields(Ship[] ships) {
 		List<Short> resultList = new ArrayList<Short>();
@@ -37,7 +37,7 @@ public class ShipUtil {
 	 * Applying a forbidding rule get the fields that a ship forbids 
 	 * @param ship
 	 * @param rule
-	 * @return
+	 * @return Description
 	 */
 	public static List<Short> getForbiddenFieldsFromShip(Ship ship, FieldForbiddingRule rule) {
 		List<Short> result = new ArrayList<Short>();
