@@ -1,6 +1,7 @@
 package com.su.android.battleship.ui.tutorials;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Intent;
@@ -58,6 +59,8 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 	private static final String BUNDLE_GAME = "BSG_FSG";	
 	private static final String BUNDLE_MINIMAP = "BSG_FSG_MM";
 	
+	private HashMap<Integer, Integer> shotsMap = new HashMap<Integer, Integer>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -102,19 +105,29 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 
 				// means that there is second click on the same button - FIRE !
 				if (aimedField == position) {
-					executeFire(_iv, position);
-					if (game.isGameOver()) {
+					if (shotsMap.containsKey(position)) {
 						Toast.makeText(FixShipGameTutorial.this,
-								"Game over.Winner is the player.", 1000).show();
-						return;
+								"Already fired this spot.", 1000).show();
 					} else {
-						continueGameProcess();
-					}
+						executeFire(_iv, position);
+						if (game.isGameOver()) {
+							Toast.makeText(FixShipGameTutorial.this,
+									"Game over.Winner is the player.", 1000).show();
+							return;
+						} else {
+							continueGameProcess();
+						}
+					}					
 				} else {
 					if (aimedField != NO_FIELD_IS_AIMED) {
 						ImageView _oldSelectedField = (ImageView) boardImageAdapter
 								.getItem(aimedField);
-						_oldSelectedField.setImageResource(boardImageAdapter.getTransparent());
+						Integer oldImageResource = shotsMap.get(aimedField);
+						if (oldImageResource != null) {
+							_oldSelectedField.setImageResource(oldImageResource);
+						} else {
+							_oldSelectedField.setImageResource(boardImageAdapter.getTransparent());
+						}						
 					}
 					_iv.setImageResource(boardImageAdapter.getCrosair());
 					aimedField = position;
@@ -128,18 +141,23 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 					Toast.makeText(FixShipGameTutorial.this,
 							"Aim board field in order to fire.", 1000).show();
 				} else {
-					// quite obvious error - communication with imageViews is
-					// through the adapted , not through the gridView
-					ImageView field = (ImageView) boardImageAdapter
-							.getItem(aimedField);
-					executeFire(field, aimedField);
-					if (game.isGameOver()) {
+					if (shotsMap.containsKey(aimedField)) {
 						Toast.makeText(FixShipGameTutorial.this,
-								"Game over.Winner is the player.", 1000).show();
-						return;
+								"Already fired this spot.", 1000).show();
 					} else {
-						continueGameProcess();
-					}
+						// quite obvious error - communication with imageViews is
+						// through the adapted , not through the gridView
+						ImageView field = (ImageView) boardImageAdapter
+								.getItem(aimedField);
+						executeFire(field, aimedField);
+						if (game.isGameOver()) {
+							Toast.makeText(FixShipGameTutorial.this,
+									"Game over.Winner is the player.", 1000).show();
+							return;
+						} else {
+							continueGameProcess();
+						}
+					}					
 				}
 			}
 		});
@@ -148,6 +166,7 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 	private void executeFire(ImageView _iv, int position) {
 		short newFieldStatus = game.executeMove((short) 0, (short) aimedField);
 		if (BoardFieldStatus.isShipAttackedStatus(newFieldStatus) || BoardFieldStatus.isShipDestroyedStatus(newFieldStatus)) {
+			shotsMap.put(position, boardImageAdapter.getCrash());
 			_iv.setImageResource(boardImageAdapter.getCrash());// mark as fired
 			
 			// start explode animation
@@ -163,6 +182,7 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 				gameSounds.playSound(2);
 			}
 		} else {
+			shotsMap.put(position, boardImageAdapter.getMiss());
 			_iv.setImageResource(boardImageAdapter.getMiss());// mark as fired
 			boardMisses.add(position);
 			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION) ) {
