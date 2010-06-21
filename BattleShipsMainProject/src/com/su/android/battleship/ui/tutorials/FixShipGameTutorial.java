@@ -170,7 +170,7 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 			_iv.setImageResource(boardImageAdapter.getCrash());// mark as fired
 			
 			// start explode animation
-			startAnimation(aimedField % 10, aimedField / 10, R.drawable.frame);
+			startAnimation(aimedField % 10, aimedField / 10, R.drawable.explosion);
 			
 			boardHits.add(position);
 			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION) ) {
@@ -371,22 +371,31 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 	 * @param resource	Animation resource to play
 	 */
 	protected void startAnimation(int x, int y, int resource) {
+		moveAnimationView(x, y);
+		
 		animationView.setBackgroundResource(resource);
-		
-		FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) animationView.getLayoutParams();
-		
-		int dps = (int) getResources().getDisplayMetrics().density;
-		params.width = params.height = 40 * dps;
-		params.leftMargin = (x * 30 - 5) * dps;
-		params.topMargin = (y * 30 - 5) * dps;
-		
-		animationView.setLayoutParams(params);
-		
 		animation = (AnimationDrawable) animationView.getBackground();
 		
 		if (animation.isRunning()) {
 			animation.stop();
 		}
 		animation.start();
+	}
+	
+	/**
+	 * Move animation view to some column and row
+	 * 
+	 * @param x	Grid column index
+	 * @param y	Grid row index
+	 */
+	protected synchronized void moveAnimationView(int x, int y) {
+		FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) animationView.getLayoutParams();
+		
+		int dps = (int) getResources().getDisplayMetrics().density;
+		params.width = params.height = 50 * dps;
+		params.leftMargin = (x * 30 - 10) * dps;
+		params.topMargin = (y * 30 - 10) * dps;
+		
+		animationView.setLayoutParams(params);
 	}
 }
