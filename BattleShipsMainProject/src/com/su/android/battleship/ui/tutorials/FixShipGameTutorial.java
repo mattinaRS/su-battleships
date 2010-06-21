@@ -184,6 +184,10 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		} else {
 			shotsMap.put(position, boardImageAdapter.getMiss());
 			_iv.setImageResource(boardImageAdapter.getMiss());// mark as fired
+			
+			// start splash animation
+			startAnimation(aimedField % 10, aimedField / 10, R.drawable.splash);
+			
 			boardMisses.add(position);
 			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION) ) {
 				Vibrator v = (Vibrator) getSystemService(FixShipGameTutorial.VIBRATOR_SERVICE); 
@@ -388,13 +392,13 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 	 * @param x	Grid column index
 	 * @param y	Grid row index
 	 */
-	protected synchronized void moveAnimationView(int x, int y) {
+	protected void moveAnimationView(int x, int y) {
 		FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) animationView.getLayoutParams();
 		
-		int dps = (int) getResources().getDisplayMetrics().density;
-		params.width = params.height = 50 * dps;
-		params.leftMargin = (x * 30 - 10) * dps;
-		params.topMargin = (y * 30 - 10) * dps;
+		float dpi = getResources().getDisplayMetrics().density;
+		params.width = params.height = (int) (50 * dpi);
+		params.leftMargin = (int) ((x * 30 - 10) * dpi);
+		params.topMargin = (int) ((y * 30 - 10) * dpi);
 		
 		animationView.setLayoutParams(params);
 	}
