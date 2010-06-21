@@ -1,11 +1,8 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="true">
-    <item android:drawable="@drawable/expl00" android:duration="80" />
-    <item android:drawable="@drawable/expl01" android:duration="80" />
-    <item android:drawable="@drawable/expl02" android:duration="80" />
-    <item android:drawable="@drawable/expl03" android:duration="80" />
-    <item android:drawable="@drawable/expl04" android:duration="80" />
-    <item android:drawable="@drawable/expl05" android:duration="80" />
-    <item android:drawable="@drawable/expl06" android:duration="80" />
-    <item android:drawable="@drawable/expl07" android:duration="80" />
+    <item android:drawable="@drawable/spl00" android:duration="100" />
+    <item android:drawable="@drawable/spl01" android:duration="100" />
+    <item android:drawable="@drawable/spl02" android:duration="100" />
+    <item android:drawable="@drawable/spl03" android:duration="100" />
+    <item android:drawable="@drawable/transparent" android:duration="100" />
 </animation-list>

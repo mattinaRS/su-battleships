@@ -7,5 +7,5 @@
     <item android:drawable="@drawable/expl04" android:duration="80" />
     <item android:drawable="@drawable/expl05" android:duration="80" />
     <item android:drawable="@drawable/expl06" android:duration="80" />
-    <item android:drawable="@drawable/expl07" android:duration="80" />
+    <item android:drawable="@drawable/transparent" android:duration="80" />
 </animation-list>
