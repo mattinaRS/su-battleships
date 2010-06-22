@@ -5,14 +5,11 @@
 
 	<ImageView android:id="@+id/ImageLogo" style="@style/MenuLogo" />
 
-	<Button style="@style/MenuButton" android:id="@+id/ButtonAimFireTutorial"
-		android:text="@string/aim_fire_tutorial" />
+	<Button style="@style/MenuButton" android:text="Arrange Ships" android:id="@+id/ButtonArrangeShipsTutorial"/>
 
-	<Button style="@style/MenuButton" android:text="@string/set_ship_game_tutorial"
-		android:id="@+id/ButtonSetShipsGameTutorial" />
+	<Button style="@style/MenuButton" android:id="@+id/ButtonPrearrangedGameTutorial" android:text="Prearranged Game"/>
 
-	<Button style="@style/MenuButton" android:id="@+id/ButtonMoveShipTutorial"
-		android:text="@string/move_ship_tutorial" />
+	<Button style="@style/MenuButton" android:id="@+id/ButtonRules" android:text="Rules"/>
 
 	<Button android:id="@+id/ButtonBackTutorials" android:text="@string/menu_back"
 		style="@style/MenuButton" />

@@ -28,4 +28,31 @@
 <string name="sound_theme">Theme</string>
 <string name="spookey_sound_theme">Spookey</string>
 <string name="lightsout_sound_theme">Lightsout</string>
+
+	<string-array name="prearanged_game_tutorial_instructions">
+		<item>WHAT HAPPENED:\n You\'ve started the &quot;Prearranged Game Tutorial&quot;.\nINSTRUCTION:\n First we will learn how to aim. In order to aim at a particular field on the game board (big blue grid) you just touch it. Go on try it out.</item>
+		
+		
+		<item>WHAT HAPPENED:\n Good. Now you\'ve aimed at a field and a crosshair has appeared in the aimed field.\nINSTRUCTION:\n   Now aim at the yellow colored field.</item>
+		<item>WHAT HAPPENED:\n Very good. Next let\'s try firing at the aimed field. \nINSTRUCTION:\n In order to do that you must press the fire button - the cannon on the lower right corner.</item>
+		<item>WHAT HAPPENED:\n Well done. You\'ve just fired at the enemy\'s game board where his ships are deployed. And even more you\'ve HIT one of them. This is indicated by the burning picture that appeared where your crosshair was. Also your opponent fired at you. Where he fired can be seen on your minimap (the map with your ships in the lower middle)\nINSTRUCTION:\n   Now let\'s learn more about the minimap. In order to do that first press the life-guard belt button in the top right corner.</item><item>WHAT HAPPEND:\n Well done  yet again :). You have now entered the so called &quot;examination mode&quot;. This means that when you touch an item on the screen a brief explanation of about it will appear.\nINSTURCTION:\n Now since our goal was to learn more about the minimap, touch the minimap (the grid in the lower middle) to see its explanation.</item><item>WHAT HAPPENED:\n A brief explanation of the minimap appeared. Then when you clicked OK on the dialog you exited &quot;examination mode&quot; and got into the normal &quot;instruction mode&quot;. Whenever you want to read the explanation of an item just click the help button and then the item.\nINSTRUCTION:\n   Now let\'s see what happens when you miss. Aim at the yellow field.</item><item>Good. Now fire.</item>
+		<item>WHAT HAPPENED:\n   You\'ve fired at a field that no enemy ship was deployed. Or in other words you missed :). This fact is indicated by the hole like icon that appeared where you fired. And that concludes our tutorial. You can continue playing. Oh I almost forgot your goal is to sink all enemy ships before he sinks yours. You sink them by hitting all their fields. And one last hint - this particular game the computer ships are deployed the same way yours are.</item>
+		
+</string-array>
+<string-array name="arrange_ships_tutorial"><item>WHAT HAPPENED:\n   You\'ve started the Arrange Ships Tutorial. And now you will learn how to arrange your ships.\nINSTRUCTION:\n   First let\'s try picking up a ship. In order to do that touch a ship and don\'t lift your finger.</item>
+<item>Good. Now move your finger.</item>
+<item>WHAT HAPPENED:\n First the touched ship entered moving mode which is indicated by the green color it was painted in. When in moving mode you can move your finger across the game board and the ship will move accordingly. When you lift your finger off of the screen you drop the ship. If there were red fields when dropping this means that this position was forbidden and the ship returns to the last acceptable position.\nINSTRUCTION:\n   Try moving a ship again.</item>
+<item>WHAT HAPPENED:\n   Wow you are really good :).\nINSTRUCTION:\n   Now let\'s try rotating a ship. In order to do that first click a ship. Then press the rotate button.</item>
+<item>WHAT HAPPENED:\n   Very good. When you press the rotate button the last touched ship will be rotated. If the ship was horizontally oriented it will rotate 90 degrees clockwise else it will rotate 90 degrees anticlockwise. If there is an obstacle that renders the rotation impossible the ship does not rotate and you receive a notification. That concludes our tutorial. If you\'d like you can continue practicing moving and rotating the ships.</item>
+
+
+</string-array>
+<string name="tutorial_arrange_ships_explanation">When you start a new game the first thing you do is arrange your ships. This tutorial will teach you how to arrange your ships. The big blue grid like sea is the game board where your ships are deployed. The ships are represented by brownish rectangles on the game board. When you press the OK button the tutorial will start. Good Luck :).</string>
+<string name="tutorial_prearranged_game_explanation">When you start a game after arranging your ships the game begins. This tutorial will teach you how to play the game. After you click the OK button the tutorial will start. Good Luck :).</string>
+<string name="tutorial_show_last_instruction_btn_explanation">This is the show last instruction button. When you press this button the last instruction given to you is displayed again.</string>
+<string name="tutorial_minimap_explanation">This is the minimap. It\'s where the arrangement of your ships is displayed - the greyish rectangles. And where enemy moves are displayed. When the enemy fires at your ships, the field that he fired at becomes either a small dot (he missed) or a red square (he hit a field of one of your ships). As the game progresses the minimap will be filled with more and more small dots and red squares.</string>
+<string name="tutorial_game_board_explanation">This is the game board. It\'s where the enemy ships that you are trying to sink are deployed. Unfortunately you cannot see them. Also this is where you make your moves - fire at the enemy ships. When you make a move  (fire at a field):  this field is revealed and if an enemy ship was deployed there you\'ve hit it else you missed. After a field has been revealed you cannot fire at it again.</string>
+<string name="tutorial_fire_button_explanation">This is the fire button. After you\'ve aimed at the game board (big sea like grid) you use this button to fire at the aimed field.</string>
+<string name="tutorial_help_button_explanation">This is the help button. After you\'ve clicked it touch another item on the screen to see a brief explanation of it.</string>
+
 </resources>

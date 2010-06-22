@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.su.android.battleship.R;
 import com.su.android.battleship.ui.tutorials.FixShipGameTutorial;
+import com.su.android.battleship.ui.tutorials.TutorialsScreen;
 
 /**
  * Game menu screen - Singleplayer, Multiplayer, Tutorials, Back
@@ -56,8 +57,8 @@ public class GameMenuScreen extends Activity implements OnClickListener {
 		case R.id.ButtonMulti:
 			break;
 		case R.id.ButtonTutorials:
-//			intent = new Intent(this, TutorialsScreen.class);
-//			startActivity(intent);
+			intent = new Intent(this, TutorialsScreen.class);
+			startActivity(intent);
 			break;
 		case R.id.ButtonBack:
 			finish();

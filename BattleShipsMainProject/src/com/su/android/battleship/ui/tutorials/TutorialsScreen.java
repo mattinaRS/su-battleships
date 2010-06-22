@@ -12,13 +12,13 @@ import com.su.android.battleship.R;
 
 /**
  * 
- * @author Vasko
+ * @author Vasko and Tony
  *
  */
 public class TutorialsScreen extends Activity implements OnClickListener{
 
-	private Button mButtonAimAndFireTutorial;
-	private Button mButtonFixShipGameTutorial;
+	private Button mButtonPrearrangedGameTutorial;
+	private Button mButtonArrangeShipsTutorial;
 	private Button mButtonMoveShipTutorial;
 	private Button mButtonBack;
 	
@@ -33,13 +33,13 @@ public class TutorialsScreen extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tutorials_menu);				
 		
-		mButtonAimAndFireTutorial = (Button) findViewById(R.id.ButtonAimFireTutorial);
-		mButtonAimAndFireTutorial.setOnClickListener(this);
+		mButtonPrearrangedGameTutorial = (Button) findViewById(R.id.ButtonPrearrangedGameTutorial);
+		mButtonPrearrangedGameTutorial.setOnClickListener(this);
 		
-		mButtonFixShipGameTutorial = (Button) findViewById(R.id.ButtonSetShipsGameTutorial);
-		mButtonFixShipGameTutorial.setOnClickListener(this);
+		mButtonArrangeShipsTutorial = (Button) findViewById(R.id.ButtonArrangeShipsTutorial);
+		mButtonArrangeShipsTutorial.setOnClickListener(this);
 		
-		mButtonMoveShipTutorial = (Button) findViewById(R.id.ButtonMoveShipTutorial);
+		mButtonMoveShipTutorial = (Button) findViewById(R.id.ButtonRules);
 		mButtonMoveShipTutorial.setOnClickListener(this);
 		
 		mButtonBack = (Button) findViewById(R.id.ButtonBackTutorials);
@@ -54,17 +54,16 @@ public class TutorialsScreen extends Activity implements OnClickListener{
 	public void onClick(View button) {
 		Intent mIntent = null;
 		switch (button.getId()) {
-		case R.id.ButtonAimFireTutorial:		
-			mIntent = new Intent(button.getContext(),AimAndFireTutorial.class);
+		case R.id.ButtonPrearrangedGameTutorial:		
+			mIntent = new Intent(button.getContext(), PrearrangedGameTutorial.class);
 			startActivity(mIntent);			
 			break;
-		case R.id.ButtonSetShipsGameTutorial:
-			mIntent = new Intent(button.getContext(),FixShipGameTutorial.class);
+		case R.id.ButtonArrangeShipsTutorial:
+			mIntent = new Intent(button.getContext(), ArrangeShipsTutorial.class);
 			startActivity(mIntent);
 			break;
-		case R.id.ButtonMoveShipTutorial:
-			mIntent = new Intent(button.getContext(), MoveSingleShipTutorial.class);
-			startActivity(mIntent);
+		case R.id.ButtonRules:
+			// do nothing for now
 			break;
 		case R.id.ButtonBackTutorials:
 			finish();

@@ -46,7 +46,9 @@
 		<activity android:name=".ui.ArrangeShips"></activity>
 		
 		<uses-library android:name="android.test.runner" />
-	</application>
+	<activity android:name=".ui.tutorials.ArrangeShipsTutorial"></activity>
+<activity android:name=".ui.tutorials.PrearrangedGameTutorial"></activity>
+</application>
 	
 	<instrumentation android:label="Preferences Tests"
 		android:name="com.su.android.battleship.unittests.preferences.PreferencesInstrumentationTestRunner"
