@@ -9,12 +9,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.su.android.battleship.R;
 import com.su.android.battleship.cfg.GamePreferences;
@@ -54,16 +52,44 @@ public class ArrangeShips extends Activity {
 	 */
 	public static final int ACCEPT = 1;
 
-	private FieldForbiddingRule rule;
-	private Ship[] ships;
-	private ForbiddenPositionsManager forbiddenPositions;
-	private short[] board;
+	/**
+	 * The forbiding rule used to determine which field is forbidden
+	 */
+	protected FieldForbiddingRule rule;
+	/**
+	 * Players ships
+	 */
+	protected Ship[] ships;
+	/**
+	 * manages forbidden fields when ships are moved about
+	 */
+	protected ForbiddenPositionsManager forbiddenPositions;
+	/**
+	 * the game board on which the ships are moved around
+	 */
+	protected short[] board;
 
-	private ShipFieldsHolder selectedShip;
-	private short selectedShipField;
-	private int selectedShipIndex;
-	private ShipFieldsHolder lastPossiblePosition;
-	private short oldCursorPosition;
+	/**
+	 * stores the selected ship
+	 */
+	protected ShipFieldsHolder selectedShip;
+	/**
+	 * 
+	 */
+	protected short selectedShipField;
+	/**
+	 * the index in the ships array of the selected ship
+	 */
+	protected int selectedShipIndex;
+	/**
+	 * last possible location of the moved ship. When an imposible arrangement is attempted 
+	 * the moved ship returns to this position 
+	 */
+	protected ShipFieldsHolder lastPossiblePosition;
+	/**
+	 * the position last position of the cursor measured in game board positions
+	 */
+	protected short oldCursorPosition;
 
 	/**
 	 * ImageAdapter for moving ships
@@ -86,7 +112,10 @@ public class ArrangeShips extends Activity {
 	 */
 	protected Button btnRotate;
 	
-	private GameSounds gameSounds;
+	/**
+	 * game sounds
+	 */
+	protected GameSounds gameSounds;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -96,155 +125,65 @@ public class ArrangeShips extends Activity {
 		} else {
 			initGame();
 		}		
-		
-		displayGameScreen();
-		attachActionListeners();
-		
-		gameSounds = new GameSounds(this);
-		if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
-			gameSounds.playSound(1);
+	}
+
+	/**
+	 * Tries to rotate a ship
+	 * @param v
+	 */
+	protected void rotate(View v) {
+		if (selectedShipIndex != -1) {
+			boolean isRotatable = true;
+			Ship ship = ships[selectedShipIndex];
+			ShipFieldsHolder oldSFH = ShipRepresentationTransformer
+					.getShipFieldsHolderFromShip(ship);
+			ShipFieldsHolder tmpSFH = ShipRepresentationTransformer
+					.getShipFieldsHolderFromShip(ship);
+			for (short forbiddenField : ShipUtil
+					.getForbiddenFieldsFromShip(ship, rule)) {
+				forbiddenPositions.removeForbiddenField(forbiddenField);
+			}
+			if (tmpSFH.getDirection() == Direction.HORIZONTAL) {
+				int newLastFieldVerticalCoordinate;
+				newLastFieldVerticalCoordinate = tmpSFH.getFirstField()/Game.BOARD_SIDE;
+				newLastFieldVerticalCoordinate += (tmpSFH.getLength() - 1);
+				if(newLastFieldVerticalCoordinate >= Game.BOARD_SIDE)
+					isRotatable = false;
+				tmpSFH.setDirection(Direction.VERTICAL);
+			} else {
+				int newLastFieldHorizontalCoordinate;
+				newLastFieldHorizontalCoordinate = tmpSFH.getFirstField()%Game.BOARD_SIDE;
+				newLastFieldHorizontalCoordinate += (tmpSFH.getLength() - 1);
+				if(newLastFieldHorizontalCoordinate >= Game.BOARD_SIDE)
+					isRotatable = false;
+				tmpSFH.setDirection(Direction.HORIZONTAL);
+			}
+			if (isShipOk(tmpSFH) && isRotatable) {
+				paint(oldSFH, moveShipsAdapter.getSeaPicture(),
+						moveShipsAdapter.getSeaPicture(),
+						PaintAction.RESTORE);
+				for (int i : ship.getBoardFields()) {
+					board[i] = -1;
+				}
+				paint(tmpSFH, moveShipsAdapter.getShipPicture(),
+						moveShipsAdapter.getShipPicture(),
+						PaintAction.PAINT_OVER);
+				ship = ShipRepresentationTransformer
+						.getShipFromShipFieldsHolder(tmpSFH);
+				ships[selectedShipIndex] = ship;
+				for (int i : ship.getBoardFields()) {
+					board[i] = (short) selectedShipIndex;
+				}
+			} else {
+				Toast.makeText(ArrangeShips.this,
+						"Last touched ship cannot be rotated.", 3000).show();
+			}
+			for (short forbiddenField : ShipUtil
+					.getForbiddenFieldsFromShip(ship, rule)) {
+				forbiddenPositions.addForbiddenField(forbiddenField);
+			}
 		}
 	}
-
-	/**
-	 * Displays the game screen
-	 */
-	protected void displayGameScreen() {
-		setContentView(R.layout.arrange_ships);
-
-		btnAccept = (Button) findViewById(R.id.ButtonAccept);
-		btnCancel = (Button) findViewById(R.id.ButtonCancel);
-		btnRotate = (Button) findViewById(R.id.ButtonRotate);
-
-		boardGrid = (GridView) findViewById(R.id.GridViewMoveShips);
-		boardGrid.setAdapter(moveShipsAdapter);
-
-	}
-
-	/**
-	 * attaches action listeners to:
-	 * touch events
-	 * clicking the buttons
-	 */
-	protected void attachActionListeners() {
-
-		boardGrid.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				short position;
-
-				position = calculatePosition(event.getX(), event.getY());
-
-				switch (event.getAction()) {
-				case MotionEvent.ACTION_DOWN:
-					if (board[position] != -1)
-						manageOnTouchDown(position);
-					break;
-				case MotionEvent.ACTION_MOVE:
-					if (selectedShip != null)
-						manageOnTouchMove(position);
-					break;
-				case MotionEvent.ACTION_UP:
-					if (selectedShip != null)
-						manageOnTouchUp(position);
-					break;
-				}
-				return false;
-			}
-		});
-
-		boardGrid.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View v,
-					int position, long id) {
-
-			}
-		});
-
-		btnRotate.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (selectedShipIndex != -1) {
-					boolean isRotatable = true;
-					Ship ship = ships[selectedShipIndex];
-					ShipFieldsHolder oldSFH = ShipRepresentationTransformer
-							.getShipFieldsHolderFromShip(ship);
-					ShipFieldsHolder tmpSFH = ShipRepresentationTransformer
-							.getShipFieldsHolderFromShip(ship);
-					for (short forbiddenField : ShipUtil
-							.getForbiddenFieldsFromShip(ship, rule)) {
-						forbiddenPositions.removeForbiddenField(forbiddenField);
-					}
-					if (tmpSFH.getDirection() == Direction.HORIZONTAL) {
-						int newLastFieldVerticalCoordinate;
-						newLastFieldVerticalCoordinate = tmpSFH.getFirstField()/Game.BOARD_SIDE;
-						newLastFieldVerticalCoordinate += (tmpSFH.getLength() - 1);
-						if(newLastFieldVerticalCoordinate >= Game.BOARD_SIDE)
-							isRotatable = false;
-						tmpSFH.setDirection(Direction.VERTICAL);
-					} else {
-						int newLastFieldHorizontalCoordinate;
-						newLastFieldHorizontalCoordinate = tmpSFH.getFirstField()%Game.BOARD_SIDE;
-						newLastFieldHorizontalCoordinate += (tmpSFH.getLength() - 1);
-						if(newLastFieldHorizontalCoordinate >= Game.BOARD_SIDE)
-							isRotatable = false;
-						tmpSFH.setDirection(Direction.HORIZONTAL);
-					}
-					if (isShipOk(tmpSFH) && isRotatable) {
-						paint(oldSFH, moveShipsAdapter.getSeaPicture(),
-								moveShipsAdapter.getSeaPicture(),
-								PaintAction.RESTORE);
-						for (int i : ship.getBoardFields()) {
-							board[i] = -1;
-						}
-						paint(tmpSFH, moveShipsAdapter.getShipPicture(),
-								moveShipsAdapter.getShipPicture(),
-								PaintAction.PAINT_OVER);
-						ship = ShipRepresentationTransformer
-								.getShipFromShipFieldsHolder(tmpSFH);
-						ships[selectedShipIndex] = ship;
-						for (int i : ship.getBoardFields()) {
-							board[i] = (short) selectedShipIndex;
-						}
-					} else {
-						Toast.makeText(ArrangeShips.this,
-								"Last touched ship cannot be rotated.", 3000).show();
-					}
-					for (short forbiddenField : ShipUtil
-							.getForbiddenFieldsFromShip(ship, rule)) {
-						forbiddenPositions.addForbiddenField(forbiddenField);
-					}
-				}
-			}
-
-		});
-
-		btnAccept.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Bundle b = new Bundle();
-				ActivityShipComunicator comm = new ActivityShipComunicator(
-						ships);
-				b.putSerializable("ships", comm);
-				Intent intent = getIntent();
-				intent.putExtra("myBundle", b);
-
-				setResult(ACCEPT, intent);
-				finish();
-			}
-		});
-
-		btnCancel.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				setResult(BACK, new Intent());
-				finish();
-			}
-		});
-	}
-
 
 	private boolean isShipOk(ShipFieldsHolder ship) {
 		Ship tmpShip = ShipRepresentationTransformer
@@ -260,7 +199,11 @@ public class ArrangeShips extends Activity {
 		return shipIsOk;
 	}
 
-	private void manageOnTouchDown(short position) {
+	/**
+	 * manages an OnTouchDown event
+	 * @param position
+	 */
+	protected void manageOnTouchDown(short position) {
 		selectedShipIndex = board[position];
 		Ship ship = ships[selectedShipIndex];
 		for (short shipField : ship.getBoardFields()) {
@@ -287,7 +230,11 @@ public class ArrangeShips extends Activity {
 				PaintAction.PAINT_OVER);
 	}
 
-	private void manageOnTouchMove(short position) {
+	/** 
+	 * manages a OnTouchMove event
+	 * @param position
+	 */
+	protected void manageOnTouchMove(short position) {
 		if (position != oldCursorPosition) {
 			paint(selectedShip, moveShipsAdapter.getSeaPicture(),
 					moveShipsAdapter.getShipPicture(), PaintAction.RESTORE);
@@ -305,7 +252,11 @@ public class ArrangeShips extends Activity {
 		}
 	}
 
-	private void manageOnTouchUp(short position) {
+	/**
+	 * Manages a OnTouchUp event
+	 * @param position
+	 */
+	protected void manageOnTouchUp(short position) {
 		paint(selectedShip, moveShipsAdapter.getSeaPicture(), moveShipsAdapter
 				.getShipPicture(), PaintAction.RESTORE);
 		paint(lastPossiblePosition, moveShipsAdapter.getShipPicture(),
@@ -360,6 +311,14 @@ public class ArrangeShips extends Activity {
 			}
 		}
 		selectedShip = lastPossiblePosition = null;
+
+		displayGameScreen();
+		attachActionListeners();
+		
+		gameSounds = new GameSounds(this);
+		if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
+			gameSounds.playSound(1);
+		}
 	}
 	
 	/**
@@ -441,7 +400,7 @@ public class ArrangeShips extends Activity {
 	 *            the x coordinate of the user's cursor
 	 * @return the calculated position of the user's cursor in a linear massive
 	 */
-	private short calculatePosition(float coordinateX, float coordinateY) {
+	protected short calculatePosition(float coordinateX, float coordinateY) {
 		short x, y;
 		short leftBorder;
 		short rightBorder;
@@ -507,8 +466,87 @@ public class ArrangeShips extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putSerializable(BUNDLE_SHIPS, ships);
-//		outState.putSerializable(BUNDLE_FORBIDDEN_POSITION, forbiddenPositions);
+		outState.putSerializable(BUNDLE_FORBIDDEN_POSITION, forbiddenPositions);
 		outState.putSerializable(BUNDLE_BOARD, board);				
 	}
 			
+	/**
+	 * Displays the game screen
+	 */
+	private void displayGameScreen() {
+		setContentView(R.layout.arrange_ships);
+
+		btnAccept = (Button) findViewById(R.id.ButtonAccept);
+		btnCancel = (Button) findViewById(R.id.ButtonCancel);
+		btnRotate = (Button) findViewById(R.id.ButtonRotate);
+
+		boardGrid = (GridView) findViewById(R.id.GridViewMoveShips);
+		boardGrid.setAdapter(moveShipsAdapter);
+
+	}
+	
+	/**
+	 * attaches action listeners to:
+	 * touch events
+	 * clicking the buttons
+	 */
+	private void attachActionListeners() {
+
+		boardGrid.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				short position;
+
+				position = calculatePosition(event.getX(), event.getY());
+
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					if (board[position] != -1)
+						manageOnTouchDown(position);
+					break;
+				case MotionEvent.ACTION_MOVE:
+					if (selectedShip != null)
+						manageOnTouchMove(position);
+					break;
+				case MotionEvent.ACTION_UP:
+					if (selectedShip != null)
+						manageOnTouchUp(position);
+					break;
+				}
+				return false;
+			}
+		});
+
+		btnRotate.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				rotate(v);
+			}
+
+		});
+
+		btnAccept.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Bundle b = new Bundle();
+				ActivityShipComunicator comm = new ActivityShipComunicator(
+						ships);
+				b.putSerializable("ships", comm);
+				Intent intent = getIntent();
+				intent.putExtra("myBundle", b);
+
+				setResult(ACCEPT, intent);
+				finish();
+			}
+		});
+
+		btnCancel.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setResult(BACK, new Intent());
+				finish();
+			}
+		});
+	}
 }

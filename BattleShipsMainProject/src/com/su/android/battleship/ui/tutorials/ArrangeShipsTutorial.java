@@ -19,7 +19,7 @@ import com.su.android.battleship.R;
 import com.su.android.battleship.cfg.GamePreferences;
 import com.su.android.battleship.data.Game;
 import com.su.android.battleship.data.Ship;
-import com.su.android.battleship.ui.ArrangeShipsRedisigned;
+import com.su.android.battleship.ui.ArrangeShips;
 import com.su.android.battleship.ui.adapter.MoveShipsAdapter;
 import com.su.android.battleship.util.GameSounds;
 import com.su.android.battleship.util.ShipUtil;
@@ -30,7 +30,7 @@ import com.su.manager.ForbiddenPositionsManager;
  * @author Tony
  * 
  */
-public class ArrangeShipsTutorial extends ArrangeShipsRedisigned {
+public class ArrangeShipsTutorial extends ArrangeShips {
 
 	private StringBuilder message;
 	private static final int CORRECTIVE_DIALOG = -1;

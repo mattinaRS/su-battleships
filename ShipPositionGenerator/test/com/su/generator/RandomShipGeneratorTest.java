@@ -2,25 +2,26 @@ package com.su.generator;
 
 import static org.junit.Assert.*;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
 
-import sun.security.util.PendingException;
 
 import com.su.data.Direction;
 import com.su.data.ShipFieldsHolder;
 
+/**
+ * Test random ship generator
+ * @author Vasko
+ *
+ */
 public class RandomShipGeneratorTest {
 
 	private static final short BOARD_SIZE_4 = 4;
-	private static final short BOARD_SIZE_10 = 10;
+//	private static final short BOARD_SIZE_10 = 10;
 	
 	/**
 	 * Test for generateRandomShipPosition method

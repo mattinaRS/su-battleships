@@ -110,6 +110,9 @@ public class SinglePlayer extends Activity {
 	protected LightsoutGameSounds lightsoutGS;
 	
 	
+	/**
+	 * is used for animation
+	 */
 	protected View animationView;
 	private AnimationDrawable animation;
 	
@@ -121,6 +124,9 @@ public class SinglePlayer extends Activity {
 	private static final String BUNDLE_GAME = "BSG_FSG";	
 	private static final String BUNDLE_MINIMAP = "BSG_FSG_MM";
 	
+	/**
+	 * stores the shot at fields so that they cannot be shot at a second time
+	 */
 	protected HashMap<Integer, Integer> shotsMap = new HashMap<Integer, Integer>();
 	
 	@Override
@@ -154,7 +160,7 @@ public class SinglePlayer extends Activity {
 	}
 	
 	private void displayGameScreen() {
-		setContentView(R.layout.fixed_ship_game);
+		setContentView(R.layout.single_player);
 
 		fireButton = (Button) findViewById(R.id.FireButton);
 
@@ -221,6 +227,11 @@ public class SinglePlayer extends Activity {
 		});
 	}
 	
+	/**
+	 * Aims at position changing _iv to crosshair icon
+	 * @param _iv
+	 * @param position
+	 */
 	protected void aimAtField(ImageView _iv, int position) {
 		if (aimedField != NO_FIELD_IS_AIMED) {
 			ImageView _oldSelectedField = (ImageView) boardImageAdapter
@@ -236,6 +247,11 @@ public class SinglePlayer extends Activity {
 		aimedField = position;
 	}
 
+	/**
+	 * executes fire at position
+	 * @param _iv
+	 * @param position
+	 */
 	protected void executeFire(ImageView _iv, int position) {
 		
 		if ((Boolean) GamePreferences.getPreference(SinglePlayer.this,GamePreferences.PREFERENCE_SOUND)) {
@@ -325,6 +341,9 @@ public class SinglePlayer extends Activity {
 		}
 	}
 
+	/**
+	 * Initialize the game
+	 */
 	protected void initGame() {
 		// Ship[] generatedShipPosition1 = generator.getHardcodedShipPosition();
 		// Ship[] generatedShipPosition2 = generator.getHardcodedShipPosition();
