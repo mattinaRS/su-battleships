@@ -8,7 +8,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.su.android.battleship.R;
-import com.su.android.battleship.ui.tutorials.FixShipGameTutorial;
 import com.su.android.battleship.ui.tutorials.TutorialsScreen;
 
 /**
@@ -51,7 +50,7 @@ public class GameMenuScreen extends Activity implements OnClickListener {
 		Intent intent = null;
 		switch (button.getId()) {
 		case R.id.ButtonSingle:
-			intent = new Intent(this, FixShipGameTutorial.class);
+			intent = new Intent(this, SinglePlayer.class);
 			startActivity(intent);
 			break;
 		case R.id.ButtonMulti:

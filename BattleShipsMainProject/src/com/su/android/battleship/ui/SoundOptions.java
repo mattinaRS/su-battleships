@@ -1,17 +1,19 @@
 package com.su.android.battleship.ui;
 
 import com.su.android.battleship.R;
-import com.su.android.battleship.cfg.GameDifficulty;
 import com.su.android.battleship.cfg.GamePreferences;
-import com.su.android.battleship.ui.tutorials.FixShipGameTutorial;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+/**
+ * Handles sounds in the game
+ * @author Vasko
+ *
+ */
 public class SoundOptions extends Activity implements OnClickListener {
 
 	private String mSoundTheme;

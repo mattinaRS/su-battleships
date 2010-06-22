@@ -25,17 +25,10 @@
 		<activity android:name=".ui.tutorials.TutorialsScreen" android:label="@string/tutorials_label">
 		</activity>
 		
-		<activity android:name=".ui.tutorials.AimAndFireTutorial" android:label="AimAndFireTutorial">
-		</activity>
-		
 		<activity android:name=".ui.About" android:label="AboutScreen">
 		</activity>
 		
 		<activity android:name=".ui.SoundOptions" android:label="SoundOptions"></activity>
-		
-	 	<activity android:name=".ui.tutorials.FixShipGameTutorial" android:label="@string/set_ship_game_tutorial">
-		</activity> 
-		<activity android:name=".ui.tutorials.MoveSingleShipTutorial" android:label="MoveSingleShipTutorial"></activity>
 		
 		<activity android:name=".ui.PreferencesMenuScreen"></activity>
 		
@@ -48,6 +41,7 @@
 		<uses-library android:name="android.test.runner" />
 	<activity android:name=".ui.tutorials.ArrangeShipsTutorial"></activity>
 <activity android:name=".ui.tutorials.PrearrangedGameTutorial"></activity>
+<activity android:name=".ui.SinglePlayer"></activity>
 </application>
 	
 	<instrumentation android:label="Preferences Tests"

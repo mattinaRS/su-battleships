@@ -3,7 +3,6 @@ package com.su.android.battleship.ui.tutorials;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -22,18 +21,16 @@ import com.su.android.battleship.cfg.GameDifficulty;
 import com.su.android.battleship.cfg.GamePreferences;
 import com.su.android.battleship.data.GameAi;
 import com.su.android.battleship.data.Ship;
-import com.su.android.battleship.service.SoundService;
-import com.su.android.battleship.ui.SinglePlayerRedisigned;
+import com.su.android.battleship.ui.SinglePlayer;
 import com.su.android.battleship.ui.adapter.GameBoardImageAdapter;
 import com.su.android.battleship.ui.adapter.MinimapImageAdapter;
-import com.su.android.battleship.util.GameSounds;
 import com.su.android.battleship.util.ShipUtil;
 
 /**
  * @author Tony
  * 
  */
-public class PrearrangedGameTutorial extends SinglePlayerRedisigned {
+public class PrearrangedGameTutorial extends SinglePlayer {
 
 	private Button doneButton;
 	private Button examineButton;
@@ -167,7 +164,6 @@ public class PrearrangedGameTutorial extends SinglePlayerRedisigned {
 	@Override
 	protected void initGame() {
 		tutorialState = EXAMINATION_MODE;
-		stopService(new Intent(this, SoundService.class));
 
 		Ship[] generatedShipPosition1 = getFixedShips();
 		Ship[] generatedShipPosition2 = getFixedShips();
@@ -181,12 +177,6 @@ public class PrearrangedGameTutorial extends SinglePlayerRedisigned {
 
 		displayGameScreen();
 		attachActionListeners();
-
-		gameSounds = new GameSounds(this);
-		if ((Boolean) GamePreferences.getPreference(this,
-				GamePreferences.PREFERENCE_SOUND)) {
-			gameSounds.playSound(1);
-		}
 
 		message = new StringBuilder(getString(R.string.tutorial_prearranged_game_explanation));
 		showDialog(TUTORIAL_EXPLANATION);
@@ -227,6 +217,7 @@ public class PrearrangedGameTutorial extends SinglePlayerRedisigned {
 		minimapGrid.setAdapter(minimapImageAdapter);
 		doneButton = (Button) findViewById(R.id.DoneButton);
 		examineButton = (Button) findViewById(R.id.ExamineButton);
+		animationView = (View) findViewById(R.id.AnimationView);
 	}
 
 	private void attachActionListeners() {
@@ -276,13 +267,16 @@ public class PrearrangedGameTutorial extends SinglePlayerRedisigned {
 				if (executeAction) {
 					ImageView _iv = (ImageView) v;
 
-					// means that there is second click on the same button -
-					// FIRE !
+					// means that there is second click on the same button - FIRE !
 					if (aimedField == position) {
-						executeFire(_iv);
+						if (shotsMap.containsKey(position)) {
+							Toast.makeText(PrearrangedGameTutorial.this,
+									"Already fired this spot.", 1000).show();
+						} else {
+							executeFire(_iv, position);
+						}					
 					} else {
 						aimAtField(_iv, position);
-
 					}
 				}
 			}
@@ -325,15 +319,18 @@ public class PrearrangedGameTutorial extends SinglePlayerRedisigned {
 				if (executeAction) {
 					if (aimedField == NO_FIELD_IS_AIMED) {
 						Toast.makeText(PrearrangedGameTutorial.this,
-								"Aim board field in order to fire.", 1000)
-								.show();
+								"Aim board field in order to fire.", 1000).show();
 					} else {
-						// quite obvious error - communication with imageViews
-						// is
-						// through the adapted , not through the gridView
-						ImageView field = (ImageView) boardImageAdapter
-								.getItem(aimedField);
-						executeFire(field);
+						if (shotsMap.containsKey(aimedField)) {
+							Toast.makeText(PrearrangedGameTutorial.this,
+									"Already fired this spot.", 1000).show();
+						} else {
+							// quite obvious error - communication with imageViews is
+							// through the adapted , not through the gridView
+							ImageView field = (ImageView) boardImageAdapter
+									.getItem(aimedField);
+							executeFire(field, aimedField);
+						}					
 					}
 				}
 			}

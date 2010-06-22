@@ -11,7 +11,13 @@ import android.content.SharedPreferences;
  */
 public class GamePreferences {
 	
+	/**
+	 * sound theme "Lightsout"
+	 */
 	public static final String SOUND_THEME_LIGHTSOUT = "Lightsout";
+	/**
+	 * sound theme "Spookey"
+	 */
 	public static final String SOUND_THEME_SPOOKEY = "Spookey";
 	
 	/**

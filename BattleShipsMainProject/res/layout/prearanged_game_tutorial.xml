@@ -19,18 +19,18 @@
 		
 	<Button android:text="show last instruction" android:height="10dp" android:typeface="serif" android:gravity="top|center_horizontal" android:layout_height="29dp" android:layout_width="180dp" android:background="@drawable/menu_button" android:id="@+id/LastInstructionButton" android:paddingTop="6dp"></Button>
 <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="50dp" android:background="@drawable/help_icon_thumb" android:id="@+id/ExamineButton"></Button>
+
 </LinearLayout>
 	
-	<GridView android:id="@+id/GridViewAFD" 
-		style="@style/GameBoard"/>
+	
 		
-	<LinearLayout style="@style/GamePane">
+	<FrameLayout style="@style/GameBoardContainer" android:id="@+id/GridContainer"><GridView android:id="@+id/GridViewAFD" style="@style/GameBoard" ></GridView><View android:id="@+id/AnimationView" android:layout_gravity="fill" android:layout_width="100dp" android:layout_height="100dp" android:layout_marginTop="1000dp" /></FrameLayout><LinearLayout style="@style/GamePane">
 		
 		<Button android:paddingLeft="10dp"
 			style="@style/GameSquareButton" android:id="@+id/DoneButton" android:text="Done"/>
 			
 		<GridView android:id="@+id/GridViewMiniMap"
-			style="@style/GameMinimap"/>
+			style="@style/GameMinimap"></GridView>
 			
 		<Button android:id="@+id/FireButton"
 			android:text="@string/game_button_fire"
@@ -38,6 +38,7 @@
 			style="@style/GameSquareButton"/>
 	
 	</LinearLayout>
+
 
 </LinearLayout>
 
