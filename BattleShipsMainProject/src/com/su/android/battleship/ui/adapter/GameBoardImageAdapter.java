@@ -64,7 +64,7 @@ public class GameBoardImageAdapter extends BaseAdapter {
         }
         
         imageView.setImageResource(boardPictures[0]);
-        Log.d("ImageViewAdapter","Position is: "+position + " and convertView: "+convertView+" and parent: "+parent);
+//        Log.d("ImageViewAdapter","Position is: "+position + " and convertView: "+convertView+" and parent: "+parent);
         
         
         /**

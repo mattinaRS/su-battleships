@@ -11,6 +11,19 @@ import android.content.SharedPreferences;
  */
 public class GamePreferences {
 	
+	public static final String SOUND_THEME_LIGHTSOUT = "Lightsout";
+	public static final String SOUND_THEME_SPOOKEY = "Spookey";
+	
+	/**
+	 * variable ,representing the sound theme used in the game - configurable from SoundOptionsScreen
+	 */
+	public static final String SOUND_THEME = "BSG_SOUND_THEME";
+		
+	/**
+	 * variable, representing music setting in a bundle 
+	 */
+	public static final String PREFERENCE_MUSIC = "BSG_PREFERENCE_MUSIC";
+	
 	/**
 	 * variable, representing sound setting in a bundle 
 	 */
@@ -52,6 +65,8 @@ public class GamePreferences {
 		mPreferences.put(PREFERENCE_SOUND, settings.getBoolean(PREFERENCE_SOUND, true));
 		mPreferences.put(PREFERENCE_VIBRATION, settings.getBoolean(PREFERENCE_VIBRATION, true));
 		mPreferences.put(PREFERENCE_NICKNAME, settings.getString(PREFERENCE_NICKNAME, "Player"));
+		mPreferences.put(SOUND_THEME, SOUND_THEME_SPOOKEY);
+		mPreferences.put(PREFERENCE_MUSIC,true);
 	}
 	
 	/**
@@ -96,7 +111,8 @@ public class GamePreferences {
 		editor.putBoolean(PREFERENCE_VIBRATION, (Boolean) mPreferences.get(PREFERENCE_VIBRATION));
 		editor.putString(PREFERENCE_DIFFICULTY, mPreferences.get(PREFERENCE_DIFFICULTY).toString());
 		editor.putString(PREFERENCE_NICKNAME, mPreferences.get(PREFERENCE_NICKNAME).toString());
-		
+		editor.putBoolean(PREFERENCE_MUSIC, (Boolean) mPreferences.get(PREFERENCE_MUSIC));
+		editor.putString(SOUND_THEME, mPreferences.get(SOUND_THEME).toString());
 		editor.commit();
 	}
 	

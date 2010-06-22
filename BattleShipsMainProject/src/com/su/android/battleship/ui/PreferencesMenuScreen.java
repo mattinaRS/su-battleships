@@ -1,6 +1,7 @@
 package com.su.android.battleship.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,7 +19,7 @@ import com.su.android.battleship.cfg.GamePreferences;
  */
 public class PreferencesMenuScreen extends Activity implements OnClickListener {
 
-	private boolean mHasSound;
+	
 	private boolean mHasVibration;
 	private GameDifficulty mGameDifficulty;
 	
@@ -59,7 +60,7 @@ public class PreferencesMenuScreen extends Activity implements OnClickListener {
 		}
 		
 		if (oldState == null) {
-			mHasSound = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND);
+//			mHasSound = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND);
 			mHasVibration = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION);
 			mGameDifficulty = (GameDifficulty) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_DIFFICULTY);
 			mNickname = (String) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_NICKNAME);
@@ -67,20 +68,20 @@ public class PreferencesMenuScreen extends Activity implements OnClickListener {
 		}		
 		else {
 			try {
-				mHasSound = Boolean.parseBoolean(oldState[0]);
+//				mHasSound = Boolean.parseBoolean(oldState[0]);
 				mHasVibration = Boolean.parseBoolean(oldState[1]);
 				mGameDifficulty = GameDifficulty.valueOf(oldState[2]);
 				mNickname = (String)oldState[3];
 			} catch (Exception e) {
 				e.printStackTrace();
-				mHasSound = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND);
+//				mHasSound = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND);
 				mHasVibration = (Boolean) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_VIBRATION);
 				mGameDifficulty = (GameDifficulty) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_DIFFICULTY);
 				mNickname = (String) GamePreferences.getPreference(this, GamePreferences.PREFERENCE_NICKNAME);
 			}
 		}
 				
-		setSoundButtonText();
+//		setSoundButtonText();
 		setVibrationButtonText();
 		setDifficultyButtonText();
 		setNicknameText();
@@ -95,8 +96,8 @@ public class PreferencesMenuScreen extends Activity implements OnClickListener {
 	public void onClick(View button) {
 		switch (button.getId()) {
 		case R.id.ButtonSound:
-			mHasSound = !mHasSound;
-			setSoundButtonText();
+			Intent intentSoundOptions = new Intent(this, SoundOptions.class);
+			startActivity(intentSoundOptions);			
 			break;
 		case R.id.ButtonVibration:
 			mHasVibration = !mHasVibration;
@@ -128,7 +129,7 @@ public class PreferencesMenuScreen extends Activity implements OnClickListener {
 	}
 	
 	private void saveState() {
-		GamePreferences.setPreference(this, GamePreferences.PREFERENCE_SOUND, mHasSound);
+//		GamePreferences.setPreference(this, GamePreferences.PREFERENCE_SOUND, mHasSound);
 		GamePreferences.setPreference(this, GamePreferences.PREFERENCE_VIBRATION, mHasVibration);
 		GamePreferences.setPreference(this, GamePreferences.PREFERENCE_DIFFICULTY, mGameDifficulty);
 		GamePreferences.setPreference(this, GamePreferences.PREFERENCE_NICKNAME, mNickname);
@@ -144,15 +145,10 @@ public class PreferencesMenuScreen extends Activity implements OnClickListener {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putStringArray(GamePreferences.BUNDLE_STATE, new String[] {mHasSound + "", mHasVibration + "", mGameDifficulty.toString()});
+		outState.putStringArray(GamePreferences.BUNDLE_STATE, new String[] { mHasVibration + "", mGameDifficulty.toString()});
 	}
 
-	/**
-	 * Not final. Experimental UI
-	 */
-	private void setSoundButtonText() {
-		mButtonSound.setText("Sound " + (mHasSound?"[on]":"[off]"));
-	}
+	
 	
 	/**
 	 * Not final. Experimental UI

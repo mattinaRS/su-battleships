@@ -31,6 +31,8 @@
 		<activity android:name=".ui.About" android:label="AboutScreen">
 		</activity>
 		
+		<activity android:name=".ui.SoundOptions" android:label="SoundOptions"></activity>
+		
 	 	<activity android:name=".ui.tutorials.FixShipGameTutorial" android:label="@string/set_ship_game_tutorial">
 		</activity> 
 		<activity android:name=".ui.tutorials.MoveSingleShipTutorial" android:label="MoveSingleShipTutorial"></activity>
@@ -38,6 +40,8 @@
 		<activity android:name=".ui.PreferencesMenuScreen"></activity>
 		
 		<service android:enabled="true" android:name=".service.SoundService" />
+		
+		<service android:enabled="true" android:name=".service.LightsoutSoundService" />
 	
 		<activity android:name=".ui.ArrangeShips"></activity>
 		

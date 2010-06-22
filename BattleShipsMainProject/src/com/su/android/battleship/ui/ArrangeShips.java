@@ -507,7 +507,7 @@ public class ArrangeShips extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putSerializable(BUNDLE_SHIPS, ships);
-		outState.putSerializable(BUNDLE_FORBIDDEN_POSITION, forbiddenPositions);
+//		outState.putSerializable(BUNDLE_FORBIDDEN_POSITION, forbiddenPositions);
 		outState.putSerializable(BUNDLE_BOARD, board);				
 	}
 			

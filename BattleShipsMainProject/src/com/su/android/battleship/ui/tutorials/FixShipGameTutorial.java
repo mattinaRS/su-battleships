@@ -26,12 +26,14 @@ import com.su.android.battleship.data.BoardFieldStatus;
 import com.su.android.battleship.data.GameAi;
 import com.su.android.battleship.data.Ship;
 import com.su.android.battleship.data.ShipPositionGenerator;
+import com.su.android.battleship.service.LightsoutSoundService;
 import com.su.android.battleship.service.SoundService;
 import com.su.android.battleship.ui.ArrangeShips;
 import com.su.android.battleship.ui.adapter.GameBoardImageAdapter;
 import com.su.android.battleship.ui.adapter.MinimapImageAdapter;
 import com.su.android.battleship.ui.data.ActivityShipComunicator;
 import com.su.android.battleship.util.GameSounds;
+import com.su.android.battleship.util.LightsoutGameSounds;
 
 /**
  * Activity for a Game Tutorial
@@ -47,6 +49,8 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 	private GridView minimapGrid;
 	private MinimapImageAdapter minimapImageAdapter;
 	private GameSounds gameSounds;
+	private LightsoutGameSounds lightsoutGS;
+	
 	
 	private View animationView;
 	private AnimationDrawable animation;
@@ -66,8 +70,17 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 		super.onCreate(savedInstanceState);
 		
 		gameSounds = new GameSounds(this);
-		if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
-			gameSounds.playSound(1);
+		lightsoutGS = new LightsoutGameSounds(this);
+		
+		if ((Boolean) GamePreferences.getPreference(this,GamePreferences.PREFERENCE_SOUND)) {
+			String soundTheme = (String) GamePreferences.getPreference(this,GamePreferences.SOUND_THEME);
+
+			if (soundTheme.equals(GamePreferences.SOUND_THEME_LIGHTSOUT)) {
+				lightsoutGS.playShipSink();
+			}
+			if(soundTheme.equals(GamePreferences.SOUND_THEME_SPOOKEY)){				
+				gameSounds.playSound(1);								
+			}
 		}
 	}
 	
@@ -109,6 +122,15 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 						Toast.makeText(FixShipGameTutorial.this,
 								"Already fired this spot.", 1000).show();
 					} else {
+						
+						if ((Boolean) GamePreferences.getPreference(FixShipGameTutorial.this,GamePreferences.PREFERENCE_SOUND)) {
+							String soundTheme = (String) GamePreferences.getPreference(FixShipGameTutorial.this,GamePreferences.SOUND_THEME);
+
+							if (soundTheme.equals(GamePreferences.SOUND_THEME_LIGHTSOUT)) {
+								lightsoutGS.playMissleShot();
+							}							
+						}
+						
 						executeFire(_iv, position);
 						if (game.isGameOver()) {
 							Toast.makeText(FixShipGameTutorial.this,
@@ -145,6 +167,13 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 						Toast.makeText(FixShipGameTutorial.this,
 								"Already fired this spot.", 1000).show();
 					} else {
+						if ((Boolean) GamePreferences.getPreference(FixShipGameTutorial.this,GamePreferences.PREFERENCE_SOUND)) {
+							String soundTheme = (String) GamePreferences.getPreference(FixShipGameTutorial.this,GamePreferences.SOUND_THEME);
+
+							if (soundTheme.equals(GamePreferences.SOUND_THEME_LIGHTSOUT)) {
+								lightsoutGS.playMissleShot();
+							}							
+						}
 						// quite obvious error - communication with imageViews is
 						// through the adapted , not through the gridView
 						ImageView field = (ImageView) boardImageAdapter
@@ -165,7 +194,7 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 
 	private void executeFire(ImageView _iv, int position) {
 		short newFieldStatus = game.executeMove((short) 0, (short) aimedField);
-		if (BoardFieldStatus.isShipAttackedStatus(newFieldStatus) || BoardFieldStatus.isShipDestroyedStatus(newFieldStatus)) {
+		if (BoardFieldStatus.isShipAttackedStatus(newFieldStatus) || BoardFieldStatus.isShipDestroyedStatus(newFieldStatus)) {			
 			shotsMap.put(position, boardImageAdapter.getCrash());
 			_iv.setImageResource(boardImageAdapter.getCrash());// mark as fired
 			
@@ -178,8 +207,29 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 				v.vibrate(600);
 			}
 			
-			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
-				gameSounds.playSound(2);
+			if(BoardFieldStatus.isShipAttackedStatus(newFieldStatus)){
+				if ((Boolean) GamePreferences.getPreference(FixShipGameTutorial.this,GamePreferences.PREFERENCE_SOUND)) {
+					String soundTheme = (String) GamePreferences.getPreference(FixShipGameTutorial.this,GamePreferences.SOUND_THEME);
+
+					if (soundTheme.equals(GamePreferences.SOUND_THEME_LIGHTSOUT)) {
+						lightsoutGS.playExplosion();
+					}
+					if (soundTheme.equals(GamePreferences.SOUND_THEME_SPOOKEY)) {
+						gameSounds.playSound(2);
+					}
+				}
+			}
+			if(BoardFieldStatus.isShipDestroyedStatus(newFieldStatus)){
+				if ((Boolean) GamePreferences.getPreference(FixShipGameTutorial.this,GamePreferences.PREFERENCE_SOUND)) {
+					String soundTheme = (String) GamePreferences.getPreference(FixShipGameTutorial.this,GamePreferences.SOUND_THEME);
+
+					if (soundTheme.equals(GamePreferences.SOUND_THEME_LIGHTSOUT)) {						
+						lightsoutGS.playShipSink();
+					}
+					if (soundTheme.equals(GamePreferences.SOUND_THEME_SPOOKEY)) {
+						gameSounds.playSound(2);
+					}
+				}
 			}
 		} else {
 			shotsMap.put(position, boardImageAdapter.getMiss());
@@ -194,8 +244,16 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 				v.vibrate(200);
 			}
 			
-			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
-				gameSounds.playSound(3);
+			if ((Boolean) GamePreferences.getPreference(FixShipGameTutorial.this,GamePreferences.PREFERENCE_SOUND)) {
+				String soundTheme = (String) GamePreferences.getPreference(FixShipGameTutorial.this,GamePreferences.SOUND_THEME);
+
+				if (soundTheme.equals(GamePreferences.SOUND_THEME_LIGHTSOUT)) {
+					lightsoutGS.playRockSplash();
+					
+				}
+				if (soundTheme.equals(GamePreferences.SOUND_THEME_SPOOKEY)) {
+					gameSounds.playSound(3);
+				}
 			}
 		}
 		_iv.setClickable(false);// make imageView unclickable
@@ -211,7 +269,8 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 	protected void initGame() {
 		// Ship[] generatedShipPosition1 = generator.getHardcodedShipPosition();
 		// Ship[] generatedShipPosition2 = generator.getHardcodedShipPosition();
-		stopService(new Intent(this, SoundService.class));
+		
+//		stopService(new Intent(this, SoundService.class));
 		
 		Intent intent = new Intent(this, ArrangeShips.class);
 		startActivityForResult(intent, 1);
@@ -303,9 +362,9 @@ public class FixShipGameTutorial extends AimAndFireTutorial {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
-			startService(new Intent(this, SoundService.class));
-		}
+//		if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
+//			startService(new Intent(this, SoundService.class));
+//		}
 	}
 	
 	/**

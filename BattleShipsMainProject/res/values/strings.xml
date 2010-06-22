@@ -23,4 +23,9 @@
 	<string name="game_enemy">Enemy</string>
 	<string name="game_button_menu">Menu</string>
 	<string name="game_button_fire">Fire</string>
+<string name="game_sound">Game Sound</string>
+<string name="game_music">Game Music</string>
+<string name="sound_theme">Theme</string>
+<string name="spookey_sound_theme">Spookey</string>
+<string name="lightsout_sound_theme">Lightsout</string>
 </resources>

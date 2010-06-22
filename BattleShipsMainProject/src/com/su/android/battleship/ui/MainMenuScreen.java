@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 
 import com.su.android.battleship.R;
 import com.su.android.battleship.cfg.GamePreferences;
+import com.su.android.battleship.service.LightsoutSoundService;
 import com.su.android.battleship.service.SoundService;
 
 /**
@@ -24,9 +25,9 @@ import com.su.android.battleship.service.SoundService;
 public class MainMenuScreen extends Activity implements OnClickListener {
 
 	/**
-	 * This is configuration flag - whether to show loading screen or not
-	 * TODO : design and implement loading screen as a self containing widget that can be attached 
-	 * to every activity configured to support loading screen 
+	 * This is configuration flag - whether to show loading screen or not TODO :
+	 * design and implement loading screen as a self containing widget that can
+	 * be attached to every activity configured to support loading screen
 	 */
 	private static final boolean isLoadingScreen = true;
 
@@ -68,14 +69,19 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 		Button buttonQuit = (Button) findViewById(R.id.ButtonQuit);
 		buttonQuit.setOnClickListener(this);
 		
-		if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
-			startService(new Intent(this, SoundService.class));
+		if ((Boolean) GamePreferences.getPreference(this,GamePreferences.PREFERENCE_MUSIC)) {
+			String soundTheme = (String) GamePreferences.getPreference(this,GamePreferences.SOUND_THEME);
+
+			if (soundTheme.equals(GamePreferences.SOUND_THEME_LIGHTSOUT)) {
+				stopService(new Intent(this, SoundService.class));
+				startService(new Intent(this, LightsoutSoundService.class));
+			}
+			if(soundTheme.equals(GamePreferences.SOUND_THEME_SPOOKEY)){
+				stopService(new Intent(this, LightsoutSoundService.class));
+				startService(new Intent(this, SoundService.class));				
+			}
 		}
-		
-		if ( !(Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
-			stopService(new Intent(this, SoundService.class));
-		}
-	}	
+	}
 
 	/**
 	 * Called when a menu button has been clicked
@@ -99,17 +105,17 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 			break;
 		case R.id.ButtonQuit:
 			stopService(new Intent(this, SoundService.class));
+			stopService(new Intent(this, LightsoutSoundService.class));
 			finish();
 			break;
 		}
 	}
-	
-	//==============================================================================================================
-	//Logic supporting loading screen
+
+	// ==============================================================================================================
+	// Logic supporting loading screen
 
 	private ProgressBar progressBar;
 	private LoadScreenAsyncTask progressBarTask;
-
 
 	// Define the Handler that receives messages from the gameLoading thread and
 	// update the
@@ -124,8 +130,8 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 				progressBarTask.setStatus(LoadScreenAsyncTask.STATUS_FINISHED);
 			}
 		}
-	};	
-	
+	};
+
 	/**
 	 * This method holds the logic for loading the loading_screen Remember that
 	 * this Activity is configurable and the call to this method can be disabled
@@ -133,12 +139,11 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 	private void displayLoadingScreen() {
 		setContentView(R.layout.progressbar_loadscreen);
 
-		// start progressBar worker thread 
+		// start progressBar worker thread
 		progressBarTask = new LoadScreenAsyncTask();
 		progressBarTask.execute("Loading");
 	}
 
-	
 	/**
 	 * This class represents a background worker thread that will do all the
 	 * game loading job.This is the common and desirable behavior - the UI
@@ -160,7 +165,7 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 		@Override
 		protected Void doInBackground(Object... params) {
 			// simulate activity here
-//			TestAI_SPPFD.test();
+			// TestAI_SPPFD.test();
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
@@ -178,7 +183,8 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * This class represents background thread responsible for ProgressBar updates.
+	 * This class represents background thread responsible for ProgressBar
+	 * updates.
 	 * 
 	 * @author vasko
 	 */
@@ -188,7 +194,7 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 		private static final int MAX_PROGRESS_STEPS = 15;
 		private int status = STATUS_RUNNING_NORMAL;
 		public static final int STATUS_RUNNING_NORMAL = 1;;
-		//public static final int STATUS_RUNNING_FAST = 2;
+		// public static final int STATUS_RUNNING_FAST = 2;
 		public static final int STATUS_FINISHED = 3;
 
 		@Override
@@ -233,6 +239,7 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 		 * Executed by UI thread after task has finished its job
 		 */
 		protected void onPostExecute(String result) {
+			System.out.println("This is before displayGameMenu()");
 			displayGameMenu();
 		}
 
@@ -248,30 +255,45 @@ public class MainMenuScreen extends Activity implements OnClickListener {
 		}
 
 	}
-	
-		/**
-		 * Stops the background music when finishing the application
-		 */
-	    protected void onDestroy() {
-		  super.onDestroy();
-		  stopService(new Intent(this, SoundService.class));
-		}
-	    
-	    /**
-	     * Starts/stops sound when the activity is restarted 
-	     * (useful when returned to after changes in settings menu)
-	     */
-		@Override
-		protected void onRestart() {
-			if ( (Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
-				startService(new Intent(this, SoundService.class));
-			}
-	    	
-	    	if ( !(Boolean)GamePreferences.getPreference(this, GamePreferences.PREFERENCE_SOUND) ) {
+
+	/**
+	 * Stops the background music when finishing the application
+	 */
+	protected void onDestroy() {
+		super.onDestroy();
+		stopService(new Intent(this, SoundService.class));
+		stopService(new Intent(this, LightsoutSoundService.class));
+	}
+
+	/**
+	 * Starts/stops sound when the activity is restarted (useful when returned
+	 * to after changes in settings menu)
+	 */
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		System.out.println("In onRestart method");
+		String soundTheme = (String) GamePreferences.getPreference(this,
+				GamePreferences.SOUND_THEME);
+		if ((Boolean) GamePreferences.getPreference(this,
+				GamePreferences.PREFERENCE_MUSIC)) {
+
+			if (soundTheme.equals(GamePreferences.SOUND_THEME_LIGHTSOUT)) {
 				stopService(new Intent(this, SoundService.class));
+				startService(new Intent(this, LightsoutSoundService.class));
 			}
-			// TODO Auto-generated method stub
-			super.onRestart();
+			if(soundTheme.equals(GamePreferences.SOUND_THEME_SPOOKEY)){
+				stopService(new Intent(this, LightsoutSoundService.class));
+				startService(new Intent(this, SoundService.class));				
+			}
 		}
+
+		if (!(Boolean) GamePreferences.getPreference(this,
+				GamePreferences.PREFERENCE_MUSIC)) {
+			stopService(new Intent(this, SoundService.class));
+			stopService(new Intent(this, LightsoutSoundService.class));
+		}
+		
+	}
 
 }
