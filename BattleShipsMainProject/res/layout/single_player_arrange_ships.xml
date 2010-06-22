@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+	
+	<GridView android:id="@+id/GridViewMoveShips"
+		android:layout_marginTop="10dp"
+		style="@style/GameBoard"/>
+		
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_marginTop="10dp"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		
+		<Button
+			android:id="@+id/ButtonRotate" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.3"
+			android:text="Rotate"/>
+		<Button
+			android:id="@+id/ButtonAccept"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.3"
+			android:text="@string/settings_apply_prefs"/>
+		<Button
+			android:id="@+id/ButtonCancel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.3"
+			android:text="@string/menu_back"/>
+	</LinearLayout>		
+
+</LinearLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<LinearLayout
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" android:layout_gravity="center_vertical|center_horizontal|center" android:layout_marginBottom="5dp" android:orientation="horizontal">
+		
+		
+			
+		
+			
+		
+			
+		
+		
+	<Button android:text="show last instruction" android:height="10dp" android:typeface="serif" android:gravity="top|center_horizontal" android:layout_height="29dp" android:layout_width="180dp" android:background="@drawable/menu_button" android:id="@+id/LastInstructionButton" android:paddingTop="6dp"></Button>
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="50dp" android:background="@drawable/help_icon_thumb" android:id="@+id/ExamineButton"></Button>
+</LinearLayout>
+	
+	<GridView android:id="@+id/GridViewAFD" 
+		style="@style/GameBoard"/>
+		
+	<LinearLayout style="@style/GamePane">
+		
+		<Button android:paddingLeft="10dp"
+			style="@style/GameSquareButton" android:id="@+id/DoneButton" android:text="Done"/>
+			
+		<GridView android:id="@+id/GridViewMiniMap"
+			style="@style/GameMinimap"/>
+			
+		<Button android:id="@+id/FireButton"
+			android:text="@string/game_button_fire"
+			android:paddingRight="10dp"
+			style="@style/GameSquareButton"/>
+	
+	</LinearLayout>
+
+</LinearLayout>
+
+
+
