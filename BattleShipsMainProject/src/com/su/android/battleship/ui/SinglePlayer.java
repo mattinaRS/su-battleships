@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -26,7 +30,6 @@ import com.su.android.battleship.data.BoardFieldStatus;
 import com.su.android.battleship.data.GameAi;
 import com.su.android.battleship.data.Ship;
 import com.su.android.battleship.data.ShipPositionGenerator;
-import com.su.android.battleship.ui.ArrangeShips;
 import com.su.android.battleship.ui.adapter.GameBoardImageAdapter;
 import com.su.android.battleship.ui.adapter.MinimapImageAdapter;
 import com.su.android.battleship.ui.data.ActivityShipComunicator;
@@ -86,7 +89,11 @@ public class SinglePlayer extends Activity {
 	 * fireButton
 	 */
 	protected Button fireButton;
-
+	
+	/**
+	 * Menu Button
+	 */
+	protected Button menuButton;
 
 	/**
 	 * manages the game and provides AI moves
@@ -166,6 +173,7 @@ public class SinglePlayer extends Activity {
 		setContentView(R.layout.single_player);
 
 		fireButton = (Button) findViewById(R.id.FireButton);
+		menuButton = (Button) findViewById(R.id.MenuButton);
 
 		boardGrid = (GridView) findViewById(R.id.GridViewAFD);
 		boardImageAdapter = new GameBoardImageAdapter(this);
@@ -226,6 +234,12 @@ public class SinglePlayer extends Activity {
 						executeFire(field, aimedField);
 					}					
 				}
+			}
+		});
+		
+		menuButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				showDialog(DIALOG_GAMEMENU_ID);
 			}
 		});
 	}
@@ -533,5 +547,52 @@ public class SinglePlayer extends Activity {
 		params.topMargin = (int) ((y * 30 - 10) * dpi);
 		
 		animationView.setLayoutParams(params);
+	}
+	
+	static final int DIALOG_GAMEMENU_ID = 0;
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreateDialog(int)
+	 */
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Dialog dialog;
+	    switch(id) {
+	    case DIALOG_GAMEMENU_ID:
+	    	final CharSequence[] items = {"Quit current game", "Return to game"};
+
+	    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	    	builder.setTitle("Game Menu");
+	    	builder.setItems(items, new DialogInterface.OnClickListener() {
+	    	    public void onClick(DialogInterface dialog, int item) {
+	    	        switch (item) {
+	    	        case 0:
+	    	        	finish();
+	    	        	break;
+	    	        case 1:
+	    	        default:
+	    	        	dismissDialog(DIALOG_GAMEMENU_ID);
+	    	        }
+	    	    }
+	    	});
+	    	dialog = builder.create();
+	    	
+	        break;
+	    default:
+	        dialog = null;
+	    }
+	    return dialog;
+	}
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onKeyDown(int, android.view.KeyEvent)
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+	        showDialog(DIALOG_GAMEMENU_ID);
+	        return true;
+	    }
+		return super.onKeyDown(keyCode, event);
 	}
 }
