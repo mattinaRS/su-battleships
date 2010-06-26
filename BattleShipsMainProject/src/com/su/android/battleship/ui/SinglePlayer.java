@@ -129,6 +129,9 @@ public class SinglePlayer extends Activity {
 	 */
 	protected HashMap<Integer, Integer> shotsMap = new HashMap<Integer, Integer>();
 	
+	private int PlayerShipsCount = 5;
+	
+	private int EnemyShipsCount = 5;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -299,6 +302,10 @@ public class SinglePlayer extends Activity {
 						gameSounds.playSound(2);
 					}
 				}
+				
+				TextView textPlayerShips = (TextView) findViewById(R.id.PlayerShips);
+				PlayerShipsCount--;
+				textPlayerShips.setText(PlayerShipsCount + "/5");
 			}
 		} else {
 			shotsMap.put(position, boardImageAdapter.getMiss());
@@ -393,6 +400,12 @@ public class SinglePlayer extends Activity {
 				|| BoardFieldStatus.isShipDestroyedStatus(fieldStatus)) {
 			minimapImageAdapter.setCrash(fieldAttackedByAi);
 			minimapHits.add(fieldAttackedByAi);
+			
+			if (BoardFieldStatus.isShipDestroyedStatus(fieldStatus)) {
+				TextView textEnemyShips = (TextView) findViewById(R.id.EnemyShips);
+				EnemyShipsCount--;
+				textEnemyShips.setText(EnemyShipsCount + "/5");
+			}
 		} else {
 			minimapImageAdapter.setMiss(fieldAttackedByAi);
 			minimapMisses.add(fieldAttackedByAi);
