@@ -10,7 +10,7 @@
 		style="@style/GameBoard"/>
 		
 	<LinearLayout
-		android:orientation="horizontal"
+		android:orientation="vertical"
 		android:layout_marginTop="10dp"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent">
@@ -19,20 +19,32 @@
 			android:id="@+id/ButtonRotate" 
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_weight="0.3"
+			android:layout_gravity="center_horizontal"
+			style="@style/MenuButton"
 			android:text="Rotate"/>
-		<Button
-			android:id="@+id/ButtonAccept"
+			
+		<LinearLayout
+			android:orientation="horizontal"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_weight="0.3"
-			android:text="@string/settings_apply_prefs"/>
-		<Button
-			android:id="@+id/ButtonCancel"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="0.3"
-			android:text="@string/menu_back"/>
+			android:layout_gravity="center_horizontal">
+			
+			<Button
+				android:id="@+id/ButtonAccept"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				style="@style/MenuButton"
+				android:layout_weight="0.5"
+				android:text="@string/settings_apply_prefs"/>
+			<Button
+				android:id="@+id/ButtonCancel"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				style="@style/MenuButton"
+				android:layout_weight="0.5"
+				android:text="@string/menu_back"/>
+			
+		</LinearLayout>
 	</LinearLayout>		
 
 </LinearLayout>
